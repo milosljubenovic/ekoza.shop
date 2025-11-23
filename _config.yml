@@ -83,6 +83,10 @@ exclude:
   - tailwind.config.js
   - postcss.config.js
   - README.md
+  - BUILD.md
+  - minify-assets.js
+  - build-production.sh
+  - .github
 
 # Plugins
 plugins:
