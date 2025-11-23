@@ -51,6 +51,7 @@ GEM
     google-protobuf (4.33.1-x86_64-linux-musl)
       bigdecimal
       rake (>= 13)
+    htmlcompressor (0.4.0)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -159,6 +160,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  htmlcompressor
   jekyll (~> 4.3)
   jekyll-seo-tag
   jekyll-sitemap
