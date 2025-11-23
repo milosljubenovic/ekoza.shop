@@ -1,8 +1,4 @@
 media:
-  - name: Assets
-    input: assets
-    output: assets
-
   - name: Products
     input: assets/images/products
     output: assets/images/products
