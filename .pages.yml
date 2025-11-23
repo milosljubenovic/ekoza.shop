@@ -11,7 +11,7 @@ media:
     input: assets/images/blogs
     output: assets/images/blogs
 
-  - name: Embroidery Assets
+  - name: EmbroideryAssets
     input: assets/images/embroidery
     output: assets/images/embroidery
     
