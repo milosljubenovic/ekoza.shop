@@ -1,11 +1,15 @@
 media:
-  - input: assets/images/products
+  - name: products
+    input: assets/images/products
     output: /assets/images/products
-  - input: assets/images/blogs
+  - name: blogs
+    input: assets/images/blogs
     output: /assets/images/blogs
-  - input: assets/images/categories
+  - name: categories
+    input: assets/images/categories
     output: /assets/images/categories
-  - input: assets/images/embroidery
+  - name: embodery
+    input: assets/images/embroidery
     output: /assets/images/embroidery
 
 content:
