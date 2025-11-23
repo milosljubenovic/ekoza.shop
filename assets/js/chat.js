@@ -20,7 +20,10 @@ const chatState = {
   isOpen: false,
   isLoading: false,
   messageHistory: [],
-  unreadCount: 0
+  unreadCount: 0,
+  agents: [],
+  selectedAgent: '', // empty = auto-routing
+  agentHealth: {} // tracks agent availability from /health endpoint
 };
 
 /**
@@ -37,6 +40,12 @@ async function initializeChat() {
   // Load session from storage
   loadSession();
   
+  // Load available agents
+  await loadAgents();
+  
+  // Check agent health status
+  await checkAgentHealth();
+  
   // Setup event listeners
   setupEventListeners();
   
@@ -44,6 +53,296 @@ async function initializeChat() {
   await loadMessageHistory();
   
   console.log('Chat initialized. Session ID:', chatState.sessionId || 'None');
+}
+
+/**
+ * Load available agents from API
+ */
+async function loadAgents() {
+  try {
+    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/agents`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      chatState.agents = data.agents || [];
+      renderAgentSelector();
+      console.log(`Loaded ${chatState.agents.length} agents`);
+    }
+  } catch (error) {
+    console.error('Failed to load agents:', error);
+    // Continue with default behavior (auto-routing)
+  }
+}
+
+/**
+ * Check agent health status from /health endpoint
+ */
+async function checkAgentHealth() {
+  try {
+    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/health`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      signal: AbortSignal.timeout(5000)
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      
+      // Store agent health status
+      if (data.agents) {
+        chatState.agentHealth = data.agents;
+        console.log('Agent health status:', chatState.agentHealth);
+      }
+      
+      // Re-render agent selector with health status
+      renderAgentSelector();
+      
+      // Enable chat
+      enableChat();
+      
+      return true;
+    } else {
+      // Health check failed
+      console.error('Health check failed with status:', response.status);
+      disableChat();
+      return false;
+    }
+  } catch (error) {
+    console.warn('Failed to check agent health:', error);
+    // Disable chat when health check fails
+    disableChat();
+  }
+  return false;
+}
+
+/**
+ * Render agent selector in UI
+ */
+function renderAgentSelector() {
+  const agentSelectorContainer = document.getElementById('agentSelector');
+  if (!agentSelectorContainer || chatState.agents.length === 0) return;
+  
+  const select = document.createElement('select');
+  select.id = 'agentSelect';
+  select.className = 'w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all';
+  
+  // Auto-routing option
+  const autoOption = document.createElement('option');
+  autoOption.value = '';
+  autoOption.textContent = '🤖 Auto-odabir agenta';
+  select.appendChild(autoOption);
+  
+  // Agent options
+  chatState.agents.forEach(agent => {
+    const option = document.createElement('option');
+    option.value = agent.id;
+    option.textContent = agent.name;
+    select.appendChild(option);
+  });
+  
+  select.addEventListener('change', (e) => {
+    chatState.selectedAgent = e.target.value;
+    console.log('Selected agent:', chatState.selectedAgent || 'auto');
+  });
+  
+  agentSelectorContainer.innerHTML = '';
+  agentSelectorContainer.appendChild(select);
+}
+
+/**
+ * Load available agents from API
+ */
+async function loadAgents() {
+  try {
+    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/agents`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      chatState.agents = data.agents || [];
+      renderAgentSelector();
+      console.log(`Loaded ${chatState.agents.length} agents`);
+    }
+  } catch (error) {
+    console.error('Failed to load agents:', error);
+    // Continue with default behavior (auto-routing)
+  }
+}
+
+/**
+ * Render agent selector in UI
+ */
+function renderAgentSelector() {
+  // Check if this is first visit (no session and no messages)
+  const isFirstVisit = !chatState.sessionId && chatState.messageHistory.length === 0;
+  
+  if (isFirstVisit) {
+    // Show Intercom-style agent cards
+    renderAgentCards();
+  } else {
+    // Show dropdown selector for existing sessions
+    renderAgentDropdown();
+  }
+}
+
+/**
+ * Render Intercom-style agent selection cards
+ */
+function renderAgentCards() {
+  const agentWelcome = document.getElementById('agentWelcome');
+  const agentCards = document.getElementById('agentCards');
+  
+  if (!agentWelcome || !agentCards || chatState.agents.length === 0) return;
+  
+  agentWelcome.classList.remove('hidden');
+  agentCards.innerHTML = '';
+  
+  chatState.agents.forEach(agent => {
+    // Check if agent is available
+    const isAvailable = chatState.agentHealth[agent.id] !== false;
+    const isDisabled = !isAvailable;
+    
+    const card = document.createElement('button');
+    card.className = `w-full border rounded-xl p-4 text-left transition-all ${
+      isDisabled 
+        ? 'bg-slate-800/50 border-slate-700/50 opacity-50 cursor-not-allowed' 
+        : 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 border-slate-600 hover:scale-105 hover:shadow-lg'
+    }`;
+    
+    if (!isDisabled) {
+      card.onclick = () => selectAgentCard(agent.id, agent.name);
+    }
+    
+    // Agent icon based on type
+    const icons = {
+      'general': '🤖',
+      'orders': '🛒',
+      'info': 'ℹ️',
+      'tracking': '📦',
+      'returns': '↩️'
+    };
+    const icon = icons[agent.id] || '💬';
+    
+    const statusBadge = isDisabled 
+      ? '<span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Nedostupan</span>' 
+      : '';
+    
+    card.innerHTML = `
+      <div class="flex items-start space-x-3">
+        <div class="text-3xl flex-shrink-0 ${ isDisabled ? 'grayscale' : '' }">${icon}</div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between mb-1">
+            <h4 class="font-bold text-white text-sm">${agent.name}</h4>
+            ${statusBadge}
+          </div>
+          <p class="text-gray-300 text-xs">${agent.description}</p>
+        </div>
+      </div>
+    `;
+    
+    agentCards.appendChild(card);
+  });
+}
+
+/**
+ * Handle agent card selection
+ */
+function selectAgentCard(agentId, agentName) {
+  // Hide welcome screen
+  const agentWelcome = document.getElementById('agentWelcome');
+  if (agentWelcome) {
+    agentWelcome.classList.add('hidden');
+  }
+  
+  // Set selected agent
+  chatState.selectedAgent = agentId;
+  
+  // Show agent selector dropdown
+  const selectorContainer = document.getElementById('agentSelectorContainer');
+  if (selectorContainer) {
+    selectorContainer.classList.remove('hidden');
+  }
+  
+  // Render dropdown and set value
+  renderAgentDropdown();
+  const select = document.getElementById('agentSelect');
+  if (select) {
+    select.value = agentId;
+  }
+  
+  // Add system message
+  addMessageToUI('bot', `Povezao sam vas sa: **${agentName}**. Kako mogu da vam pomognem?`);
+  
+  // Focus input
+  const chatInput = document.getElementById('chatInput');
+  if (chatInput) {
+    chatInput.focus();
+  }
+  
+  console.log('Agent selected from card:', agentId);
+}
+
+/**
+ * Render agent dropdown selector
+ */
+function renderAgentDropdown() {
+  const agentSelectorContainer = document.getElementById('agentSelectorContainer');
+  const agentSelector = document.getElementById('agentSelector');
+  if (!agentSelector || chatState.agents.length === 0) return;
+  
+  // Show container
+  if (agentSelectorContainer) {
+    agentSelectorContainer.classList.remove('hidden');
+  }
+  
+  const select = document.createElement('select');
+  select.id = 'agentSelect';
+  select.className = 'w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all';
+  
+  // Auto-routing option
+  const autoOption = document.createElement('option');
+  autoOption.value = '';
+  autoOption.textContent = '🤖 Auto-odabir agenta';
+  select.appendChild(autoOption);
+  
+  // Agent options
+  chatState.agents.forEach(agent => {
+    const option = document.createElement('option');
+    option.value = agent.id;
+    
+    // Check if agent is available
+    const isAvailable = chatState.agentHealth[agent.id] !== false;
+    
+    if (!isAvailable) {
+      option.disabled = true;
+      option.textContent = `${agent.name} (Nedostupan)`;
+      option.style.opacity = '0.5';
+    } else {
+      option.textContent = agent.name;
+    }
+    
+    option.title = agent.description;
+    select.appendChild(option);
+  });
+  
+  select.addEventListener('change', (e) => {
+    chatState.selectedAgent = e.target.value;
+    console.log('Selected agent:', chatState.selectedAgent || 'auto');
+  });
+  
+  agentSelector.innerHTML = '';
+  agentSelector.appendChild(select);
 }
 
 /**
@@ -161,6 +460,11 @@ async function sendMessageToAPI(message) {
       requestBody.session_id = chatState.sessionId;
     }
     
+    // Add agent_id if manually selected
+    if (chatState.selectedAgent) {
+      requestBody.agent_id = chatState.selectedAgent;
+    }
+    
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CHAT_CONFIG.apiTimeout);
     
@@ -194,7 +498,12 @@ async function sendMessageToAPI(message) {
     }
     
     // Add bot response to UI
-    addMessageToUI('bot', data.response);
+    addMessageToUI('bot', data.response, false, null, data.agent_used);
+    
+    // Log which agent handled the message
+    if (data.agent_used) {
+      console.log('Agent used:', data.agent_used);
+    }
     
     // Increment badge if chat is closed
     if (!chatState.isOpen) {
@@ -226,7 +535,7 @@ async function sendMessageToAPI(message) {
 /**
  * Add message to UI
  */
-function addMessageToUI(sender, text, isError = false, messageTimestamp = null) {
+function addMessageToUI(sender, text, isError = false, messageTimestamp = null, agentUsed = null) {
   const messagesContainer = document.getElementById('chatMessages');
   if (!messagesContainer) return;
   
@@ -267,6 +576,15 @@ function addMessageToUI(sender, text, isError = false, messageTimestamp = null) 
     const messageClass = isError ? 'bg-red-500/20 border border-red-500/50' : 'bg-gradient-to-br from-slate-800 to-slate-700';
     const iconColor = isError ? 'from-red-500 to-red-600' : 'from-purple-500 to-pink-500';
     
+    // Find agent name if agentUsed is provided
+    let agentBadge = '';
+    if (agentUsed && chatState.agents.length > 0) {
+      const agent = chatState.agents.find(a => a.id === agentUsed);
+      if (agent) {
+        agentBadge = `<span class="inline-block bg-purple-500/30 text-purple-200 text-xs px-2 py-0.5 rounded-full mr-2" title="${agent.description}">${agent.name}</span>`;
+      }
+    }
+    
     messageDiv.innerHTML = `
       <div class="flex items-start space-x-2">
         <div class="w-8 h-8 bg-gradient-to-r ${iconColor} rounded-full flex items-center justify-center flex-shrink-0">
@@ -275,7 +593,7 @@ function addMessageToUI(sender, text, isError = false, messageTimestamp = null) 
           </svg>
         </div>
         <div class="message-bubble bot ${messageClass} text-white p-3 rounded-2xl rounded-tl-sm max-w-[80%]">
-          <p class="text-sm">${formatBotMessage(text)}</p>
+          ${agentBadge}<p class="text-sm">${formatBotMessage(text)}</p>
           <span class="text-xs opacity-75 mt-1 block">${timestamp}</span>
         </div>
       </div>
@@ -619,11 +937,70 @@ async function checkAPIHealth() {
   return false;
 }
 
+/**
+ * Disable chat when health check fails
+ */
+function disableChat() {
+  const chatButton = document.getElementById('chatButton');
+  const chatFab = chatButton?.querySelector('.chat-fab');
+  
+  if (chatButton && chatFab) {
+    // Disable button
+    chatFab.disabled = true;
+    chatFab.onclick = null;
+    
+    // Add disabled styling
+    chatFab.classList.add('opacity-50', 'cursor-not-allowed', 'grayscale');
+    chatFab.classList.remove('hover:scale-110');
+    
+    // Update badge to show error
+    const badge = document.getElementById('chatBadge');
+    if (badge) {
+      badge.textContent = '!';
+      badge.classList.remove('bg-red-500', 'hidden');
+      badge.classList.add('bg-yellow-500');
+      badge.title = 'Chat je trenutno nedostupan';
+    }
+    
+    console.log('Chat disabled due to health check failure');
+  }
+}
+
+/**
+ * Enable chat when health check succeeds
+ */
+function enableChat() {
+  const chatButton = document.getElementById('chatButton');
+  const chatFab = chatButton?.querySelector('.chat-fab');
+  
+  if (chatButton && chatFab) {
+    // Enable button
+    chatFab.disabled = false;
+    chatFab.onclick = toggleChat;
+    
+    // Remove disabled styling
+    chatFab.classList.remove('opacity-50', 'cursor-not-allowed', 'grayscale');
+    chatFab.classList.add('hover:scale-110');
+    
+    // Reset badge
+    const badge = document.getElementById('chatBadge');
+    if (badge) {
+      badge.classList.remove('bg-yellow-500');
+      badge.classList.add('bg-red-500', 'hidden');
+      badge.title = '';
+    }
+    
+    console.log('Chat enabled');
+  }
+}
+
 // Export functions for use in HTML
 window.toggleChat = toggleChat;
 window.clearChat = clearChat;
 window.checkAPIHealth = checkAPIHealth;
+window.checkAgentHealth = checkAgentHealth;
 window.fetchSessionHistory = fetchSessionHistory;
 window.updateBadgeCount = updateBadgeCount;
 window.incrementBadge = incrementBadge;
+window.selectAgentCard = selectAgentCard;
 window.clearBadge = clearBadge;
