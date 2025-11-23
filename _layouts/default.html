@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/output.css' | relative_url }}">
+  {% seo %}
+  <script>
+    // Theme initialization (must be before body renders to prevent flash)
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+      document.documentElement.classList.add('light-mode');
+    } else {
+      document.documentElement.classList.remove('light-mode');
+    }
+  </script>
+</head>
+<body class="bg-gray-50 transition-colors duration-300">
+  {% include header.html %}
+  
+  <main class="min-h-screen">
+    {{ content }}
+  </main>
+  
+  {% include footer.html %}
+  {% include cart-modal.html %}
+  
+  <script src="{{ '/assets/js/cart.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  
+  <!-- Products data for search -->
+  <script id="productsData" type="application/json">
+    {{ site.data.products | jsonify }}
+  </script>
+</body>
+</html>

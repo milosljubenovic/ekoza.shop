@@ -1,0 +1,67 @@
+# Lazy Pleasure - Jekyll eCommerce Configuration
+title: Lazy Pleasure
+description: Online prodavnica za moderne proizvode
+baseurl: ""
+url: "http://localhost:4000"
+
+# Store Information
+store:
+  name: "Lazy Pleasure"
+  owner: "Đurđina Stojanović"
+  business_name: "pr Lazy pleasure"
+  mb: "66357732"
+  pib: "112791552"
+  address: "DEDINA BARA bb"
+  city: "Grdelica"
+  postal_code: "16220"
+  country: "Srbija"
+  phone: "+381 62 220894"
+  email: "info@lazypleasure.rs"
+
+# Payment Information
+payment:
+  bank_name: "Banka Intesa"
+  account_number: "160-XXXXXX-XX"
+  account_holder: "EKOZA SHOP"
+
+# Shipping Information
+shipping:
+  courier_name: "AKS"
+  standard_price: 400
+  standard_delivery_days: "7 radnih dana"
+  pickup_delivery_days: "3 radna dana"
+  cod_fee: 50
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Collections
+collections:
+  products:
+    output: true
+    permalink: /proizvodi/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "products"
+    values:
+      layout: "product"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - package.json
+  - package-lock.json
+  - tailwind.config.js
+  - postcss.config.js
+  - README.md
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap

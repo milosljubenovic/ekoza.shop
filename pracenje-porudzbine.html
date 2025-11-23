@@ -1,0 +1,164 @@
+---
+layout: default
+title: Praćenje Porudžbine
+---
+
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen py-16">
+  <div class="container mx-auto px-4 py-8 max-w-2xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-white mb-4">📦 Praćenje Porudžbine</h1>
+      <p class="text-gray-300 text-lg">Unesite broj porudžbine da proverite status</p>
+    </div>
+
+    <!-- Track Order Form -->
+    <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 mb-8">
+      <form id="trackOrderForm" class="space-y-6">
+        <div>
+          <label for="orderNumber" class="block text-sm font-medium text-gray-300 mb-2">
+            Broj Porudžbine
+          </label>
+          <div class="flex gap-3">
+            <input 
+              type="text" 
+              id="orderNumber" 
+              name="orderNumber"
+              placeholder="npr. EK12345678"
+              pattern="EK[0-9]{8}"
+              required
+              class="flex-1 px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+            >
+            <button 
+              type="submit"
+              class="btn-primary-modern px-8"
+            >
+              Proveri Status
+            </button>
+          </div>
+          <p class="text-sm text-gray-400 mt-2">
+            Broj porudžbine možete pronaći u email potvrdi
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Order Status Result -->
+    <div id="orderStatusResult" class="hidden">
+      <!-- Success State -->
+      <div id="orderFound" class="hidden bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-3xl font-bold text-white">Porudžbina Pronađena</h2>
+            <p class="text-gray-300" id="orderNumberDisplay"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!-- Order Info -->
+          <div class="bg-slate-900 rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-gray-400 uppercase mb-4">Informacije</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-xs text-gray-500">Datum porudžbine</p>
+                <p class="text-white font-semibold" id="orderDate"></p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Kupac</p>
+                <p class="text-white font-semibold" id="customerName"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="bg-slate-900 rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-gray-400 uppercase mb-4">Status</h3>
+            <div id="statusBadge" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold">
+              <span class="w-2 h-2 rounded-full animate-pulse"></span>
+              <span id="statusText"></span>
+            </div>
+            <p class="text-sm text-gray-400 mt-4" id="statusDescription"></p>
+          </div>
+        </div>
+
+        <!-- Total -->
+        <div class="bg-slate-900 rounded-xl p-6">
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-semibold text-gray-300">Ukupan Iznos</span>
+            <span class="text-3xl font-bold text-gradient" id="orderTotal"></span>
+          </div>
+        </div>
+
+        <!-- Status Timeline -->
+        <div class="mt-8">
+          <h3 class="text-xl font-bold text-white mb-4">Status Progresa</h3>
+          <div class="space-y-4" id="statusTimeline">
+            <!-- Timeline items will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Not Found State -->
+      <div id="orderNotFound" class="hidden bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 text-center">
+        <div class="w-20 h-20 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-4">Porudžbina Nije Pronađena</h2>
+        <p class="text-gray-300 mb-6">
+          Molimo proverite broj porudžbine i pokušajte ponovo.<br>
+          Ako i dalje imate problema, kontaktirajte nas.
+        </p>
+        <a href="/kontakt/" class="btn-primary-modern inline-block">
+          Kontaktirajte Nas
+        </a>
+      </div>
+
+      <!-- Error State -->
+      <div id="orderError" class="hidden bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 text-center">
+        <div class="w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-4">Greška Prilikom Pretraživanja</h2>
+        <p class="text-gray-300 mb-6">
+          Došlo je do greške prilikom pretraživanja porudžbine.<br>
+          Molimo pokušajte ponovo za nekoliko trenutaka.
+        </p>
+        <button onclick="location.reload()" class="btn-primary-modern inline-block">
+          Pokušaj Ponovo
+        </button>
+      </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="mt-12 text-center">
+      <h3 class="text-xl font-bold text-white mb-4">Potrebna Vam Je Pomoć?</h3>
+      <p class="text-gray-300 mb-6">
+        Ako imate pitanja o Vašoj porudžbini, slobodno nas kontaktirajte
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/kontakt/" class="btn-secondary-modern">
+          <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Kontakt Forma
+        </a>
+        <a href="mailto:kontakt@ekoza.shop" class="btn-secondary-modern">
+          <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+          </svg>
+          Email Podrška
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/order-tracking.js"></script>

@@ -1,0 +1,88 @@
+<header class="bg-slate-900/95 backdrop-blur-md shadow-2xl sticky top-0 z-50 border-b border-slate-700/50">
+  <nav class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="text-3xl font-bold text-gradient hover:scale-105 transition-transform">
+        Lazy Pleasure
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="/" class="nav-link group">
+          <span>Početna</span>
+          <span class="nav-link-underline"></span>
+        </a>
+        <a href="/proizvodi/" class="nav-link group">
+          <span>Proizvodi</span>
+          <span class="nav-link-underline"></span>
+        </a>
+        <a href="/kategorije/" class="nav-link group">
+          <span>Kategorije</span>
+          <span class="nav-link-underline"></span>
+        </a>
+        <a href="/kontakt/" class="nav-link group">
+          <span>Kontakt</span>
+          <span class="nav-link-underline"></span>
+        </a>
+      </div>
+
+      <!-- Search and Cart -->
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <button onclick="toggleTheme()" class="nav-icon-btn" aria-label="Toggle theme">
+          <svg id="themeIconDark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+          <svg id="themeIconLight" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Search Icon -->
+        <button onclick="toggleSearch()" class="nav-icon-btn">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Cart Icon -->
+        <button onclick="toggleCart()" class="nav-icon-btn relative">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg">0</span>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu()" class="md:hidden nav-icon-btn">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Bar (Hidden by default) -->
+    <div id="searchBar" class="hidden py-4 border-t border-slate-700/50">
+      <div class="relative">
+        <input type="text" 
+               id="searchInput" 
+               placeholder="Pretražite lazy bag proizvode..." 
+               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-12 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+               onkeyup="searchProducts(event)">
+        <svg class="w-5 h-5 absolute left-4 top-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <div id="searchResults" class="absolute left-0 right-0 bg-slate-800 shadow-2xl rounded-xl mt-2 max-h-96 overflow-y-auto hidden border border-slate-700"></div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-slate-700/50 space-y-2">
+      <a href="/" class="block py-3 text-white hover:text-purple-400 transition-colors font-semibold">Početna</a>
+      <a href="/proizvodi/" class="block py-3 text-white hover:text-purple-400 transition-colors font-semibold">Proizvodi</a>
+      <a href="/kategorije/" class="block py-3 text-white hover:text-purple-400 transition-colors font-semibold">Kategorije</a>
+      <a href="/kontakt/" class="block py-3 text-white hover:text-purple-400 transition-colors font-semibold">Kontakt</a>
+    </div>
+  </nav>
+</header>

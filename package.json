@@ -1,0 +1,13 @@
+{
+  "name": "lazy-pleasure-store",
+  "version": "1.0.0",
+  "description": "Lazy Pleasure eCommerce Store",
+  "scripts": {
+    "watch:css": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --watch",
+    "build:css": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --minify",
+    "dev": "bundle exec jekyll serve --livereload"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

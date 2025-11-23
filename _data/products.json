@@ -1,0 +1,249 @@
+[
+  {
+    "id": "lazy-foteljica-standard",
+    "name": "Lazy Foteljica Standard",
+    "category": "Lazy Foteljica",
+    "base_price": 6500,
+    "price": 6500,
+    "old_price": 7500,
+    "description": "Udobna lazy foteljica sa odličnom podrškom za leđa. Idealna za dnevni boravak.",
+    "images": [
+      "/assets/images/products/lazy-foteljica-1.jpg",
+      "/assets/images/products/lazy-foteljica-2.jpg",
+      "/assets/images/products/lazy-foteljica-3.jpg"
+    ],
+    "colors": [
+      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-crna.jpg"},
+      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-siva.jpg"},
+      {"name": "Braon", "hex": "#8B4513", "price_modifier": 200, "image": "/assets/images/products/lazy-foteljica-braon.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 500},
+      {"name": "XL", "price_modifier": 1000}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["foteljica", "komfor", "dnevna"]
+  },
+  {
+    "id": "lazy-lopta-fudbal",
+    "name": "Lazy Lopta Fudbal",
+    "category": "Lazy Lopta",
+    "base_price": 4200,
+    "price": 4200,
+    "description": "Lazy bag u obliku fudbalske lopte. Savršen za mlade fudbalske fanove.",
+    "images": [
+      "/assets/images/products/lazy-lopta-1.jpg",
+      "/assets/images/products/lazy-lopta-2.jpg"
+    ],
+    "colors": [
+      {"name": "Klasična crno-bela", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-fudbal-crno-bela.jpg"},
+      {"name": "Plavo-bela", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-fudbal-plavo-bela.jpg"}
+    ],
+    "sizes": [
+      {"name": "S", "price_modifier": 0},
+      {"name": "M", "price_modifier": 300},
+      {"name": "L", "price_modifier": 600}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["lopta", "fudbal", "dečji"]
+  },
+  {
+    "id": "lazy-tabure-okrugli",
+    "name": "Lazy Tabure Okrugli",
+    "category": "Lazy Tabure",
+    "base_price": 2800,
+    "price": 2800,
+    "old_price": 3200,
+    "description": "Kompaktan lazy tabure za dodatno sedenje ili kao podnožje.",
+    "images": [
+      "/assets/images/products/lazy-tabure-1.jpg"
+    ],
+    "colors": [
+      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-crna.jpg"},
+      {"name": "Crvena", "hex": "#FF0000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-crvena.jpg"},
+      {"name": "Plava", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-plava.jpg"},
+      {"name": "Zelena", "hex": "#008000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-zelena.jpg"}
+    ],
+    "sizes": [
+      {"name": "S", "price_modifier": 0},
+      {"name": "M", "price_modifier": 400}
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": ["tabure", "kompaktan", "praktičan"]
+  },
+  {
+    "id": "granule-premium",
+    "name": "Premium granule za dopunu - 5kg",
+    "category": "Dopune za lazy bag (granule)",
+    "base_price": 1500,
+    "price": 1500,
+    "description": "Kvalitetne EPS granule za dopunu lazy bag proizvoda. Pakovanje od 5kg.",
+    "images": [
+      "/assets/images/products/granule-1.jpg"
+    ],
+    "colors": [
+      {"name": "Bela", "hex": "#FFFFFF", "price_modifier": 0, "image": "/assets/images/products/granule-bela.jpg"}
+    ],
+    "sizes": [
+      {"name": "5kg", "price_modifier": 0},
+      {"name": "10kg", "price_modifier": 1200},
+      {"name": "20kg", "price_modifier": 2800}
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": ["granule", "dopuna", "EPS"]
+  },
+  {
+    "id": "lazy-bag-jednobojni-crni",
+    "name": "Lazy Bag Jednobojni - Crni",
+    "category": "Lazy Bag Jednobojni",
+    "base_price": 5500,
+    "price": 5500,
+    "description": "Klasični crni lazy bag. Elegantan i praktičan za svaki prostor.",
+    "images": [
+      "/assets/images/products/lazy-jednobojni-1.jpg",
+      "/assets/images/products/lazy-jednobojni-2.jpg"
+    ],
+    "colors": [
+      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-crna.jpg"},
+      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-siva.jpg"},
+      {"name": "Tamno plava", "hex": "#00008B", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-plava.jpg"},
+      {"name": "Bordo", "hex": "#800020", "price_modifier": 300, "image": "/assets/images/products/lazy-jednobojni-bordo.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 500},
+      {"name": "XL", "price_modifier": 900}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["jednobojni", "klasik", "elegantan"]
+  },
+  {
+    "id": "lazy-bag-visebojni-duga",
+    "name": "Lazy Bag Višebojni - Duga",
+    "category": "Lazy Bag Višebojni",
+    "base_price": 6200,
+    "price": 6200,
+    "old_price": 7000,
+    "description": "Veseli višebojni lazy bag sa duginom šarom. Osvežite svoj prostor!",
+    "images": [
+      "/assets/images/products/lazy-visebojni-1.jpg",
+      "/assets/images/products/lazy-visebojni-2.jpg"
+    ],
+    "colors": [
+      {"name": "Duga", "hex": "#FF0000", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-duga.jpg"},
+      {"name": "Geometrijski", "hex": "#FFA500", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-geometrijski.jpg"},
+      {"name": "Tropski", "hex": "#00FF00", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-tropski.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 600},
+      {"name": "XL", "price_modifier": 1100}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["višebojni", "dezen", "moderan"]
+  },
+  {
+    "id": "lazy-teddy-beli",
+    "name": "Lazy Teddy - Beli",
+    "category": "Lazy Teddy",
+    "base_price": 7500,
+    "price": 7500,
+    "description": "Neverovatno mekan lazy bag od teddy materijala. Luksuzni komfor.",
+    "images": [
+      "/assets/images/products/lazy-teddy-1.jpg",
+      "/assets/images/products/lazy-teddy-2.jpg"
+    ],
+    "colors": [
+      {"name": "Bela", "hex": "#FFFFFF", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-bela.jpg"},
+      {"name": "Bež", "hex": "#F5F5DC", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-bez.jpg"},
+      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-siva.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 700},
+      {"name": "XL", "price_modifier": 1300}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["teddy", "mekan", "luksuz"]
+  },
+  {
+    "id": "lazy-foteljica-premium",
+    "name": "Lazy Foteljica Premium",
+    "category": "Lazy Foteljica",
+    "base_price": 8500,
+    "price": 8500,
+    "old_price": 9500,
+    "description": "Premium lazy foteljica sa vodootpornom presvlakom i dodatnom podrškom.",
+    "images": [
+      "/assets/images/products/lazy-foteljica-premium-1.jpg"
+    ],
+    "colors": [
+      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-crna.jpg"},
+      {"name": "Tamno siva", "hex": "#696969", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-siva.jpg"},
+      {"name": "Tamno plava", "hex": "#00008B", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-plava.jpg"}
+    ],
+    "sizes": [
+      {"name": "L", "price_modifier": 0},
+      {"name": "XL", "price_modifier": 800}
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": ["premium", "vodootporan", "foteljica"]
+  },
+  {
+    "id": "lazy-bag-jednobojni-boja",
+    "name": "Lazy Bag Jednobojni - Vibrantne boje",
+    "category": "Lazy Bag Jednobojni",
+    "base_price": 5800,
+    "price": 5800,
+    "description": "Jednobojni lazy bag u vibrantnim bojama za osveženje prostora.",
+    "images": [
+      "/assets/images/products/lazy-jednobojni-vibrant-1.jpg",
+      "/assets/images/products/lazy-jednobojni-vibrant-2.jpg"
+    ],
+    "colors": [
+      {"name": "Crvena", "hex": "#FF0000", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-crvena.jpg"},
+      {"name": "Zelena", "hex": "#00FF00", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-zelena.jpg"},
+      {"name": "Plava", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-plava.jpg"},
+      {"name": "Žuta", "hex": "#FFFF00", "price_modifier": 200, "image": "/assets/images/products/lazy-vibrant-zuta.jpg"},
+      {"name": "Narandžasta", "hex": "#FFA500", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-narandzasta.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 500},
+      {"name": "XL", "price_modifier": 900}
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": ["jednobojni", "vibrantan", "boje"]
+  },
+  {
+    "id": "lazy-lopta-kosarka",
+    "name": "Lazy Lopta Košarka",
+    "category": "Lazy Lopta",
+    "base_price": 4500,
+    "price": 4500,
+    "description": "Lazy bag u obliku košarkaške lopte. Za prave košarkaške ljubitelje.",
+    "images": [
+      "/assets/images/products/lazy-lopta-kosarka-1.jpg"
+    ],
+    "colors": [
+      {"name": "Narandžasta", "hex": "#FFA500", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-kosarka.jpg"}
+    ],
+    "sizes": [
+      {"name": "M", "price_modifier": 0},
+      {"name": "L", "price_modifier": 400}
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": ["lopta", "košarka", "sport"]
+  }
+]

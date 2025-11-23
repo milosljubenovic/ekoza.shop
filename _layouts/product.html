@@ -1,0 +1,259 @@
+---
+layout: default
+---
+
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen py-16">
+<div class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+    <!-- Product Images Gallery -->
+    <div>
+      <div class="mb-4">
+        <img id="mainImage" src="{{ page.images[0] }}" alt="{{ page.title }}" class="w-full h-96 object-cover rounded-2xl shadow-2xl border border-slate-700">
+      </div>
+      <div class="grid grid-cols-4 gap-3">
+        {% for image in page.images %}
+        <img src="{{ image }}" alt="{{ page.title }}" 
+             class="w-full h-24 object-cover rounded-xl cursor-pointer hover:opacity-75 thumbnail-image border-2 border-slate-700 hover:border-purple-500 transition-all"
+             onclick="changeMainImage('{{ image }}')">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600">
+      <h1 class="text-4xl font-bold text-white mb-6">{{ page.title }}</h1>
+      <div class="flex items-center mb-6">
+        <span id="displayPrice" class="text-4xl font-bold text-gradient">{{ page.base_price }} RSD</span>
+        {% if page.old_price %}
+        <span class="text-xl text-gray-500 line-through ml-4">{{ page.old_price }} RSD</span>
+        {% endif %}
+      </div>
+
+      <div class="mb-6">
+        <p class="text-gray-300 text-lg">{{ page.description }}</p>
+      </div>
+
+      <!-- Category -->
+      <div class="mb-6">
+        <span class="text-sm text-gray-400">Kategorija:</span>
+        <a href="/kategorije/{{ page.category | slugify }}" class="text-purple-400 hover:text-purple-300 ml-2 font-semibold">
+          {{ page.category }}
+        </a>
+      </div>
+
+      <!-- Colors -->
+      {% if page.colors %}
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-white mb-3">Boja: <span id="selectedColorName" class="text-purple-400"></span></label>
+        <div class="flex gap-3" id="colorOptions">
+          {% for color in page.colors %}
+          <label class="cursor-pointer relative">
+            <input type="radio" 
+                   name="color" 
+                   value="{{ color.name }}" 
+                   data-price-modifier="{{ color.price_modifier }}"
+                   {% if color.image %}data-image="{{ color.image }}"{% endif %}
+                   class="hidden color-radio"
+                   {% if forloop.first %}checked{% endif %}>
+            <div class="w-14 h-14 rounded-full border-3 border-slate-600 hover:border-purple-500 transition-all hover:scale-110 flex items-center justify-center color-swatch"
+                 style="background-color: {{ color.hex }};"
+                 title="{{ color.name }}{% if color.price_modifier > 0 %} (+{{ color.price_modifier }} RSD){% endif %}">
+              <svg class="w-6 h-6 text-white hidden check-icon" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Sizes/Variations -->
+      {% if page.sizes %}
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-white mb-3">Veličina: <span id="selectedSizeName" class="text-purple-400"></span></label>
+        <div class="flex flex-wrap gap-3" id="sizeOptions">
+          {% for size in page.sizes %}
+          <label class="cursor-pointer">
+            <input type="radio" 
+                   name="size" 
+                   value="{{ size.name }}" 
+                   data-price-modifier="{{ size.price_modifier }}"
+                   class="hidden size-radio"
+                   {% if forloop.first %}checked{% endif %}>
+            <div class="px-5 py-3 border-2 border-slate-600 rounded-xl hover:border-purple-500 size-swatch text-white font-semibold transition-all hover:bg-slate-700">
+              {{ size.name }}{% if size.price_modifier > 0 %} <span class="text-xs text-purple-400">+{{ size.price_modifier }} RSD</span>{% endif %}
+            </div>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Quantity -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-white mb-3">Količina:</label>
+        <div class="flex items-center gap-3">
+          <button onclick="decrementQuantity()" class="px-5 py-3 bg-slate-700 rounded-xl hover:bg-slate-600 text-white font-bold text-xl transition-all">-</button>
+          <input type="number" id="quantity" value="1" min="1" class="w-24 text-center bg-slate-800 border border-slate-600 rounded-xl py-3 text-white font-bold text-lg">
+          <button onclick="incrementQuantity()" class="px-5 py-3 bg-slate-700 rounded-xl hover:bg-slate-600 text-white font-bold text-xl transition-all">+</button>
+        </div>
+      </div>
+
+      <!-- Stock Status -->
+      <div class="mb-6">
+        {% if page.in_stock %}
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg">
+          <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Na stanju
+        </span>
+        {% else %}
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg">
+          Trenutno nije dostupno
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button onclick="addToCartWithOptions()" 
+              class="w-full btn-primary-modern text-lg py-4 mb-6"
+              {% unless page.in_stock %}disabled{% endunless %}>
+        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        Dodaj u korpu
+      </button>
+
+      <!-- Product Details Accordion -->
+      <div class="border-t border-slate-600 pt-6">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold mb-4 text-white">Detalji proizvoda</h3>
+          <div class="prose prose-sm text-gray-300">
+            {{ content }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const basePrice = {{ page.base_price }};
+const defaultImage = '{{ page.images[0] }}';
+let selectedColorModifier = 0;
+let selectedSizeModifier = 0;
+
+function updatePrice() {
+  const totalPrice = basePrice + selectedColorModifier + selectedSizeModifier;
+  document.getElementById('displayPrice').textContent = totalPrice.toLocaleString('sr-RS') + ' RSD';
+}
+
+function changeMainImage(imageSrc) {
+  document.getElementById('mainImage').src = imageSrc;
+}
+
+// Color selection with radio buttons
+document.querySelectorAll('.color-radio').forEach(radio => {
+  const swatch = radio.nextElementSibling;
+  const checkIcon = swatch.querySelector('.check-icon');
+  
+  if (radio.checked) {
+    swatch.classList.add('ring-4', 'ring-purple-500', 'scale-110');
+    checkIcon.classList.remove('hidden');
+    selectedColorModifier = parseInt(radio.dataset.priceModifier) || 0;
+    document.getElementById('selectedColorName').textContent = radio.value;
+    
+    // Change image if color has specific image
+    if (radio.dataset.image) {
+      changeMainImage(radio.dataset.image);
+    }
+    updatePrice();
+  }
+  
+  radio.addEventListener('change', function() {
+    // Remove selection from all
+    document.querySelectorAll('.color-swatch').forEach(s => {
+      s.classList.remove('ring-4', 'ring-purple-500', 'scale-110');
+      s.querySelector('.check-icon').classList.add('hidden');
+    });
+    
+    // Add selection to current
+    if (this.checked) {
+      swatch.classList.add('ring-4', 'ring-purple-500', 'scale-110');
+      checkIcon.classList.remove('hidden');
+      selectedColorModifier = parseInt(this.dataset.priceModifier) || 0;
+      document.getElementById('selectedColorName').textContent = this.value;
+      
+      // Change image if color has specific image, otherwise use default
+      if (this.dataset.image) {
+        changeMainImage(this.dataset.image);
+      } else {
+        changeMainImage(defaultImage);
+      }
+      
+      updatePrice();
+    }
+  });
+});
+
+// Size selection with radio buttons
+document.querySelectorAll('.size-radio').forEach(radio => {
+  const swatch = radio.nextElementSibling;
+  
+  if (radio.checked) {
+    swatch.classList.add('border-purple-500', 'bg-gradient-to-r', 'from-purple-600', 'to-pink-600');
+    swatch.classList.remove('border-slate-600');
+    selectedSizeModifier = parseInt(radio.dataset.priceModifier) || 0;
+    document.getElementById('selectedSizeName').textContent = radio.value;
+    updatePrice();
+  }
+  
+  radio.addEventListener('change', function() {
+    // Remove selection from all
+    document.querySelectorAll('.size-swatch').forEach(s => {
+      s.classList.remove('border-purple-500', 'bg-gradient-to-r', 'from-purple-600', 'to-pink-600');
+      s.classList.add('border-slate-600');
+    });
+    
+    // Add selection to current
+    if (this.checked) {
+      swatch.classList.add('border-purple-500', 'bg-gradient-to-r', 'from-purple-600', 'to-pink-600');
+      swatch.classList.remove('border-slate-600');
+      selectedSizeModifier = parseInt(this.dataset.priceModifier) || 0;
+      document.getElementById('selectedSizeName').textContent = this.value;
+      updatePrice();
+    }
+  });
+});
+
+function incrementQuantity() {
+  const input = document.getElementById('quantity');
+  input.value = parseInt(input.value) + 1;
+}
+
+function decrementQuantity() {
+  const input = document.getElementById('quantity');
+  if (parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+  }
+}
+
+function addToCartWithOptions() {
+  const selectedColor = document.querySelector('.color-radio:checked');
+  const selectedSize = document.querySelector('.size-radio:checked');
+  const quantity = parseInt(document.getElementById('quantity').value);
+  
+  const colorName = selectedColor ? selectedColor.value : '';
+  const sizeName = selectedSize ? selectedSize.value : '';
+  const totalPrice = basePrice + selectedColorModifier + selectedSizeModifier;
+  
+  const productTitle = '{{ page.title }}' + 
+                      (colorName ? ' - ' + colorName : '') + 
+                      (sizeName ? ' (' + sizeName + ')' : '');
+  
+  addToCart(productTitle, totalPrice, '{{ page.images[0] }}', '{{ page.url }}', quantity);
+}
+</script>

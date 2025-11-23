@@ -1,0 +1,61 @@
+[
+  {
+    "id": "lazy-foteljica",
+    "name": "Lazy Foteljica",
+    "slug": "lazy-foteljica",
+    "description": "Udobna lazy foteljica za potpuno opuštanje",
+    "icon": "🛋️",
+    "image": "/assets/images/categories/lazy-foteljica.jpg"
+  },
+  {
+    "id": "lazy-lopta",
+    "name": "Lazy Lopta",
+    "slug": "lazy-lopta",
+    "description": "Lazy bag u obliku lopte za zabavu i komfor",
+    "icon": "⚽",
+    "image": "/assets/images/categories/lazy-lopta.jpg"
+  },
+  {
+    "id": "lazy-tabure",
+    "name": "Lazy Tabure",
+    "slug": "lazy-tabure",
+    "description": "Praktičan lazy tabure za dodatno sedenje",
+    "icon": "🪑",
+    "image": "/assets/images/categories/lazy-tabure.jpg"
+  },
+  {
+    "id": "dopune-granule",
+    "name": "Dopune za lazy bag (granule)",
+    "slug": "dopune-granule",
+    "description": "Kvalitetne granule za dopunu vaših lazy bag proizvoda",
+    "icon": "🔘",
+    "image": "/assets/images/categories/dopune-granule.jpg"
+  },
+  {
+    "id": "lazy-bag-jednobojni",
+    "name": "Lazy Bag Jednobojni",
+    "slug": "lazy-bag-jednobojni",
+    "description": "Klasični jednobojni lazy bag u raznim bojama",
+    "icon": "🎨",
+    "image": "/assets/images/categories/lazy-bag-jednobojni.jpg",
+    "parent": "lazy-bag"
+  },
+  {
+    "id": "lazy-bag-visebojni",
+    "name": "Lazy Bag Višebojni",
+    "slug": "lazy-bag-visebojni",
+    "description": "Kreativni višebojni lazy bag sa šarenim dezenom",
+    "icon": "🌈",
+    "image": "/assets/images/categories/lazy-bag-visebojni.jpg",
+    "parent": "lazy-bag"
+  },
+  {
+    "id": "lazy-teddy",
+    "name": "Lazy Teddy",
+    "slug": "lazy-teddy",
+    "description": "Mekani lazy bag od teddy materijala",
+    "icon": "🧸",
+    "image": "/assets/images/categories/lazy-teddy.jpg",
+    "parent": "lazy-bag"
+  }
+]

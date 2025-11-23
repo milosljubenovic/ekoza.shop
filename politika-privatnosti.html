@@ -1,0 +1,104 @@
+---
+layout: default
+title: Politika privatnosti
+---
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <h1 class="text-4xl font-bold mb-8">Politika privatnosti</h1>
+
+  <div class="prose prose-lg max-w-none">
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">1. Uvod</h2>
+      <p class="text-gray-700 mb-4">
+        {{ site.store.name }} poštuje privatnost svojih korisnika i posvećen je zaštiti ličnih podataka.
+        Ova politika privatnosti objašnjava kako prikupljamo, koristimo i štitimo vaše lične podatke.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">2. Koje podatke prikupljamo</h2>
+      <p class="text-gray-700 mb-4">
+        Prikupljamo samo podatke neophodne za obradu vaše porudžbine:
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Ime i prezime</li>
+        <li>Adresa za dostavu</li>
+        <li>Broj telefona</li>
+        <li>Email adresa</li>
+        <li>Informacije o porudžbini</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">3. Kako koristimo vaše podatke</h2>
+      <p class="text-gray-700 mb-4">
+        Vaše lične podatke koristimo isključivo za:
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Obradu i isporuku porudžbine</li>
+        <li>Komunikaciju vezanu za vašu porudžbinu</li>
+        <li>Rešavanje reklamacija i upita</li>
+        <li>Informisanje o promocijama (samo uz vašu saglasnost)</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">4. Kolačići (Cookies)</h2>
+      <p class="text-gray-700 mb-4">
+        Naša web stranica koristi lokalno skladištenje (localStorage) za čuvanje podataka o vašoj korpi za kupovinu.
+        Ovi podaci se čuvaju samo na vašem uređaju i nismo im pristipi sa naše strane.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">5. Deljenje podataka</h2>
+      <p class="text-gray-700 mb-4">
+        Vaše lične podatke ne delimo sa trećim stranama osim:
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Kurirskim službama (samo podaci potrebni za dostavu)</li>
+        <li>Kada je to zakonski obavezno</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">6. Vaša prava</h2>
+      <p class="text-gray-700 mb-4">
+        U skladu sa Zakonom o zaštiti podataka o ličnosti, imate pravo da:
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Zatražite pristup svojim ličnim podacima</li>
+        <li>Zatražite ispravku netačnih podataka</li>
+        <li>Zatražite brisanje vaših podataka</li>
+        <li>Povučete saglasnost za obradu podataka</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">7. Bezbednost podataka</h2>
+      <p class="text-gray-700 mb-4">
+        Primenjujemo odgovarajuće tehničke i organizacione mere za zaštitu vaših ličnih podataka
+        od neovlašćenog pristupa, izmene ili otkrivanja.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">8. Kontakt</h2>
+      <p class="text-gray-700 mb-4">
+        Za sva pitanja vezana za zaštitu podataka, kontaktirajte nas:
+      </p>
+      <ul class="list-none text-gray-700">
+        <li><strong>Email:</strong> {{ site.store.email }}</li>
+        <li><strong>Telefon:</strong> {{ site.store.phone }}</li>
+      </ul>
+    </section>
+
+    <div class="bg-gray-100 p-6 rounded-lg mt-8">
+      <p class="text-sm text-gray-600">
+        Poslednje ažuriranje: {{ 'now' | date: "%d.%m.%Y" }}<br>
+        <strong>{{ site.store.owner }}</strong><br>
+        {{ site.store.business_name }}
+      </p>
+    </div>
+  </div>
+</div>

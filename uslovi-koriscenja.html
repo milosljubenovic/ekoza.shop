@@ -1,0 +1,98 @@
+---
+layout: default
+title: Uslovi korišćenja
+---
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <h1 class="text-4xl font-bold mb-8">Uslovi korišćenja</h1>
+
+  <div class="prose prose-lg max-w-none">
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">1. Opšte odredbe</h2>
+      <p class="text-gray-700 mb-4">
+        Ovi uslovi korišćenja regulišu odnos između korisnika i online prodavnice {{ site.store.name }}.
+        Korišćenjem naše web stranice i kupovinom proizvoda, prihvatate sve uslove navedene u ovom dokumentu.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">2. Porudžbine</h2>
+      <p class="text-gray-700 mb-4">
+        Porudžbine se vrše preko naše web stranice i potvrđuju se putem WhatsApp-a ili telefona.
+        Svaka porudžbina podleže dostupnosti proizvoda i potvrdi od strane naše službe.
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Porudžbine se obrađuju radnim danima</li>
+        <li>Potvrda porudžbine stiže u roku od 24 sata</li>
+        <li>Zadržavamo pravo odbijanja porudžbine u opravdanim slučajevima</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">3. Cene i plaćanje</h2>
+      <p class="text-gray-700 mb-4">
+        Sve cene su izražene u RSD i uključuju PDV. Cene mogu biti podložne promenama bez prethodne najave.
+      </p>
+      <p class="text-gray-700 mb-4">
+        <strong>Načini plaćanja:</strong>
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Plaćanje pouzećem (gotovina ili kartica kuriru)</li>
+        <li>Uplata na račun (pre slanja)</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">4. Dostava</h2>
+      <p class="text-gray-700 mb-4">
+        Dostava se vrši putem kurirskih službi na teritoriji Republike Srbije.
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Besplatna dostava za porudžbine preko 5000 RSD</li>
+        <li>Standardna dostava: 300 RSD</li>
+        <li>Rok isporuke: 2-5 radnih dana</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">5. Pravo na odustanak</h2>
+      <p class="text-gray-700 mb-4">
+        Kupac ima pravo da odustane od kupovine u roku od 14 dana od dana preuzimanja proizvoda,
+        u skladu sa Zakonom o zaštiti potrošača.
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 mb-4">
+        <li>Proizvod mora biti neoštećen i u originalnoj ambalaži</li>
+        <li>Troškove povraćaja snosi kupac</li>
+        <li>Povraćaj novca vrši se u roku od 14 dana od prijema proizvoda</li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">6. Reklamacije</h2>
+      <p class="text-gray-700 mb-4">
+        U slučaju fizičkog oštećenja ili neispravnosti proizvoda, kupac ima pravo na reklamaciju
+        u roku od 8 dana od dana preuzimanja.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">7. Kontakt</h2>
+      <p class="text-gray-700 mb-4">
+        Za sva pitanja i dodatne informacije možete nas kontaktirati:
+      </p>
+      <ul class="list-none text-gray-700">
+        <li><strong>Telefon:</strong> {{ site.store.phone }}</li>
+        <li><strong>Email:</strong> {{ site.store.email }}</li>
+        <li><strong>Adresa:</strong> {{ site.store.address }}, {{ site.store.city }} {{ site.store.postal_code }}</li>
+      </ul>
+    </section>
+
+    <div class="bg-gray-100 p-6 rounded-lg mt-8">
+      <p class="text-sm text-gray-600">
+        <strong>{{ site.store.owner }}</strong><br>
+        {{ site.store.business_name }}<br>
+        MB: {{ site.store.mb }} | PIB: {{ site.store.pib }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<!-- Shopping Cart Modal -->
+<div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50" onclick="closeCartIfClickedOutside(event)">
+  <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform transition-transform" id="cartSidebar">
+    <div class="flex flex-col h-full">
+      <!-- Header -->
+      <div class="flex items-center justify-between p-4 border-b">
+        <h2 class="text-xl font-semibold">Korpa</h2>
+        <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Cart Items -->
+      <div class="flex-1 overflow-y-auto p-4" id="cartItems">
+        <div class="text-center text-gray-500 py-8" id="emptyCart">
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <p>Vaša korpa je prazna</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="border-t p-4 bg-gray-50">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-lg font-semibold">Ukupno:</span>
+          <span class="text-2xl font-bold text-primary-600" id="cartTotal">0 RSD</span>
+        </div>
+        <button onclick="checkout()" class="w-full btn-primary">
+          Završi kupovinu
+        </button>
+        <button onclick="toggleCart()" class="w-full btn-secondary mt-2">
+          Nastavi kupovinu
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
