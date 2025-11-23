@@ -32,6 +32,10 @@ shipping:
   pickup_delivery_days: "3 radna dana"
   cod_fee: 50
 
+# Google Apps Script
+google_apps_script:
+  url: "https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec"
+
 # Customization Options
 customization:
   embroidery_price: 300

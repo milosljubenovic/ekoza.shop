@@ -351,6 +351,10 @@ title: Završi Porudžbinu
   </div>
 </div>
 
+<script>
+  // Inject Google Apps Script URL from Jekyll config
+  window.GOOGLE_SCRIPT_URL = '{{ site.google_apps_script.url }}';
+</script>
 <script src="/assets/js/checkout.js"></script>
 <script>
 // Check if both shipping and payment methods are selected, enable/disable button

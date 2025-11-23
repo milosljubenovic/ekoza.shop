@@ -1,7 +1,7 @@
 // Checkout functionality
 
-// Configuration - Replace with your Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+// Configuration - Loaded from Jekyll config via inline script in HTML
+const GOOGLE_SCRIPT_URL = window.GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec';
 
 // Load cart and display order summary
 document.addEventListener('DOMContentLoaded', function() {
@@ -73,9 +73,9 @@ function updateOrderTotals(subtotal) {
     shipping = 0;
   }
   
-  // Get selected payment method
+  // Get selected payment method - no COD fee (set to 0)
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'pouzecem';
-  const codFee = paymentMethod === 'pouzecem' ? 0 : 0;
+  const codFee = 0; // No COD fee
   
   const total = subtotal + shipping + codFee;
 
@@ -137,18 +137,33 @@ async function submitOrder() {
   try {
     const orderData = collectOrderData();
     
+    // Validate Google Script URL is configured
+    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      throw new Error('Google Apps Script URL nije konfigurisan. Molimo kontaktirajte administratora.');
+    }
+    
     // Submit to Google Sheets
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'no-cors', // Required for Google Apps Script
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(orderData)
     });
 
-    // Since we're using no-cors, we can't read the response
-    // Assume success and show confirmation
+    // Note: With 'no-cors' mode, we can't read the response
+    // We assume success if no error was thrown
+    
+    // Save order to localStorage as backup
+    const orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+    orderHistory.push({
+      orderNumber: orderData.orderNumber,
+      timestamp: orderData.timestamp,
+      total: orderData.pricing.total,
+      status: 'pending'
+    });
+    localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
     
     // Clear cart
     localStorage.removeItem('cart');
@@ -156,10 +171,35 @@ async function submitOrder() {
 
     // Show success modal with order number
     showSuccessModal(orderData.orderNumber);
+    
+    // Optional: Send to analytics
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'purchase', {
+        transaction_id: orderData.orderNumber,
+        value: orderData.pricing.total,
+        currency: 'RSD',
+        items: orderData.items.map(item => ({
+          item_id: item.id,
+          item_name: item.name,
+          quantity: item.quantity,
+          price: item.price
+        }))
+      });
+    }
 
   } catch (error) {
     console.error('Error submitting order:', error);
-    alert('Došlo je do greške prilikom slanja porudžbine. Molimo pokušajte ponovo ili nas kontaktirajte direktno.');
+    
+    // Show user-friendly error message
+    let errorMessage = 'Došlo je do greške prilikom slanja porudžbine.';
+    
+    if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+      errorMessage = 'Nema internet konekcije. Molimo proverite vašu vezu i pokušajte ponovo.';
+    } else if (error.message.includes('konfigurisan')) {
+      errorMessage = error.message;
+    }
+    
+    alert(errorMessage + '\n\nMolimo pokušajte ponovo ili nas kontaktirajte direktno na:\n📧 kontakt@ekoza.shop\n📱 +381 XX XXX XXXX');
     
     // Restore button
     submitBtn.disabled = false;
@@ -189,13 +229,13 @@ function collectOrderData() {
     shipping = 0;
   }
   
-  // Add COD fee if payment method is pouzecem
+  // Add COD fee if payment method is pouzecem (currently set to 0)
   const paymentMethod = formData.get('paymentMethod');
-  const codFee = paymentMethod === 'pouzecem' ? 50 : 0;
+  const codFee = 0; // Set to 0 for now, can be configured later
   
   const total = subtotal + shipping + codFee;
 
-  // Generate order number
+  // Generate order number: EK + last 8 digits of timestamp
   const orderNumber = 'EK' + Date.now().toString().slice(-8);
 
   // Prepare order data
@@ -203,21 +243,30 @@ function collectOrderData() {
     orderNumber: orderNumber,
     timestamp: new Date().toISOString(),
     customer: {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      phone: formData.get('phone')
+      firstName: formData.get('firstName').trim(),
+      lastName: formData.get('lastName').trim(),
+      email: formData.get('email').trim().toLowerCase(),
+      phone: formData.get('phone').trim()
     },
     shipping: {
-      address: formData.get('address'),
-      city: formData.get('city'),
-      postalCode: formData.get('postalCode'),
-      country: formData.get('country'),
+      address: formData.get('address').trim(),
+      city: formData.get('city').trim(),
+      postalCode: formData.get('postalCode').trim(),
+      country: formData.get('country').trim(),
       method: formData.get('shippingMethod')
     },
     paymentMethod: formData.get('paymentMethod'),
-    notes: formData.get('notes') || '',
-    items: cart,
+    notes: formData.get('notes')?.trim() || '',
+    items: cart.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      color: item.color || null,
+      size: item.size || null,
+      image: item.image,
+      url: item.url
+    })),
     pricing: {
       subtotal: subtotal,
       shipping: shipping,

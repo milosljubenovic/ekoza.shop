@@ -1,7 +1,7 @@
 // Order Tracking functionality
 
-// Configuration - Replace with your Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+// Configuration - Loaded from Jekyll config via inline script in HTML
+const GOOGLE_SCRIPT_URL = window.GOOGLE_SCRIPT_URL
 
 // Status configurations
 const statusConfig = {
@@ -99,34 +99,56 @@ async function trackOrder(orderNumber) {
 
 function showLoading() {
   const resultDiv = document.getElementById('orderStatusResult');
+  if (!resultDiv) return;
+  
   resultDiv.classList.remove('hidden');
   
   // Hide all states
-  document.getElementById('orderFound').classList.add('hidden');
-  document.getElementById('orderNotFound').classList.add('hidden');
-  document.getElementById('orderError').classList.add('hidden');
+  const orderFound = document.getElementById('orderFound');
+  const orderNotFound = document.getElementById('orderNotFound');
+  const orderError = document.getElementById('orderError');
   
-  // Show loading message
-  resultDiv.innerHTML = `
-    <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 text-center">
-      <svg class="animate-spin h-12 w-12 mx-auto mb-4 text-purple-400" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      <p class="text-white text-lg">Pretražujem porudžbinu...</p>
-    </div>
+  if (orderFound) orderFound.classList.add('hidden');
+  if (orderNotFound) orderNotFound.classList.add('hidden');
+  if (orderError) orderError.classList.add('hidden');
+  
+  // Create or update loading div
+  let loadingDiv = document.getElementById('orderLoading');
+  if (!loadingDiv) {
+    loadingDiv = document.createElement('div');
+    loadingDiv.id = 'orderLoading';
+    resultDiv.appendChild(loadingDiv);
+  }
+  
+  loadingDiv.className = 'bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 text-center';
+  loadingDiv.innerHTML = `
+    <svg class="animate-spin h-12 w-12 mx-auto mb-4 text-purple-400" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="text-white text-lg">Pretražujem porudžbinu...</p>
   `;
+  loadingDiv.classList.remove('hidden');
 }
 
 function showOrderFound(data) {
   const resultDiv = document.getElementById('orderStatusResult');
+  if (!resultDiv) return;
+  
   resultDiv.classList.remove('hidden');
+  
+  // Hide loading
+  const loadingDiv = document.getElementById('orderLoading');
+  if (loadingDiv) loadingDiv.classList.add('hidden');
   
   // Show order found section
   const orderFoundDiv = document.getElementById('orderFound');
-  orderFoundDiv.classList.remove('hidden');
-  document.getElementById('orderNotFound').classList.add('hidden');
-  document.getElementById('orderError').classList.add('hidden');
+  const orderNotFound = document.getElementById('orderNotFound');
+  const orderError = document.getElementById('orderError');
+  
+  if (orderFoundDiv) orderFoundDiv.classList.remove('hidden');
+  if (orderNotFound) orderNotFound.classList.add('hidden');
+  if (orderError) orderError.classList.add('hidden');
   
   // Update order details
   document.getElementById('orderNumberDisplay').textContent = data.orderNumber;
@@ -155,11 +177,21 @@ function showOrderFound(data) {
 
 function showOrderNotFound() {
   const resultDiv = document.getElementById('orderStatusResult');
+  if (!resultDiv) return;
+  
   resultDiv.classList.remove('hidden');
   
-  document.getElementById('orderFound').classList.add('hidden');
-  document.getElementById('orderNotFound').classList.remove('hidden');
-  document.getElementById('orderError').classList.add('hidden');
+  // Hide loading
+  const loadingDiv = document.getElementById('orderLoading');
+  if (loadingDiv) loadingDiv.classList.add('hidden');
+  
+  const orderFound = document.getElementById('orderFound');
+  const orderNotFound = document.getElementById('orderNotFound');
+  const orderError = document.getElementById('orderError');
+  
+  if (orderFound) orderFound.classList.add('hidden');
+  if (orderNotFound) orderNotFound.classList.remove('hidden');
+  if (orderError) orderError.classList.add('hidden');
   
   // Scroll to result
   setTimeout(() => {
@@ -169,11 +201,21 @@ function showOrderNotFound() {
 
 function showOrderError() {
   const resultDiv = document.getElementById('orderStatusResult');
+  if (!resultDiv) return;
+  
   resultDiv.classList.remove('hidden');
   
-  document.getElementById('orderFound').classList.add('hidden');
-  document.getElementById('orderNotFound').classList.add('hidden');
-  document.getElementById('orderError').classList.remove('hidden');
+  // Hide loading
+  const loadingDiv = document.getElementById('orderLoading');
+  if (loadingDiv) loadingDiv.classList.add('hidden');
+  
+  const orderFound = document.getElementById('orderFound');
+  const orderNotFound = document.getElementById('orderNotFound');
+  const orderError = document.getElementById('orderError');
+  
+  if (orderFound) orderFound.classList.add('hidden');
+  if (orderNotFound) orderNotFound.classList.add('hidden');
+  if (orderError) orderError.classList.remove('hidden');
   
   // Scroll to result
   setTimeout(() => {
