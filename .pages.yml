@@ -199,46 +199,6 @@ content:
             type: number
             default: 0
 
-  - name: embroidery
-    label: Dizajni za vez
-    type: file
-    path: _data/embroidery_designs.json
-    format: json
-    fields:
-      - name: designs
-        label: Dizajni
-        type: object
-        list: true
-        fields:
-          - name: id
-            label: ID
-            type: string
-            required: true
-          - name: name
-            label: Naziv
-            type: string
-            required: true
-          - name: category
-            label: Kategorija
-            type: select
-            required: true
-            options:
-              values:
-                - cartoon
-                - nature
-                - sports
-                - text
-                - custom
-          - name: image
-            label: Slika
-            type: image
-            required: true
-            options:
-              media: assets/images/embroidery
-          - name: price_modifier
-            label: Modifikator cene
-            type: number
-            default: 0
 
 settings:
   content:
