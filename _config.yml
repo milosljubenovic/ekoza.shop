@@ -31,6 +31,7 @@ shipping:
   standard_delivery_days: "7 radnih dana"
   pickup_delivery_days: "3 radna dana"
   cod_fee: 50
+  free_min_order: 15.000
 
 # Google Apps Script
 google_apps_script:

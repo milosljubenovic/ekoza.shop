@@ -64,9 +64,6 @@ jobs:
         env:
           JEKYLL_ENV: production
       
-      - name: Minify and obfuscate JavaScript
-        run: npm run minify:js
-      
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
