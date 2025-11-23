@@ -101,7 +101,7 @@ title: Proizvodi
              data-category="{{ product.category }}"
              data-price="{{ product.price }}"
              data-in-stock="{{ product.in_stock }}">
-          <a href="/proizvod/{{ product.id }}/">
+          <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/">
             <div class="relative overflow-hidden rounded-t-2xl">
               <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
               {% if product.old_price %}

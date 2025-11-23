@@ -259,8 +259,8 @@ title: Završi Porudžbinu
             <label class="flex items-start cursor-pointer">
               <input type="checkbox" id="terms" name="terms" required class="mt-1 w-5 h-5 text-purple-600 bg-slate-900 border-slate-600 rounded focus:ring-purple-500">
               <span class="ml-3 text-sm text-gray-300">
-                Slažem se sa <a href="/uslovi-koriscenja/" class="text-purple-400 hover:text-purple-300 underline" target="_blank">uslovima korišćenja</a> 
-                i <a href="/politika-privatnosti/" class="text-purple-400 hover:text-purple-300 underline" target="_blank">politikom privatnosti</a>. <span class="text-red-400">*</span>
+                Slažem se sa <a href="{{ '/u' | relative_url }}slovi-koriscenja/" class="text-purple-400 hover:text-purple-300 underline" target="_blank">uslovima korišćenja</a> 
+                i <a href="{{ '/p' | relative_url }}olitika-privatnosti/" class="text-purple-400 hover:text-purple-300 underline" target="_blank">politikom privatnosti</a>. <span class="text-red-400">*</span>
               </span>
             </label>
           </div>
@@ -341,7 +341,7 @@ title: Završi Porudžbinu
     </p>
 
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="/pracenje-porudzbine/?orderNumber=" id="trackOrderLink" class="btn-primary-modern inline-block">
+      <a href="{{ '/p' | relative_url }}racenje-porudzbine/?orderNumber=" id="trackOrderLink" class="btn-primary-modern inline-block">
         Prati Porudžbinu
       </a>
       <a href="/" class="btn-secondary-modern inline-block">

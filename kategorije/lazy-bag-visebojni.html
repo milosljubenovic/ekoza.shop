@@ -14,7 +14,7 @@ title: Lazy Bag Višebojni
       {% for product in site.data.products %}
       {% if product.category == "Lazy Bag Višebojni" %}
       <div class="product-card">
-        <a href="/proizvod/{{ product.id }}/" class="block">
+        <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/" class="block">
           <div class="relative overflow-hidden rounded-t-2xl">
             <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-110">
             {% if product.old_price %}

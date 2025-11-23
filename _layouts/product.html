@@ -36,7 +36,7 @@ layout: default
       <!-- Category -->
       <div class="mb-6">
         <span class="text-sm text-gray-400">Kategorija:</span>
-        <a href="/kategorije/{{ page.category | slugify }}" class="text-purple-400 hover:text-purple-300 ml-2 font-semibold">
+        <a href="{{ '/k' | relative_url }}ategorije/{{ page.category | slugify }}" class="text-purple-400 hover:text-purple-300 ml-2 font-semibold">
           {{ page.category }}
         </a>
       </div>

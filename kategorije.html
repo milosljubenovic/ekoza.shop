@@ -12,7 +12,7 @@ title: Kategorije
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {% for category in site.data.categories %}
-    <a href="/kategorije/{{ category.slug }}/" class="category-card group">
+    <a href="{{ '/k' | relative_url }}ategorije/{{ category.slug }}/" class="category-card group">
       <div class="relative h-56 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-500"></div>
         <span class="text-8xl relative z-10 group-hover:scale-110 transition-transform duration-500">{{ category.icon }}</span>

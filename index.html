@@ -40,7 +40,7 @@ title: Početna
         </p>
 
         <div class="flex space-x-4 pt-4">
-          <a href="/proizvod/{{ featured.id }}/" class="btn-hero group">
+          <a href="{{ '/p' | relative_url }}roizvod/{{ featured.id }}/" class="btn-hero group">
             <span>PORUČI</span>
             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -74,7 +74,7 @@ title: Početna
               {% assign showcase_products = site.data.products | where: "featured", true | slice: 0, 3 %}
               {% for product in showcase_products %}
               <div class="lazy-bag-item" style="animation-delay: {{ forloop.index | times: 0.2 }}s">
-                <a href="/proizvod/{{ product.id }}/">
+                <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/">
                   <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300">
                 </a>
               </div>
@@ -102,7 +102,7 @@ title: Početna
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {% for category in site.data.categories %}
-      <a href="/kategorije/{{ category.slug }}/" class="category-card group">
+      <a href="{{ '/k' | relative_url }}ategorije/{{ category.slug }}/" class="category-card group">
         <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">{{ category.icon }}</div>
         <h3 class="font-bold text-white text-lg">{{ category.name }}</h3>
         <p class="text-gray-400 text-sm mt-2">{{ category.description | truncate: 50 }}</p>
@@ -117,7 +117,7 @@ title: Početna
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between mb-12">
       <h2 class="text-4xl font-bold text-white">Popularni <span class="text-gradient">Proizvodi</span></h2>
-      <a href="/proizvodi/" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center group">
+      <a href="{{ '/p' | relative_url }}roizvodi/" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center group">
         Svi proizvodi
         <svg class="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -129,7 +129,7 @@ title: Početna
       {% assign featured_products = site.data.products | where: "featured", true | slice: 0, 8 %}
       {% for product in featured_products %}
       <div class="product-card">
-        <a href="/proizvod/{{ product.id }}/">
+        <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/">
           <div class="relative overflow-hidden rounded-t-2xl">
             <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
             {% if product.old_price %}
