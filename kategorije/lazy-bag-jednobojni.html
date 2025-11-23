@@ -1,51 +1,58 @@
 ---
 layout: default
 title: Lazy Bag Jednobojni
+description: Pregledajte našu kolekciju lazy bag jednobojni proizvoda.
+category: Lazy Bag Jednobojni
 ---
 
 <div class="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen py-16">
-  <div class="container mx-auto px-4 py-8">
-    <div class="mb-12 text-center">
-      <h1 class="text-5xl font-bold text-white mb-4">🟥 Lazy Bag Jednobojni</h1>
-      <p class="text-gray-300 text-lg">Klasični jednobojni lazy bag u raznim bojama</p>
-    </div>
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-12 text-center">
+    <h1 class="text-5xl font-bold mb-4 text-white">
+      <span class="text-6xl">🛋️</span> Lazy Bag Jednobojni
+    </h1>
+    <p class="text-gray-400 text-lg max-w-2xl mx-auto">Pregledajte našu kolekciju lazy bag jednobojni proizvoda.</p>
+  </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      {% for product in site.data.products %}
-      {% if product.category == "Lazy Bag Jednobojni" %}
-      <div class="product-card">
-        <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/" class="block">
-          <div class="relative overflow-hidden rounded-t-2xl">
-            <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-110">
-            {% if product.old_price %}
-            <span class="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-              -{{ product.old_price | minus: product.base_price | times: 100 | divided_by: product.old_price }}%
-            </span>
-            {% endif %}
-            {% if product.featured %}
-            <span class="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-              ⭐ Popularno
-            </span>
-            {% endif %}
-          </div>
-          <div class="bg-gradient-to-br from-slate-800 to-slate-700 p-5 rounded-b-2xl border-t-2 border-purple-500/30">
-            <h3 class="font-bold text-white mb-3 text-lg">{{ product.name }}</h3>
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-2xl font-bold text-gradient">{{ product.base_price }} RSD</span>
-                {% if product.old_price %}
-                <span class="block text-sm text-gray-400 line-through">{{ product.old_price }} RSD</span>
-                {% endif %}
-              </div>
-              <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:scale-105 transition-transform">
-                Pogledaj
-              </div>
+  <!-- Category Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% assign category_products = site.data.products | where: "category", "Lazy Bag Jednobojni" %}
+    {% for product in category_products %}
+      <a href="/proizvod/{{ product.id }}" class="group bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-600 hover:border-purple-500">
+        <div class="aspect-square overflow-hidden bg-slate-900">
+          {% if product.images[0] %}
+            <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          {% endif %}
+        </div>
+        <div class="p-5">
+          <h3 class="text-lg font-bold text-white mb-3 group-hover:text-purple-400 transition-colors line-clamp-2">{{ product.name }}</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              {% if product.old_price %}
+                <span class="text-sm text-gray-500 line-through mr-2">{{ product.old_price }} RSD</span>
+              {% endif %}
+              <span class="text-2xl font-bold text-gradient">{{ product.price }} RSD</span>
             </div>
           </div>
-        </a>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
+          <div class="flex items-center justify-between">
+            {% if product.in_stock %}
+              <span class="text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full font-semibold">Na stanju</span>
+            {% else %}
+              <span class="text-xs bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full font-semibold">Nema na stanju</span>
+            {% endif %}
+            <span class="text-purple-400 font-semibold text-sm group-hover:text-pink-400 transition-colors">
+              Pogledaj →
+            </span>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
   </div>
+
+  {% if category_products.size == 0 %}
+    <div class="text-center py-20">
+      <p class="text-gray-400 text-xl">Trenutno nema proizvoda u ovoj kategoriji.</p>
+    </div>
+  {% endif %}
+</div>
 </div>

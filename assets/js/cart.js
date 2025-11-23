@@ -140,15 +140,15 @@ class ShoppingCart {
 const cart = new ShoppingCart();
 
 // Global functions for use in HTML
-function addToCart(name, price, image, url) {
+function addToCart(name, price, image, url, quantity = 1) {
   // Get selected color and size if on product page
   const selectedColor = document.querySelector('.color-option.ring-2');
   const selectedSize = document.querySelector('.size-option.border-primary-600');
-  const quantity = document.getElementById('quantity');
+  const quantityInput = document.getElementById('quantity');
 
   const color = selectedColor ? selectedColor.dataset.color : null;
   const size = selectedSize ? selectedSize.dataset.size : null;
-  const qty = quantity ? parseInt(quantity.value) : 1;
+  const qty = quantityInput ? parseInt(quantityInput.value) : quantity;
 
   cart.addItem(name, price, image, url, qty, color, size);
 }
@@ -175,3 +175,10 @@ function checkout() {
   // Redirect to checkout page
   window.location.href = '/porudzbina/';
 }
+
+// Make cart and functions globally accessible
+window.cart = cart;
+window.addToCart = addToCart;
+window.toggleCart = toggleCart;
+window.closeCartIfClickedOutside = closeCartIfClickedOutside;
+window.checkout = checkout;

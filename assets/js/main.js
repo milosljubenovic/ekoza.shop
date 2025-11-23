@@ -33,6 +33,10 @@ function updateThemeIcons() {
   }
 }
 
+// Make functions globally accessible
+window.toggleTheme = toggleTheme;
+window.updateThemeIcons = updateThemeIcons;
+
 // Initialize theme icons on load
 document.addEventListener('DOMContentLoaded', function() {
   updateThemeIcons();
@@ -95,6 +99,11 @@ function searchProducts(event) {
     searchResults.classList.remove('hidden');
   }
 }
+
+// Make functions globally accessible
+window.toggleMobileMenu = toggleMobileMenu;
+window.toggleSearch = toggleSearch;
+window.searchProducts = searchProducts;
 
 // Close search results when clicking outside
 document.addEventListener('click', function(event) {

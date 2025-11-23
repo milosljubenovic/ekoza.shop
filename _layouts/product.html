@@ -45,9 +45,9 @@ layout: default
       {% if page.colors %}
       <div class="mb-6">
         <label class="block text-sm font-semibold text-white mb-3">Boja: <span id="selectedColorName" class="text-purple-400"></span></label>
-        <div class="flex gap-3" id="colorOptions">
+        <div class="flex flex-wrap gap-4 max-h-32 overflow-y-auto p-1" id="colorOptions">
           {% for color in page.colors %}
-          <label class="cursor-pointer relative">
+          <label class="cursor-pointer relative transition-all">
             <input type="radio" 
                    name="color" 
                    value="{{ color.name }}" 
@@ -55,13 +55,23 @@ layout: default
                    {% if color.image %}data-image="{{ color.image }}"{% endif %}
                    class="hidden color-radio"
                    {% if forloop.first %}checked{% endif %}>
-            <div class="w-14 h-14 rounded-full border-3 border-slate-600 hover:border-purple-500 transition-all hover:scale-110 flex items-center justify-center color-swatch"
+            {% if color.image %}
+            <div class="w-14 h-14 rounded-full border-3 border-slate-600 hover:border-purple-400 transition-all flex items-center justify-center color-swatch overflow-hidden bg-white"
+                 title="{{ color.name }}{% if color.price_modifier > 0 %} (+{{ color.price_modifier }} RSD){% endif %}">
+              <img src="{{ color.image }}" alt="{{ color.name }}" class="w-full h-full object-cover">
+              <svg class="w-8 h-8 text-purple-500 absolute inset-0 m-auto hidden check-icon drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            {% else %}
+            <div class="w-14 h-14 rounded-full border-3 border-slate-600 hover:border-purple-400 transition-all flex items-center justify-center color-swatch"
                  style="background-color: {{ color.hex }};"
                  title="{{ color.name }}{% if color.price_modifier > 0 %} (+{{ color.price_modifier }} RSD){% endif %}">
               <svg class="w-6 h-6 text-white hidden check-icon" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
             </div>
+            {% endif %}
           </label>
           {% endfor %}
         </div>
@@ -310,11 +320,12 @@ function changeMainImage(imageSrc) {
 
 // Color selection with radio buttons
 document.querySelectorAll('.color-radio').forEach(radio => {
+  const label = radio.parentElement;
   const swatch = radio.nextElementSibling;
   const checkIcon = swatch.querySelector('.check-icon');
   
   if (radio.checked) {
-    swatch.classList.add('ring-4', 'ring-purple-500', 'scale-110');
+    label.classList.add('ring-4', 'ring-purple-500', 'ring-offset-2', 'ring-offset-slate-800', 'rounded-full');
     checkIcon.classList.remove('hidden');
     selectedColorModifier = parseInt(radio.dataset.priceModifier) || 0;
     document.getElementById('selectedColorName').textContent = radio.value;
@@ -328,14 +339,16 @@ document.querySelectorAll('.color-radio').forEach(radio => {
   
   radio.addEventListener('change', function() {
     // Remove selection from all
-    document.querySelectorAll('.color-swatch').forEach(s => {
-      s.classList.remove('ring-4', 'ring-purple-500', 'scale-110');
-      s.querySelector('.check-icon').classList.add('hidden');
+    document.querySelectorAll('.color-radio').forEach(r => {
+      const lbl = r.parentElement;
+      const sw = r.nextElementSibling;
+      lbl.classList.remove('ring-4', 'ring-purple-500', 'ring-offset-2', 'ring-offset-slate-800', 'rounded-full');
+      sw.querySelector('.check-icon').classList.add('hidden');
     });
     
     // Add selection to current
     if (this.checked) {
-      swatch.classList.add('ring-4', 'ring-purple-500', 'scale-110');
+      label.classList.add('ring-4', 'ring-purple-500', 'ring-offset-2', 'ring-offset-slate-800', 'rounded-full');
       checkIcon.classList.remove('hidden');
       selectedColorModifier = parseInt(this.dataset.priceModifier) || 0;
       document.getElementById('selectedColorName').textContent = this.value;

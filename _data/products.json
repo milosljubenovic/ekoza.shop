@@ -1,251 +1,472 @@
 [
   {
-    "id": "lazy-foteljica-standard",
-    "name": "Lazy Foteljica Standard",
-    "category": "Lazy Foteljica",
-    "base_price": 6500,
-    "price": 6500,
-    "old_price": 7500,
-    "description": "Udobna lazy foteljica sa odličnom podrškom za leđa. Idealna za dnevni boravak.",
-    "supports_embroidery": true,
-    "supports_name_embroidery": true,
+    "id": "personalizovani-lazy-bag",
+    "name": "Personalizovani Lazy Bag",
+    "category": "Lazy Bag Jednobojni",
+    "base_price": 3600,
+    "price": 3600,
+    "description": "Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Bagom!\n\nOvaj jedinstveni komad nameštaja sastoji se od 7 prilagodljivih delova koji se lako mogu prilagoditi vašim potrebama i preferencijama.\n\nSvaki deo je dizajniran tako da vam pruži maksimalnu udobnost i podršku, bilo da se odmarate, čitate ili gledate omiljeni film.\n\nKarakteristike proizvoda:\n\nPrilagodljiv dizajn: Sastavljen od 7 delova koji se mogu rasporediti na različite načine, omogućavajući vam da kreirate savršeno mesto za opuštanje.\n\nPersonalizacija: Dodajte svoj lični pečat sa mestom za vez amblema i prostorom za vaš tekst. Bez obzira da li želite da dodate ime, inspirativnu poruku ili omiljeni citat, mogućnosti su beskrajne.\n\nVisokokvalitetni materijali: Napravljen od vrhunskih materijala koji osiguravaju dugotrajnost i lako održavanje.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i neutralne boje čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija ergonomskog dizajna i elegantnog izgleda garantuje udobnost i estetiku.\n\nFleksibilnost: Lako prilagodljiv različitim potrebama i prostorima zahvaljujući modularnoj strukturi.\n\nLični pečat: Omogućava vam da izrazite svoju kreativnost i personalizujete vaš prostor.\n\nNeka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Bagom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!\n\nLazyBag je dostupan u četiri veličine (visina/osnova):\n\n210/90cm\n\n240/100cm\n\n270/110cm\n\n300/130cm\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
     "images": [
-      "/assets/images/products/lazy-foteljica-1.jpg",
-      "/assets/images/products/lazy-foteljica-2.jpg",
-      "/assets/images/products/lazy-foteljica-3.jpg"
+      "/assets/images/products/personalizovani-lazy-bag/personalizovani-lazy-bag.png"
     ],
     "colors": [
-      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-crna.jpg"},
-      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-siva.jpg"},
-      {"name": "Braon", "hex": "#8B4513", "price_modifier": 200, "image": "/assets/images/products/lazy-foteljica-braon.jpg"}
+      {
+        "name": "Standardna",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/personalizovani-lazy-bag/personalizovani-lazy-bag.png"
+      }
     ],
     "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 500},
-      {"name": "XL", "price_modifier": 1000}
+      {
+        "name": "210/90CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "240/100CM",
+        "price_modifier": 500
+      },
+      {
+        "name": "270/110CM",
+        "price_modifier": 1100
+      },
+      {
+        "name": "300/130CM",
+        "price_modifier": 1800
+      }
     ],
     "in_stock": true,
     "featured": true,
-    "tags": ["foteljica", "komfor", "dnevna"]
+    "tags": [
+      "lazy-bag-jednobojni"
+    ]
   },
   {
-    "id": "lazy-lopta-fudbal",
-    "name": "Lazy Lopta Fudbal",
-    "category": "Lazy Lopta",
-    "base_price": 4200,
-    "price": 4200,
-    "description": "Lazy bag u obliku fudbalske lopte. Savršen za mlade fudbalske fanove.",
-    "images": [
-      "/assets/images/products/lazy-lopta-1.jpg",
-      "/assets/images/products/lazy-lopta-2.jpg"
-    ],
-    "colors": [
-      {"name": "Klasična crno-bela", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-fudbal-crno-bela.jpg"},
-      {"name": "Plavo-bela", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-fudbal-plavo-bela.jpg"}
-    ],
-    "sizes": [
-      {"name": "S", "price_modifier": 0},
-      {"name": "M", "price_modifier": 300},
-      {"name": "L", "price_modifier": 600}
-    ],
-    "in_stock": true,
-    "featured": true,
-    "tags": ["lopta", "fudbal", "dečji"]
-  },
-  {
-    "id": "lazy-tabure-okrugli",
-    "name": "Lazy Tabure Okrugli",
+    "id": "personalizovano-lazy-tabure",
+    "name": "Personalizovano Lazy Tabure",
     "category": "Lazy Tabure",
-    "base_price": 2800,
-    "price": 2800,
-    "old_price": 3200,
-    "description": "Kompaktan lazy tabure za dodatno sedenje ili kao podnožje.",
+    "base_price": 2300,
+    "price": 2300,
+    "description": "Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Tabureom! Ovaj jedinstveni komad nameštaja sastoji se od tri dela: dva sedišta i omotača, koji se lako mogu prilagoditi vašim potrebama i preferencijama. Svaki deo je dizajniran da vam pruži maksimalnu udobnost i podršku, bilo da odmarate noge, sedite ili koristite kao dodatni stočić.\n\nKarakteristike proizvoda:\n\nPrilagodljiv dizajn: Sastavljen od tri delova koji se mogu rasporediti na različite načine, omogućavajući vam da kreirate savršeno mesto za opuštanje.\n\nPersonalizacija: Dodajte svoj lični pečat sa mestom za vez amblema i prostorom za vaš tekst. Bez obzira da li želite da dodate ime, inspirativnu poruku ili omiljeni citat, mogućnosti su beskrajne.\n\nVisokokvalitetni materijali: Napravljen od vrhunskih materijala koji osiguravaju dugotrajnost i lako održavanje.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i neutralne boje čine ovaj Lazy Tabure idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija ergonomskog dizajna i elegantnog izgleda garantuje udobnost i estetiku.\n\nFleksibilnost: Lako prilagodljiv različitim potrebama i prostorima zahvaljujući modularnoj strukturi.\n\nLični pečat: Omogućava vam da izrazite svoju kreativnost i personalizujete vaš prostor.\n\nNeka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Tabureom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!\n\nDostupne veličine:\n\n100 cm\n\n80 cm\n\n50 cm\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
     "images": [
-      "/assets/images/products/lazy-tabure-1.jpg"
+      "/assets/images/products/personalizovano-lazy-tabure/personalizovano-lazy-tabure.png"
     ],
     "colors": [
-      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-crna.jpg"},
-      {"name": "Crvena", "hex": "#FF0000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-crvena.jpg"},
-      {"name": "Plava", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-plava.jpg"},
-      {"name": "Zelena", "hex": "#008000", "price_modifier": 0, "image": "/assets/images/products/lazy-tabure-zelena.jpg"}
+      {
+        "name": "Standardna",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/personalizovano-lazy-tabure/personalizovano-lazy-tabure.png"
+      }
     ],
     "sizes": [
-      {"name": "S", "price_modifier": 0},
-      {"name": "M", "price_modifier": 400}
+      {
+        "name": "100CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "50CM",
+        "price_modifier": 2200
+      },
+      {
+        "name": "80CM",
+        "price_modifier": 3200
+      }
     ],
     "in_stock": true,
-    "featured": false,
-    "tags": ["tabure", "kompaktan", "praktičan"]
+    "featured": true,
+    "tags": [
+      "lazy-tabure"
+    ]
   },
   {
-    "id": "granule-premium",
-    "name": "Premium granule za dopunu - 5kg",
-    "category": "Dopune za lazy bag (granule)",
-    "base_price": 1500,
-    "price": 1500,
-    "description": "Kvalitetne EPS granule za dopunu lazy bag proizvoda. Pakovanje od 5kg.",
-    "images": [
-      "/assets/images/products/granule-1.jpg"
-    ],
-    "colors": [
-      {"name": "Bela", "hex": "#FFFFFF", "price_modifier": 0, "image": "/assets/images/products/granule-bela.jpg"}
-    ],
-    "sizes": [
-      {"name": "5kg", "price_modifier": 0},
-      {"name": "10kg", "price_modifier": 1200},
-      {"name": "20kg", "price_modifier": 2800}
-    ],
-    "in_stock": true,
-    "featured": false,
-    "tags": ["granule", "dopuna", "EPS"]
-  },
-  {
-    "id": "lazy-bag-jednobojni-crni",
-    "name": "Lazy Bag Jednobojni - Crni",
+    "id": "lazy-teddy",
+    "name": "Lazy Teddy",
     "category": "Lazy Bag Jednobojni",
-    "base_price": 5500,
-    "price": 5500,
-    "description": "Klasični crni lazy bag. Elegantan i praktičan za svaki prostor.",
+    "base_price": 5900,
+    "price": 5900,
+    "description": "Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Teddijem! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Teddy je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.\n\nKarakteristike proizvoda:\n\nPlišani materijal: Napravljen od najkvalitetnijeg pliša, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.\n\nJednobojni dizajn: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Teddy idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.\n\nUniverzalna upotreba: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.\n\nNeka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Teddijem. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!\n\nLazy Teddy se šije u jednoj veličini (visina/širina)\n\n280/130cm\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
     "images": [
-      "/assets/images/products/lazy-jednobojni-1.jpg",
-      "/assets/images/products/lazy-jednobojni-2.jpg"
+      "/assets/images/products/lazy-teddy/lazy-teddy.png"
     ],
     "colors": [
-      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-crna.jpg"},
-      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-siva.jpg"},
-      {"name": "Tamno plava", "hex": "#00008B", "price_modifier": 0, "image": "/assets/images/products/lazy-jednobojni-plava.jpg"},
-      {"name": "Bordo", "hex": "#800020", "price_modifier": 300, "image": "/assets/images/products/lazy-jednobojni-bordo.jpg"}
+      {
+        "name": "Siva",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/siva.png"
+      },
+      {
+        "name": "Bejbi-roze",
+        "hex": "#FFC0CB",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/bejbi-roze.png"
+      },
+      {
+        "name": "Bela",
+        "hex": "#FFFFFF",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/bela.png"
+      },
+      {
+        "name": "Nebo-plava",
+        "hex": "#0000FF",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/nebo-plava.png"
+      },
+      {
+        "name": "Crna",
+        "hex": "#000000",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/crna.png"
+      },
+      {
+        "name": "Army-green",
+        "hex": "#4B5320",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-teddy/army-green.png"
+      }
     ],
     "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 500},
-      {"name": "XL", "price_modifier": 900}
-    ],
-    "in_stock": true,
-    "featured": true,
-    "tags": ["jednobojni", "klasik", "elegantan"]
-  },
-  {
-    "id": "lazy-bag-visebojni-duga",
-    "name": "Lazy Bag Višebojni - Duga",
-    "category": "Lazy Bag Višebojni",
-    "base_price": 6200,
-    "price": 6200,
-    "old_price": 7000,
-    "description": "Veseli višebojni lazy bag sa duginom šarom. Osvežite svoj prostor!",
-    "images": [
-      "/assets/images/products/lazy-visebojni-1.jpg",
-      "/assets/images/products/lazy-visebojni-2.jpg"
-    ],
-    "colors": [
-      {"name": "Duga", "hex": "#FF0000", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-duga.jpg"},
-      {"name": "Geometrijski", "hex": "#FFA500", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-geometrijski.jpg"},
-      {"name": "Tropski", "hex": "#00FF00", "price_modifier": 400, "image": "/assets/images/products/lazy-visebojni-tropski.jpg"}
-    ],
-    "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 600},
-      {"name": "XL", "price_modifier": 1100}
-    ],
-    "in_stock": true,
-    "featured": true,
-    "tags": ["višebojni", "dezen", "moderan"]
-  },
-  {
-    "id": "lazy-teddy-beli",
-    "name": "Lazy Teddy - Beli",
-    "category": "Lazy Teddy",
-    "base_price": 7500,
-    "price": 7500,
-    "description": "Neverovatno mekan lazy bag od teddy materijala. Luksuzni komfor.",
-    "images": [
-      "/assets/images/products/lazy-teddy-1.jpg",
-      "/assets/images/products/lazy-teddy-2.jpg"
-    ],
-    "colors": [
-      {"name": "Bela", "hex": "#FFFFFF", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-bela.jpg"},
-      {"name": "Bež", "hex": "#F5F5DC", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-bez.jpg"},
-      {"name": "Siva", "hex": "#808080", "price_modifier": 0, "image": "/assets/images/products/lazy-teddy-siva.jpg"}
-    ],
-    "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 700},
-      {"name": "XL", "price_modifier": 1300}
-    ],
-    "in_stock": true,
-    "featured": true,
-    "tags": ["teddy", "mekan", "luksuz"]
-  },
-  {
-    "id": "lazy-foteljica-premium",
-    "name": "Lazy Foteljica Premium",
-    "category": "Lazy Foteljica",
-    "base_price": 8500,
-    "price": 8500,
-    "old_price": 9500,
-    "description": "Premium lazy foteljica sa vodootpornom presvlakom i dodatnom podrškom.",
-    "images": [
-      "/assets/images/products/lazy-foteljica-premium-1.jpg"
-    ],
-    "colors": [
-      {"name": "Crna", "hex": "#000000", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-crna.jpg"},
-      {"name": "Tamno siva", "hex": "#696969", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-siva.jpg"},
-      {"name": "Tamno plava", "hex": "#00008B", "price_modifier": 0, "image": "/assets/images/products/lazy-foteljica-premium-plava.jpg"}
-    ],
-    "sizes": [
-      {"name": "L", "price_modifier": 0},
-      {"name": "XL", "price_modifier": 800}
-    ],
-    "in_stock": true,
-    "featured": true,
-    "tags": ["premium", "vodootporan", "foteljica"]
-  },
-  {
-    "id": "lazy-bag-jednobojni-boja",
-    "name": "Lazy Bag Jednobojni - Vibrantne boje",
-    "category": "Lazy Bag Jednobojni",
-    "base_price": 5800,
-    "price": 5800,
-    "description": "Jednobojni lazy bag u vibrantnim bojama za osveženje prostora.",
-    "images": [
-      "/assets/images/products/lazy-jednobojni-vibrant-1.jpg",
-      "/assets/images/products/lazy-jednobojni-vibrant-2.jpg"
-    ],
-    "colors": [
-      {"name": "Crvena", "hex": "#FF0000", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-crvena.jpg"},
-      {"name": "Zelena", "hex": "#00FF00", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-zelena.jpg"},
-      {"name": "Plava", "hex": "#0000FF", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-plava.jpg"},
-      {"name": "Žuta", "hex": "#FFFF00", "price_modifier": 200, "image": "/assets/images/products/lazy-vibrant-zuta.jpg"},
-      {"name": "Narandžasta", "hex": "#FFA500", "price_modifier": 0, "image": "/assets/images/products/lazy-vibrant-narandzasta.jpg"}
-    ],
-    "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 500},
-      {"name": "XL", "price_modifier": 900}
+      {
+        "name": "M",
+        "price_modifier": 0
+      }
     ],
     "in_stock": true,
     "featured": false,
-    "tags": ["jednobojni", "vibrantan", "boje"]
+    "tags": [
+      "lazy-bag-jednobojni"
+    ]
   },
   {
-    "id": "lazy-lopta-kosarka",
-    "name": "Lazy Lopta Košarka",
+    "id": "lazy-bag-jednobojni",
+    "name": "Lazy Bag - Jednobojni",
+    "category": "Lazy Bag Jednobojni",
+    "base_price": 3600,
+    "price": 3600,
+    "description": "Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Bag! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Bag je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.\n\nKarakteristike proizvoda:\n\nPlišani materijal: Napravljen od najkvalitetnije eko-kože, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.\n\nJednobojni dizajn: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.\n\nUniverzalna upotreba: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.\n\nNeka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Bagom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!\n\nLazy Bag se šije us sledećim veličinama (visina/širina):\n\n210/90cm: Idealno za manje prostore i personalnu upotrebu.\n\n240/100cm: Savršeno za srednje prostore i dodatnu udobnost.\n\n270/110cm: Odlično za prostranije sobe i veći komfor.\n\n300/130cm: Maksimalna veličina za ultimativno opuštanje i prostranost.\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
+    "images": [
+      "/assets/images/products/lazy-bag-jednobojni/lazy-bag-jednobojni.png"
+    ],
+    "colors": [
+      {
+        "name": "Tamno plava",
+        "hex": "#0000FF",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/tamno-plava-21090cm.png"
+      },
+      {
+        "name": "Cyan",
+        "hex": "#00FFFF",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/cyan-21090cm.png"
+      },
+      {
+        "name": "Siva",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/siva-21090cm.png"
+      },
+      {
+        "name": "Braon",
+        "hex": "#8B4513",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/braon-21090cm.png"
+      },
+      {
+        "name": "Crna",
+        "hex": "#000000",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/crna-21090cm.png"
+      },
+      {
+        "name": "Crvena",
+        "hex": "#FF0000",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/crvena-21090cm.png"
+      },
+      {
+        "name": "Ljubičasta",
+        "hex": "#800080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/ljubičasta-21090cm.png"
+      },
+      {
+        "name": "Oker",
+        "hex": "#CC7722",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/oker-21090cm.png"
+      },
+      {
+        "name": "Baby roze",
+        "hex": "#FFC0CB",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-bag-jednobojni/baby-roze-21090cm.png"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "210/90CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "240/100CM",
+        "price_modifier": 500
+      },
+      {
+        "name": "270/110CM",
+        "price_modifier": 1100
+      },
+      {
+        "name": "300/130CM",
+        "price_modifier": 1800
+      }
+    ],
+    "in_stock": true,
+    "featured": true,
+    "tags": [
+      "lazy-bag-jednobojni"
+    ]
+  },
+  {
+    "id": "lazybag-višebojni",
+    "name": "LazyBag - Višebojni",
+    "category": "Lazy Bag Jednobojni",
+    "base_price": 0,
+    "price": 0,
+    "description": "Višebojni Lazy Bag – Savršenstvo udobnosti u četiri veličine!\n\nUživajte u ultimativnom komforu sa našim jednobojnim Lazy Bagom! Ovaj jedinstveni komad nameštaja je dizajniran da vam pruži maksimalnu udobnost i podršku, bilo da se odmarate, čitate ili gledate omiljeni film.\n\nKarakteristike proizvoda:\n\nPrilagodljiv dizajn: Jednobojni Lazy Bag se sastoji od 7 delova koji se mogu lako prilagoditi vašim potrebama i preferencijama, omogućavajući vam da kreirate savršeno mesto za opuštanje.\n\nVisokokvalitetni materijali: Napravljen od vrhunskih materijala koji osiguravaju dugotrajnost i lako održavanje.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i neutralne boje čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija ergonomskog dizajna i elegantnog izgleda garantuje udobnost i estetiku.\n\nFleksibilnost: Lako prilagodljiv različitim potrebama i prostorima zahvaljujući modularnoj strukturi.\n\nJednostavno održavanje: Materijali su izabrani tako da omogućavaju lako čišćenje i dugotrajnu upotrebu.\n\nVeličine:\n\nJednobojni Lazy Bag je dostupan u četiri različite veličine kako bi savršeno odgovarao vašem prostoru i potrebama:\n\n210/90cm: Idealno za manje prostore i personalnu upotrebu.\n\n240/100cm: Savršeno za srednje prostore i dodatnu udobnost.\n\n270/110cm: Odlično za prostranije sobe i veći komfor.\n\n300/130cm: Maksimalna veličina za ultimativno opuštanje i prostranost.\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
+    "images": [
+      "/assets/images/products/lazybag-višebojni/lazybag-višebojni.png"
+    ],
+    "colors": [
+      {
+        "name": "Lbv01",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv01.jpg"
+      },
+      {
+        "name": "Lbv02",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv02.jpg"
+      },
+      {
+        "name": "Lbv03",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv03.jpg"
+      },
+      {
+        "name": "Lbv04",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv04.jpg"
+      },
+      {
+        "name": "Lbv05",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv05.jpg"
+      },
+      {
+        "name": "Lbv06",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazybag-višebojni/lbv06.jpg"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "210/90CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "240/100CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "270/110CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "300/130CM",
+        "price_modifier": 0
+      }
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": [
+      "lazy-bag-jednobojni"
+    ]
+  },
+  {
+    "id": "lazy-lopta",
+    "name": "Lazy Lopta",
     "category": "Lazy Lopta",
-    "base_price": 4500,
-    "price": 4500,
-    "description": "Lazy bag u obliku košarkaške lopte. Za prave košarkaške ljubitelje.",
+    "base_price": 3900,
+    "price": 3900,
+    "description": "Uživajte u ultimativnom komforu sa našim Lazy Loptama! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Lopta je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.\n\nKarakteristike proizvoda:\n\nPlišani materijal: Napravljen od najkvalitetnije eko-kože, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.\n\nJednobojni dizajn: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.\n\nSavršeno uklapanje u svaki dom: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Lopta idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.\n\nPrednosti:\n\nKomfor i stil: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.\n\nUniverzalna upotreba: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.\n\nNeka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Loptom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!\n\nLazy Lopta se šije u sledećim veličinama (obim):\n\n230cm\n\n250cm\n\n270cm\n\n300cm\n\nPotrebna Vam je pomoć?\n\nKako da poručim presonalizovani LazyBag?\n\nPolitika Slanja",
     "images": [
-      "/assets/images/products/lazy-lopta-kosarka-1.jpg"
+      "/assets/images/products/lazy-lopta/lazy-lopta.png"
     ],
     "colors": [
-      {"name": "Narandžasta", "hex": "#FFA500", "price_modifier": 0, "image": "/assets/images/products/lazy-lopta-kosarka.jpg"}
+      {
+        "name": "Ll-01",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-01-230cm.png"
+      },
+      {
+        "name": "Ll-02",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-02-230cm.png"
+      },
+      {
+        "name": "Ll-03",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-03-230cm.png"
+      },
+      {
+        "name": "Ll-04",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-04-230cm.png"
+      },
+      {
+        "name": "Ll-05",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-05-230cm.png"
+      },
+      {
+        "name": "Ll-06",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-06-230cm.png"
+      },
+      {
+        "name": "Ll-07",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-07-230cm.png"
+      },
+      {
+        "name": "Ll-08",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-08-230cm.png"
+      },
+      {
+        "name": "Ll-09",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-09-230cm.png"
+      },
+      {
+        "name": "Ll-10",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-10-230cm.png"
+      },
+      {
+        "name": "Ll-11",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-11-230cm.png"
+      },
+      {
+        "name": "Ll-12",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-12-230cm.png"
+      },
+      {
+        "name": "Ll-13",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-13-230cm.png"
+      },
+      {
+        "name": "Ll-14",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-14-230cm.png"
+      },
+      {
+        "name": "Ll-15",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/lazy-lopta/ll-15-230cm.png"
+      }
     ],
     "sizes": [
-      {"name": "M", "price_modifier": 0},
-      {"name": "L", "price_modifier": 400}
+      {
+        "name": "230CM",
+        "price_modifier": 0
+      },
+      {
+        "name": "250CM",
+        "price_modifier": 500
+      },
+      {
+        "name": "270CM",
+        "price_modifier": 1000
+      },
+      {
+        "name": "300CM",
+        "price_modifier": 1500
+      }
     ],
     "in_stock": true,
     "featured": false,
-    "tags": ["lopta", "košarka", "sport"]
+    "tags": [
+      "lazy-lopta"
+    ]
+  },
+  {
+    "id": "dopuna-za-lazybag-granule",
+    "name": "Dopuna za LazyBag (Granule)",
+    "category": "Dopune za lazy bag (granule)",
+    "base_price": 450,
+    "price": 450,
+    "description": "1KG granula za dopunu lazy begova, lopti, taburića...",
+    "images": [
+      "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png"
+    ],
+    "colors": [
+      {
+        "name": "Standardna",
+        "hex": "#808080",
+        "price_modifier": 0,
+        "image": "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "0.5KG",
+        "price_modifier": 0
+      },
+      {
+        "name": "1KG",
+        "price_modifier": 450
+      },
+      {
+        "name": "1.5KG",
+        "price_modifier": 900
+      },
+      {
+        "name": "2KG",
+        "price_modifier": 1350
+      }
+    ],
+    "in_stock": true,
+    "featured": false,
+    "tags": [
+      "dopune-za-lazy-bag-granule"
+    ]
   }
 ]
