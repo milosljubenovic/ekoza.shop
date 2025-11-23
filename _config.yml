@@ -1,8 +1,8 @@
 # Lazy Pleasure - Jekyll eCommerce Configuration
 title: Lazy Pleasure
 description: Online prodavnica za moderne proizvode
-baseurl: ""
-url: "https://milosljubenovic.github.io/ekoza.shop"
+baseurl: "/ekoza.shop"
+url: "https://milosljubenovic.github.io"
 
 # Store Information
 store:
