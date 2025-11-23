@@ -1,0 +1,399 @@
+/* 
+ * Chat Widget Styles
+ * Custom styles for Ekoza Shop Chat Integration
+ */
+
+/* Chat Container */
+#chatModal {
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+}
+
+.chat-container {
+  animation: slideUpRight 0.3s ease-out;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  height: 780px;
+  max-height: calc(100vh - 2rem);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpRight {
+  from {
+    opacity: 0;
+    transform: translate(20px, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+/* Chat Messages Container */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 #1e293b;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7, #ec4899);
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9333ea, #db2777);
+}
+
+/* Message Bubbles */
+.message-bubble {
+  word-wrap: break-word;
+  animation: popIn 0.2s ease-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.chat-message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typing Indicator */
+.typing-dots {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.typing-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #a855f7;
+  animation: typingDot 1.4s infinite;
+}
+
+.typing-dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+}
+
+/* Chat FAB (Floating Action Button) */
+#chatButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+}
+
+.chat-fab {
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+  animation: bounceIn 0.5s ease-out, pulse 2s infinite;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.6);
+  }
+}
+
+.chat-fab:hover {
+  box-shadow: 0 12px 32px rgba(168, 85, 247, 0.6);
+}
+
+.chat-fab:active {
+  transform: scale(0.95);
+}
+
+/* Send Button Animation */
+.btn-send:hover {
+  transform: scale(1.05);
+}
+
+.btn-send:active {
+  transform: scale(0.95);
+}
+
+.btn-send:disabled {
+  transform: none;
+}
+
+/* Message Links */
+.message-bubble a {
+  color: #a855f7;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.message-bubble a:hover {
+  color: #ec4899;
+}
+
+/* Chat Input Focus Effects */
+#chatInput:focus {
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+}
+
+/* Light Mode Overrides */
+html.light-mode .chat-container {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html.light-mode .chat-header {
+  background: linear-gradient(to right, #9333ea, #db2777);
+}
+
+html.light-mode .message-bubble.bot {
+  background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0);
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+html.light-mode .chat-input {
+  background: #f8fafc;
+  border-top-color: #e2e8f0;
+}
+
+html.light-mode #chatInput {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+html.light-mode #chatInput::placeholder {
+  color: #64748b;
+}
+
+html.light-mode .chat-messages {
+  scrollbar-color: #9333ea #f1f5f9;
+}
+
+html.light-mode .chat-messages::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light-mode .typing-dots .dot {
+  background-color: #9333ea;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .chat-container {
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .chat-header {
+    border-radius: 0;
+  }
+  
+  #chatButton {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .chat-fab {
+    padding: 0.875rem;
+  }
+  
+  .chat-fab svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Accessibility */
+.chat-fab:focus,
+.btn-send:focus,
+#chatInput:focus {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+.chat-container,
+.message-bubble,
+.btn-send,
+.chat-fab,
+#chatInput {
+  transition: all 0.3s ease;
+}
+
+/* Character count warning */
+#charCount.text-red-400 {
+  font-weight: 600;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Error message styling */
+.message-bubble.bot.bg-red-500\/20 {
+  border-left: 3px solid #ef4444;
+}
+
+/* Loading state for send button */
+.btn-send.loading {
+  pointer-events: none;
+}
+
+.btn-send.loading svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade-in animation for messages */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Notification dot pulse */
+#chatNotification {
+  animation: notificationPulse 2s infinite;
+}
+
+@keyframes notificationPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+/* Welcome message styling */
+.chat-message:first-child .message-bubble {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+html.light-mode .chat-message:first-child .message-bubble {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Timestamp styling */
+.message-bubble span {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Clear chat button hover effect */
+button[onclick="clearChat()"] {
+  transition: all 0.2s;
+}
+
+button[onclick="clearChat()"]:hover {
+  color: #a855f7;
+}
+
+button[onclick="clearChat()"]:hover svg {
+  transform: scale(1.1);
+}
+
+/* Chat Badge */
+#chatBadge {
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

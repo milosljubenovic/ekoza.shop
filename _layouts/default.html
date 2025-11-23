@@ -6,6 +6,7 @@
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{ '/assets/css/output.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/chat.css' | relative_url }}">
   {% seo %}
   <script>
     // Theme initialization (must be before body renders to prevent flash)
@@ -25,9 +26,11 @@
   
   {% include footer.html %}
   {% include cart-modal.html %}
+  {% include chat-modal.html %}
   
   <script src="{{ '/assets/js/cart.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/chat.js' | relative_url }}"></script>
   
   <!-- Products data for search -->
   <script id="productsData" type="application/json">

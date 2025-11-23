@@ -88,7 +88,14 @@ exclude:
   - minify-assets.js
   - build-production.sh
   - .github
-  - assets/js/*.js
+
+# Include JavaScript files
+include:
+  - assets/js/chat.js
+  - assets/js/cart.js
+  - assets/js/main.js
+  - assets/js/checkout.js
+  - assets/js/order-tracking.js
 
 # Plugins
 plugins:
