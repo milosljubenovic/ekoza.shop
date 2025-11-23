@@ -16,13 +16,13 @@ store:
   postal_code: "16220"
   country: "Srbija"
   phone: "+381 62 220894"
-  email: "info@lazypleasure.rs"
+  email: "office@ekoza.shop"
 
 # Payment Information
 payment:
-  bank_name: "Banka Intesa"
-  account_number: "160-XXXXXX-XX"
-  account_holder: "EKOZA SHOP"
+  bank_name: "AIK Banka a.d. Beograd"
+  account_number: "105-0261802000054-45"
+  account_holder: "Lazy Pleasure PR Đurđina Stojanović"
 
 # Shipping Information
 shipping:

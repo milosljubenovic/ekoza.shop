@@ -8,8 +8,8 @@ price: 3600
 # old_price: null
 in_stock: true
 featured: false
-supports_embroidery: false
-supports_name_embroidery: false
+supports_embroidery: true
+supports_name_embroidery: true
 description: |
   Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Bagom!
   

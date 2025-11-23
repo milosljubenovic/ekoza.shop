@@ -99,7 +99,7 @@ title: Završi Porudžbinu
                   <label for="country" class="block text-sm font-semibold text-white mb-2">
                     Država <span class="text-red-400">*</span>
                   </label>
-                  <input type="text" id="country" name="country" value="Srbija" required
+                  <input type="text" id="country" name="country" value="Srbija" required disabled
                          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
                 </div>
               </div>
@@ -230,7 +230,7 @@ title: Završi Porudžbinu
                       <p class="text-gray-400">Primalac: <span class="text-white font-semibold">{{ site.payment.account_holder }}</span></p>
                       <p class="text-gray-400">Banka: <span class="text-white font-semibold">{{ site.payment.bank_name }}</span></p>
                       <p class="text-gray-400">Račun: <span class="text-white font-mono">{{ site.payment.account_number }}</span></p>
-                      <p class="text-gray-400">Poziv na broj: <span class="text-white font-mono" id="orderReference">Broj porudžbine</span></p>
+                      <p class="text-gray-400">Poziv na broj: <span class="text-white font-mono" id="orderReference">Broj porudžbine (Dostupno nakon poručivanja) </span></p>
                     </div>
                     <p class="text-xs text-gray-400 mt-2">
                       * Roba se šalje nakon prijema uplate (1-2 radna dana)

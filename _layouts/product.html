@@ -8,7 +8,7 @@ layout: default
     <!-- Product Images Gallery -->
     <div>
       <div class="mb-4">
-        <img id="mainImage" src="{{ page.images[0] }}" alt="{{ page.title }}" class="w-full h-96 object-cover rounded-2xl shadow-2xl border border-slate-700">
+        <img id="mainImage" src="{{ page.images[0] }}" alt="{{ page.title }}" class="w-full h-96 object-cover rounded-2xl shadow-2xl border border-slate-700 cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageModal('{{ page.images[0] }}')">
       </div>
       <div class="grid grid-cols-4 gap-3">
         {% for image in page.images %}
@@ -295,6 +295,41 @@ layout: default
       <div id="noResultsMessage" class="hidden text-center py-12">
         <p class="text-gray-400 text-lg">Nema pronađenih dizajna</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox Modal -->
+<div id="imageLightboxModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4" onclick="closeImageModal(event)">
+  <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white hover:text-purple-400 transition-colors z-10">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+  
+  <div class="relative max-w-7xl max-h-[90vh] overflow-hidden" onclick="event.stopPropagation()">
+    <div id="imageContainer" class="overflow-auto" style="max-height: 90vh;">
+      <img id="lightboxImage" src="" alt="" class="transition-transform duration-200" style="transform-origin: center center;">
+    </div>
+    
+    <!-- Zoom Controls -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-slate-800/90 rounded-full px-4 py-2 backdrop-blur-sm">
+      <button onclick="zoomOut()" class="text-white hover:text-purple-400 transition-colors p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path>
+        </svg>
+      </button>
+      <span id="zoomLevel" class="text-white font-semibold min-w-16 text-center">100%</span>
+      <button onclick="zoomIn()" class="text-white hover:text-purple-400 transition-colors p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+        </svg>
+      </button>
+      <button onclick="resetZoom()" class="text-white hover:text-purple-400 transition-colors p-2 ml-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </div>
@@ -629,5 +664,119 @@ function filterEmbroideryDesigns() {
     noResults.classList.toggle('hidden', visibleCount > 0);
   }
 }
+
+// Image Lightbox Functions
+let currentZoom = 1;
+let isDragging = false;
+let startX, startY, scrollLeft, scrollTop;
+
+function openImageModal(imageSrc) {
+  const modal = document.getElementById('imageLightboxModal');
+  const lightboxImage = document.getElementById('lightboxImage');
+  
+  if (modal && lightboxImage) {
+    lightboxImage.src = imageSrc;
+    modal.classList.remove('hidden');
+    resetZoom();
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeImageModal(event) {
+  if (!event || event.target.id === 'imageLightboxModal') {
+    const modal = document.getElementById('imageLightboxModal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      currentZoom = 1;
+    }
+  }
+}
+
+function zoomIn() {
+  currentZoom = Math.min(currentZoom + 0.25, 3);
+  updateZoom();
+}
+
+function zoomOut() {
+  currentZoom = Math.max(currentZoom - 0.25, 0.5);
+  updateZoom();
+}
+
+function resetZoom() {
+  currentZoom = 1;
+  updateZoom();
+}
+
+function updateZoom() {
+  const lightboxImage = document.getElementById('lightboxImage');
+  const zoomLevel = document.getElementById('zoomLevel');
+  
+  if (lightboxImage) {
+    lightboxImage.style.transform = `scale(${currentZoom})`;
+    lightboxImage.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+  }
+  
+  if (zoomLevel) {
+    zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
+  }
+}
+
+// Enable dragging when zoomed
+const imageContainer = document.getElementById('imageContainer');
+
+if (imageContainer) {
+  imageContainer.addEventListener('mousedown', function(e) {
+    if (currentZoom > 1) {
+      isDragging = true;
+      imageContainer.style.cursor = 'grabbing';
+      startX = e.pageX - imageContainer.offsetLeft;
+      startY = e.pageY - imageContainer.offsetTop;
+      scrollLeft = imageContainer.scrollLeft;
+      scrollTop = imageContainer.scrollTop;
+    }
+  });
+
+  imageContainer.addEventListener('mouseleave', function() {
+    isDragging = false;
+    if (currentZoom > 1) {
+      imageContainer.style.cursor = 'grab';
+    }
+  });
+
+  imageContainer.addEventListener('mouseup', function() {
+    isDragging = false;
+    if (currentZoom > 1) {
+      imageContainer.style.cursor = 'grab';
+    }
+  });
+
+  imageContainer.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - imageContainer.offsetLeft;
+    const y = e.pageY - imageContainer.offsetTop;
+    const walkX = (x - startX) * 2;
+    const walkY = (y - startY) * 2;
+    imageContainer.scrollLeft = scrollLeft - walkX;
+    imageContainer.scrollTop = scrollTop - walkY;
+  });
+}
+
+// Keyboard shortcuts for zoom
+document.addEventListener('keydown', function(event) {
+  const modal = document.getElementById('imageLightboxModal');
+  if (modal && !modal.classList.contains('hidden')) {
+    if (event.key === 'Escape') {
+      closeImageModal();
+    } else if (event.key === '+' || event.key === '=') {
+      zoomIn();
+    } else if (event.key === '-') {
+      zoomOut();
+    } else if (event.key === '0') {
+      resetZoom();
+    }
+  }
+});
 
 </script>

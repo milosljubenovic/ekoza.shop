@@ -4,6 +4,7 @@
     "slug": "lazy-bag-jednobojni",
     "description": "Pregledajte našu kolekciju lazy bag jednobojni proizvoda.",
     "icon": "🛋️",
+    "image": "/assets/images/products/lazy-bag-jednobojni/braon-21090cm.png",
     "products": [
       "personalizovani-lazy-bag",
       "lazy-teddy",
@@ -16,6 +17,7 @@
     "slug": "lazy-tabure",
     "description": "Pregledajte našu kolekciju lazy tabure proizvoda.",
     "icon": "🛋️",
+    "image": "/assets/images/products/personalizovano-lazy-tabure/personalizovano-lazy-tabure.png",
     "products": [
       "personalizovano-lazy-tabure"
     ]
@@ -25,6 +27,7 @@
     "slug": "lazy-lopta",
     "description": "Pregledajte našu kolekciju lazy lopta proizvoda.",
     "icon": "🛋️",
+    "image": "/assets/images/products/lazy-lopta/lazy-lopta.png",
     "products": [
       "lazy-lopta"
     ]
@@ -34,6 +37,7 @@
     "slug": "dopune-za-lazy-bag-granule",
     "description": "Pregledajte našu kolekciju dopune za lazy bag (granule) proizvoda.",
     "icon": "🛋️",
+    "image": "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png",
     "products": [
       "dopuna-za-lazybag-granule"
     ]
