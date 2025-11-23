@@ -1,7 +1,7 @@
 media:
   - name: products
     input: assets/images/products
-    output: /assets/images/products
+    output: assets/images/products
   - name: blogs
     input: assets/images/blogs
     output: /assets/images/blogs
