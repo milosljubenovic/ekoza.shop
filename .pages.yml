@@ -3,6 +3,10 @@ media:
     input: assets
     output: assets
 
+  - name: Products
+    input: assets/images/products
+    output: assets/images/products
+
 content:
   - name: posts
     label: Blog
