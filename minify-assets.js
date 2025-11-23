@@ -5,7 +5,6 @@ const path = require('path');
 const { minify } = require('terser');
 
 const jsFiles = [
-  { src: 'assets/js/anti-debug.js', dest: '_site/assets/js/anti-debug.js' },
   { src: 'assets/js/cart.js', dest: '_site/assets/js/cart.js' },
   { src: 'assets/js/main.js', dest: '_site/assets/js/main.js' },
   { src: 'assets/js/checkout.js', dest: '_site/assets/js/checkout.js' }
