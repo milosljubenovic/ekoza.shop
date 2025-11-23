@@ -3,102 +3,179 @@ layout: default
 title: Politika privatnosti
 ---
 
-<div class="container mx-auto px-4 py-8 max-w-4xl">
-  <h1 class="text-4xl font-bold mb-8">Politika privatnosti</h1>
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 light-mode:from-gray-50 light-mode:to-white min-h-screen py-16 transition-colors duration-300">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-4xl font-bold mb-8 text-white light-mode:text-gray-900">Politika privatnosti</h1>
 
-  <div class="prose prose-lg max-w-none">
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">1. Uvod</h2>
-      <p class="text-gray-700 mb-4">
-        {{ site.store.name }} poštuje privatnost svojih korisnika i posvećen je zaštiti ličnih podataka.
-        Ova politika privatnosti objašnjava kako prikupljamo, koristimo i štitimo vaše lične podatke.
-      </p>
-    </section>
+    <div class="space-y-8">
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">1. Uvod</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          {{ site.store.name }} poštuje privatnost svojih korisnika i posvećen je zaštiti ličnih podataka.
+          Ova politika privatnosti objašnjava kako prikupljamo, koristimo i štitimo vaše lične podatke.
+        </p>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">2. Koje podatke prikupljamo</h2>
-      <p class="text-gray-700 mb-4">
-        Prikupljamo samo podatke neophodne za obradu vaše porudžbine:
-      </p>
-      <ul class="list-disc ml-6 text-gray-700 mb-4">
-        <li>Ime i prezime</li>
-        <li>Adresa za dostavu</li>
-        <li>Broj telefona</li>
-        <li>Email adresa</li>
-        <li>Informacije o porudžbini</li>
-      </ul>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">2. Koje podatke prikupljamo</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          Prikupljamo samo podatke neophodne za obradu vaše porudžbine:
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Ime i prezime</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Adresa za dostavu</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Broj telefona</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Email adresa</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Informacije o porudžbini</span>
+          </li>
+        </ul>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">3. Kako koristimo vaše podatke</h2>
-      <p class="text-gray-700 mb-4">
-        Vaše lične podatke koristimo isključivo za:
-      </p>
-      <ul class="list-disc ml-6 text-gray-700 mb-4">
-        <li>Obradu i isporuku porudžbine</li>
-        <li>Komunikaciju vezanu za vašu porudžbinu</li>
-        <li>Rešavanje reklamacija i upita</li>
-        <li>Informisanje o promocijama (samo uz vašu saglasnost)</li>
-      </ul>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">3. Kako koristimo vaše podatke</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          Vaše lične podatke koristimo isključivo za:
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Obradu i isporuku porudžbine</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Komunikaciju vezanu za vašu porudžbinu</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Rešavanje reklamacija i upita</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Informisanje o promocijama (samo uz vašu saglasnost)</span>
+          </li>
+        </ul>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">4. Kolačići (Cookies)</h2>
-      <p class="text-gray-700 mb-4">
-        Naša web stranica koristi lokalno skladištenje (localStorage) za čuvanje podataka o vašoj korpi za kupovinu.
-        Ovi podaci se čuvaju samo na vašem uređaju i nismo im pristipi sa naše strane.
-      </p>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">4. Kolačići (Cookies)</h2>
+        <p class="text-gray-300 light-mode:text-gray-700">
+          Naša web stranica koristi lokalno skladištenje (localStorage) za čuvanje podataka o vašoj korpi za kupovinu.
+          Ovi podaci se čuvaju samo na vašem uređaju i ne možemo im pristupiti sa naše strane.
+        </p>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">5. Deljenje podataka</h2>
-      <p class="text-gray-700 mb-4">
-        Vaše lične podatke ne delimo sa trećim stranama osim:
-      </p>
-      <ul class="list-disc ml-6 text-gray-700 mb-4">
-        <li>Kurirskim službama (samo podaci potrebni za dostavu)</li>
-        <li>Kada je to zakonski obavezno</li>
-      </ul>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">5. Deljenje podataka</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          Vaše lične podatke ne delimo sa trećim stranama osim:
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Kurirskim službama (samo podaci potrebni za dostavu)</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Kada je to zakonski obavezno</span>
+          </li>
+        </ul>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">6. Vaša prava</h2>
-      <p class="text-gray-700 mb-4">
-        U skladu sa Zakonom o zaštiti podataka o ličnosti, imate pravo da:
-      </p>
-      <ul class="list-disc ml-6 text-gray-700 mb-4">
-        <li>Zatražite pristup svojim ličnim podacima</li>
-        <li>Zatražite ispravku netačnih podataka</li>
-        <li>Zatražite brisanje vaših podataka</li>
-        <li>Povučete saglasnost za obradu podataka</li>
-      </ul>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">6. Vaša prava</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          U skladu sa Zakonom o zaštiti podataka o ličnosti, imate pravo da:
+        </p>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Zatražite pristup svojim ličnim podacima</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Zatražite ispravku netačnih podataka</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Zatražite brisanje vaših podataka</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-purple-400 light-mode:text-purple-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Povučete saglasnost za obradu podataka</span>
+          </li>
+        </ul>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">7. Bezbednost podataka</h2>
-      <p class="text-gray-700 mb-4">
-        Primenjujemo odgovarajuće tehničke i organizacione mere za zaštitu vaših ličnih podataka
-        od neovlašćenog pristupa, izmene ili otkrivanja.
-      </p>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">7. Bezbednost podataka</h2>
+        <p class="text-gray-300 light-mode:text-gray-700">
+          Primenjujemo odgovarajuće tehničke i organizacione mere za zaštitu vaših ličnih podataka
+          od neovlašćenog pristupa, izmene ili otkrivanja.
+        </p>
+      </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">8. Kontakt</h2>
-      <p class="text-gray-700 mb-4">
-        Za sva pitanja vezana za zaštitu podataka, kontaktirajte nas:
-      </p>
-      <ul class="list-none text-gray-700">
-        <li><strong>Email:</strong> {{ site.store.email }}</li>
-        <li><strong>Telefon:</strong> {{ site.store.phone }}</li>
-      </ul>
-    </section>
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">8. Kontakt</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          Za sva pitanja vezana za zaštitu podataka, kontaktirajte nas:
+        </p>
+        <ul class="space-y-2">
+          <li class="text-gray-300 light-mode:text-gray-700"><strong class="text-white light-mode:text-gray-900">Email:</strong> <a href="mailto:{{ site.store.email }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.email }}</a></li>
+          <li class="text-gray-300 light-mode:text-gray-700"><strong class="text-white light-mode:text-gray-900">Telefon:</strong> <a href="tel:{{ site.store.phone }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.phone }}</a></li>
+        </ul>
+      </section>
 
-    <div class="bg-gray-100 p-6 rounded-lg mt-8">
-      <p class="text-sm text-gray-600">
-        Poslednje ažuriranje: {{ 'now' | date: "%d.%m.%Y" }}<br>
-        <strong>{{ site.store.owner }}</strong><br>
-        {{ site.store.business_name }}
-      </p>
+      <div class="bg-gradient-to-br from-purple-900/50 to-pink-900/50 light-mode:from-gray-100 light-mode:to-gray-200 p-6 rounded-2xl border border-purple-500/30 light-mode:border-gray-300">
+        <p class="text-sm text-gray-300 light-mode:text-gray-600">
+          Poslednje ažuriranje: {{ 'now' | date: "%d.%m.%Y" }}<br>
+          <strong class="text-white light-mode:text-gray-900">{{ site.store.owner }}</strong><br>
+          {{ site.store.business_name }}
+        </p>
+      </div>
     </div>
   </div>
 </div>

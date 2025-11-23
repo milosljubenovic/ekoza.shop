@@ -3,109 +3,106 @@ layout: default
 title: Način plaćanja
 ---
 
-<div class="container mx-auto px-4 py-8 max-w-4xl">
-  <h1 class="text-4xl font-bold mb-8">Način plaćanja</h1>
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 light-mode:from-gray-50 light-mode:to-white min-h-screen py-16 transition-colors duration-300">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-4xl font-bold mb-8 text-white light-mode:text-gray-900">Način plaćanja</h1>
 
-  <div class="prose prose-lg max-w-none">
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Dostupni načini plaćanja</h2>
-      <p class="text-gray-700 mb-6">
-        {{ site.store.name }} nudi sledeće načine plaćanja za vašu udobnost:
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- Pouzeće -->
-        <div class="bg-white rounded-lg shadow-md p-6 border-2 border-primary-200">
-          <div class="flex items-center mb-4">
-            <svg class="w-12 h-12 text-primary-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-            </svg>
-            <h3 class="text-xl font-bold">Plaćanje pouzećem</h3>
-          </div>
-          <p class="text-gray-700 mb-4">
-            Plaćanje gotovinom ili karticom kuriru prilikom preuzimanja paketa.
-          </p>
-          <ul class="list-disc ml-6 text-sm text-gray-600">
-            <li>Najsigurniji način plaćanja</li>
-            <li>Plaćanje samo kada primite robu</li>
-            <li>Proverite proizvod pre plaćanja</li>
-          </ul>
-        </div>
-
-        <!-- Uplata na račun -->
-        <div class="bg-white rounded-lg shadow-md p-6 border-2 border-primary-200">
-          <div class="flex items-center mb-4">
-            <svg class="w-12 h-12 text-primary-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-            </svg>
-            <h3 class="text-xl font-bold">Uplata na račun</h3>
-          </div>
-          <p class="text-gray-700 mb-4">
-            Uplatite putem banke ili internet banking-a pre slanja porudžbine.
-          </p>
-          <ul class="list-disc ml-6 text-sm text-gray-600">
-            <li>Brža obrada porudžbine</li>
-            <li>Bez dodatnih troškova</li>
-            <li>Potvrda plaćanja putem SMS-a</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="mb-8 bg-primary-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-semibold mb-4">Podaci za uplatu</h2>
-      <div class="space-y-2 text-gray-700">
-        <p><strong>Primalac:</strong> {{ site.store.owner }} {{ site.store.business_name }}</p>
-        <p><strong>Broj računa:</strong> 160-XXXXXX-XX</p>
-        <p><strong>Banka:</strong> Banka Intesa</p>
-        <p><strong>PIB:</strong> {{ site.store.pib }}</p>
-        <p class="mt-4 text-sm italic">
-          * U opis uplate obavezno navedite broj porudžbine ili vaše ime i prezime
+    <div class="space-y-8">
+      <section>
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">Dostupni načini plaćanja</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-6">
+          {{ site.store.name }} nudi sledeće načine plaćanja za vašu udobnost:
         </p>
-      </div>
-    </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Važne informacije</h2>
-      <ul class="space-y-3 text-gray-700">
-        <li class="flex items-start">
-          <svg class="w-6 h-6 text-primary-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Porudžbina se obrađuje nakon potvrde plaćanja (za uplatu na račun)</span>
-        </li>
-        <li class="flex items-start">
-          <svg class="w-6 h-6 text-primary-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Kod plaćanja pouzećem, moguć je dodatni trošak kurirske službe (proverite sa kurirom)</span>
-        </li>
-        <li class="flex items-start">
-          <svg class="w-6 h-6 text-primary-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Cene na sajtu su konačne i uključuju PDV</span>
-        </li>
-        <li class="flex items-start">
-          <svg class="w-6 h-6 text-primary-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Fiskalni račun se izdaje prilikom preuzimanja paketa</span>
-        </li>
-      </ul>
-    </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <!-- Pouzeće -->
+          <div class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl shadow-lg p-6 border border-slate-600 light-mode:border-purple-200">
+            <div class="flex items-center mb-4">
+              <svg class="w-12 h-12 text-purple-400 light-mode:text-purple-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <h3 class="text-xl font-bold text-white light-mode:text-gray-900">Plaćanje pouzećem</h3>
+            </div>
+            <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+              Plaćanje gotovinom ili karticom kuriru prilikom preuzimanja paketa.
+            </p>
+            <ul class="list-disc ml-6 text-sm text-gray-400 light-mode:text-gray-600 space-y-1">
+              <li>Najsigurniji način plaćanja</li>
+              <li>Plaćanje samo kada primite robu</li>
+              <li>Proverite proizvod pre plaćanja</li>
+              <li>Dodatni trošak: {{ site.shipping.cod_fee }} RSD</li>
+            </ul>
+          </div>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Kontakt za pitanja</h2>
-      <p class="text-gray-700 mb-4">
-        Ukoliko imate pitanja vezana za plaćanje, slobodno nas kontaktirajte:
-      </p>
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <p class="text-gray-700">
-          <strong>Telefon:</strong> <a href="tel:{{ site.store.phone }}" class="text-primary-600 hover:underline">{{ site.store.phone }}</a><br>
-          <strong>Email:</strong> <a href="mailto:{{ site.store.email }}" class="text-primary-600 hover:underline">{{ site.store.email }}</a>
+          <!-- Uplata na račun -->
+          <div class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl shadow-lg p-6 border border-slate-600 light-mode:border-purple-200">
+            <div class="flex items-center mb-4">
+              <svg class="w-12 h-12 text-purple-400 light-mode:text-purple-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+              </svg>
+              <h3 class="text-xl font-bold text-white light-mode:text-gray-900">Uplata na račun</h3>
+            </div>
+            <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+              Uplatite putem banke ili internet banking-a pre slanja porudžbine.
+            </p>
+            <ul class="list-disc ml-6 text-sm text-gray-400 light-mode:text-gray-600 space-y-1">
+              <li>Brža obrada porudžbine</li>
+              <li>Bez dodatnih troškova</li>
+              <li>Potvrda plaćanja putem SMS-a</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-purple-50 light-mode:to-purple-100 p-6 rounded-2xl border border-slate-600 light-mode:border-purple-200">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">Podaci za uplatu</h2>
+        <div class="space-y-2 text-gray-300 light-mode:text-gray-700">
+          <p><strong class="text-white light-mode:text-gray-900">Primalac:</strong> {{ site.payment.account_holder }}</p>
+          <p><strong class="text-white light-mode:text-gray-900">Broj računa:</strong> {{ site.payment.account_number }}</p>
+          <p><strong class="text-white light-mode:text-gray-900">Banka:</strong> {{ site.payment.bank_name }}</p>
+          <p><strong class="text-white light-mode:text-gray-900">PIB:</strong> {{ site.store.pib }}</p>
+          <p class="mt-4 text-sm italic text-gray-400 light-mode:text-gray-600">
+            * U opis uplate obavezno navedite broj porudžbine ili vaše ime i prezime
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">Važne informacije</h2>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-purple-400 light-mode:text-purple-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Porudžbina se obrađuje nakon potvrde plaćanja (za uplatu na račun)</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-purple-400 light-mode:text-purple-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Cene na sajtu su konačne i uključuju PDV</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-purple-400 light-mode:text-purple-600 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-gray-300 light-mode:text-gray-700">Fiskalni račun se izdaje prilikom preuzimanja paketa</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">Kontakt za pitanja</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
+          Ukoliko imate pitanja vezana za plaćanje, slobodno nas kontaktirajte:
         </p>
-      </div>
-    </section>
+        <div class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-gray-50 light-mode:to-gray-100 p-6 rounded-2xl border border-slate-600 light-mode:border-gray-200">
+          <p class="text-gray-300 light-mode:text-gray-700">
+            <strong class="text-white light-mode:text-gray-900">Telefon:</strong> <a href="tel:{{ site.store.phone }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.phone }}</a><br>
+            <strong class="text-white light-mode:text-gray-900">Email:</strong> <a href="mailto:{{ site.store.email }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.email }}</a>
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
 </div>
