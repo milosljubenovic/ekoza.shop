@@ -7,6 +7,9 @@ media:
     input: assets/images/products
     output: assets/images/products
 
+  - name: Blogs
+    input: assets/images/blogs
+    output: assets/images/blogs
 content:
   - name: posts
     label: Blog
