@@ -95,7 +95,7 @@ function searchProducts(event) {
     `).join('');
     searchResults.classList.remove('hidden');
   } else {
-    searchResults.innerHTML = '<div class="p-4 text-center text-gray-400">Nema rezultata za "${searchTerm}"</div>';
+    searchResults.innerHTML = `<div class="p-4 text-center text-gray-400">Nema rezultata za "${searchTerm}"</div>`;
     searchResults.classList.remove('hidden');
   }
 }
