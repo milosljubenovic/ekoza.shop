@@ -1,0 +1,77 @@
+---
+layout: default
+title: Blog
+---
+
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 dark:from-slate-900 dark:to-slate-800 light-mode:bg-gradient-to-b light-mode:from-gray-50 light-mode:to-white min-h-screen py-16 transition-colors duration-300">
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-5xl font-bold mb-4 text-center text-white light-mode:text-gray-900">
+    Naš <span class="text-gradient">Blog</span>
+  </h1>
+  <p class="text-gray-400 light-mode:text-gray-600 text-center mb-16 text-lg">Saveti, novosti i inspiracija</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for post in site.posts %}
+    <article class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl overflow-hidden border border-slate-600 light-mode:border-gray-200 hover:border-purple-500 light-mode:hover:border-purple-400 transition-all group shadow-xl hover:shadow-2xl hover:-translate-y-1 duration-300">
+      {% if post.image %}
+      <a href="{{ post.url | relative_url }}">
+        <div class="h-56 overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+          <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+      </a>
+      {% endif %}
+      
+      <div class="p-6">
+        <div class="flex items-center gap-4 text-sm text-gray-400 light-mode:text-gray-600 mb-3">
+          <span class="flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            {{ post.date | date: "%d.%m.%Y" }}
+          </span>
+          {% if post.author %}
+          <span class="flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            {{ post.author }}
+          </span>
+          {% endif %}
+        </div>
+        
+        <h2 class="text-2xl font-bold text-white light-mode:text-gray-900 mb-3 group-hover:text-purple-400 light-mode:group-hover:text-purple-600 transition-colors">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+        
+        <p class="text-gray-400 light-mode:text-gray-600 mb-4 line-clamp-3">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+        
+        {% if post.categories %}
+        <div class="flex flex-wrap gap-2 mb-4">
+          {% for category in post.categories %}
+          <span class="px-3 py-1 bg-purple-600/30 light-mode:bg-purple-100 text-purple-300 light-mode:text-purple-700 rounded-full text-xs font-semibold">{{ category }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+        <a href="{{ post.url | relative_url }}" class="inline-flex items-center text-purple-400 light-mode:text-purple-600 font-semibold hover:text-pink-400 light-mode:hover:text-pink-600 transition-colors group">
+          Pročitaj više
+          <svg class="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if site.posts.size == 0 %}
+  <div class="text-center py-20">
+    <svg class="w-20 h-20 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <p class="text-gray-400 text-xl">Još nema objavljenih članaka</p>
+  </div>
+  {% endif %}
+</div>
+</div>
