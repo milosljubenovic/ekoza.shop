@@ -193,7 +193,7 @@ content:
             label: Slika
             type: image
             options:
-              media: assets/images/categories
+              media: categories
           - name: order
             label: Redosled
             type: number
