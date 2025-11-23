@@ -15,17 +15,25 @@ title: Početna
 
   {% assign featured = site.data.products | where: "featured", true | first %}
   <div class="container mx-auto px-4 py-20 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Left Content -->
-      <div class="text-white space-y-6 fade-in-up">
+      <div class="text-white space-y-6 fade-in-up relative">
         <div class="flex items-center space-x-2 mb-4">
           <div class="sun-icon">☀️</div>
           <span class="text-yellow-400 font-semibold tracking-wider animate-pulse">NOVO U PONUDI!</span>
         </div>
         
-        <h1 class="text-6xl lg:text-7xl font-bold leading-tight">
+        <h1 class="text-6xl lg:text-7xl font-bold leading-tight relative">
           Novo u<br>
           <span class="text-gradient">ponudi!</span>
+          <!-- Product Circle Behind Text - Mobile Only -->
+          <div class="md:hidden absolute -right-16 top-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none z-[-1]">
+            <div class="product-circle opacity-40">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <img src="{{ '/assets/images/hero.gif' | relative_url }}" alt="Lazy Bag" class="w-full h-full object-contain">
+              </div>
+            </div>
+          </div>
         </h1>
         
         <div class="flex items-center space-x-3">
@@ -38,6 +46,20 @@ title: Početna
         <p class="text-xl text-gray-300 max-w-md">
           {{ featured.name }} {{ featured.icon | default: "🧸" }}
         </p>
+
+        <!-- Decorative Icons - Mobile: Behind text -->
+        <div class="flex md:hidden items-center space-x-8 pt-4">
+          <div class="decorative-icon">🍦</div>
+          <div class="decorative-icon delay-1">🛒</div>
+          <div class="squiggle">~</div>
+        </div>
+
+        <!-- Decorative Icons - Desktop: Above buttons -->
+        <div class="hidden md:flex items-center space-x-8 pb-4">
+          <div class="decorative-icon">🍦</div>
+          <div class="decorative-icon delay-1">🛒</div>
+          <div class="squiggle">~</div>
+        </div>
 
         <div class="flex space-x-4 pt-4">
           <a href="{{ '/p' | relative_url }}roizvod/{{ featured.id }}/" class="btn-hero group">
@@ -57,17 +79,10 @@ title: Početna
             </svg>
           </button>
         </div>
-
-        <!-- Decorative Icons -->
-        <div class="flex items-center space-x-8 pt-8">
-          <div class="decorative-icon">🍦</div>
-          <div class="decorative-icon delay-1">🛒</div>
-          <div class="squiggle">~</div>
-        </div>
       </div>
 
       <!-- Right Content - Product Display -->
-      <div class="relative fade-in-right">
+      <div class="relative fade-in-right hidden md:block">
         <div class="product-circle">
           <div class="absolute inset-0 flex items-center justify-center">
             <img src="{{ '/assets/images/hero.gif' | relative_url }}" alt="Lazy Bag Products" class="w-full h-full object-contain">
