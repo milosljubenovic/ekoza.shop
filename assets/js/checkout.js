@@ -75,16 +75,13 @@ function updateOrderTotals(subtotal) {
   
   // Get selected payment method
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'pouzecem';
-  const codFee = paymentMethod === 'pouzecem' ? 50 : 0;
+  const codFee = paymentMethod === 'pouzecem' ? 0 : 0;
   
   const total = subtotal + shipping + codFee;
 
   document.getElementById('subtotalAmount').textContent = subtotal.toLocaleString('sr-RS') + ' RSD';
   
   let shippingText = shipping === 0 ? 'Besplatna' : shipping.toLocaleString('sr-RS') + ' RSD';
-  if (codFee > 0) {
-    shippingText += ` (+${codFee} RSD naknada)`;
-  }
   document.getElementById('shippingAmount').textContent = shippingText;
   
   document.getElementById('totalAmount').textContent = total.toLocaleString('sr-RS') + ' RSD';

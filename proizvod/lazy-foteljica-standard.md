@@ -6,6 +6,8 @@ base_price: 6500
 price: 6500
 old_price: 7500
 description: "Udobna lazy foteljica sa odličnom podrškom za leđa. Idealna za dnevni boravak."
+supports_embroidery: true
+supports_name_embroidery: true
 images:
   - "/assets/images/products/lazy-foteljica-1.jpg"
   - "/assets/images/products/lazy-foteljica-2.jpg"

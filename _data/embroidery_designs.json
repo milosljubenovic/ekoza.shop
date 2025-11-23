@@ -1,0 +1,65 @@
+[
+  {
+    "id": "mickey-mouse",
+    "name": "Mickey Mouse",
+    "category": "cartoon",
+    "image": "/assets/images/embroidery/mickey-mouse.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/mickey-mouse.png"
+  },
+  {
+    "id": "football",
+    "name": "Fudbalska lopta",
+    "category": "sport",
+    "image": "/assets/images/embroidery/football.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/football.png"
+  },
+  {
+    "id": "basketball",
+    "name": "Košarkaška lopta",
+    "category": "sport",
+    "image": "/assets/images/embroidery/basketball.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/basketball.png"
+  },
+  {
+    "id": "dog",
+    "name": "Pas",
+    "category": "animals",
+    "image": "/assets/images/embroidery/dog.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/dog.png"
+  },
+  {
+    "id": "cat",
+    "name": "Mačka",
+    "category": "animals",
+    "image": "/assets/images/embroidery/cat.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/cat.png"
+  },
+  {
+    "id": "flower",
+    "name": "Cvet",
+    "category": "nature",
+    "image": "/assets/images/embroidery/flower.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/flower.png"
+  },
+  {
+    "id": "tree",
+    "name": "Drvo",
+    "category": "nature",
+    "image": "/assets/images/embroidery/tree.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/tree.png"
+  },
+  {
+    "id": "star",
+    "name": "Zvezda",
+    "category": "other",
+    "image": "/assets/images/embroidery/star.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/star.png"
+  },
+  {
+    "id": "heart",
+    "name": "Srce",
+    "category": "other",
+    "image": "/assets/images/embroidery/heart.png",
+    "thumbnail": "/assets/images/embroidery/thumbs/heart.png"
+  }
+]

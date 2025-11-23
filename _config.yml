@@ -2,7 +2,7 @@
 title: Lazy Pleasure
 description: Online prodavnica za moderne proizvode
 baseurl: ""
-url: "http://localhost:4000"
+url: "https://milosljubenovic.github.io/ekoza.shop/"
 
 # Store Information
 store:
@@ -31,6 +31,29 @@ shipping:
   standard_delivery_days: "7 radnih dana"
   pickup_delivery_days: "3 radna dana"
   cod_fee: 50
+
+# Customization Options
+customization:
+  embroidery_price: 300
+  name_embroidery_price: 500
+  font_options:
+    - name: "Latinica"
+      value: "latin"
+    - name: "Ćirilica"
+      value: "cyrillic"
+  embroidery_categories:
+    - name: "Svi"
+      value: "all"
+    - name: "Crtani"
+      value: "cartoon"
+    - name: "Sport"
+      value: "sport"
+    - name: "Životinje"
+      value: "animals"
+    - name: "Priroda"
+      value: "nature"
+    - name: "Ostalo"
+      value: "other"
 
 # Build settings
 markdown: kramdown
