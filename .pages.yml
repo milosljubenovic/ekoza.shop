@@ -1,16 +1,7 @@
 media:
-  - name: products
-    input: assets/images/products
-    output: assets/images/products
-  - name: blogs
-    input: assets/images/blogs
-    output: assets/images/blogs
-  - name: categories
-    input: assets/images/categories
-    output: assets/images/categories
-  - name: embodery
-    input: assets/images/embroidery
-    output: assets/images/embroidery
+  - name: Assets
+    input: assets
+    output: assets
 
 content:
   - name: posts
