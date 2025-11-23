@@ -18,6 +18,14 @@ store:
   phone: "+381 62 220894"
   email: "office@ekoza.shop"
 
+# Contact Channels
+contact:
+  viber: "381622220894"
+  whatsapp: "381622220894"
+  facebook_messenger: "foteljicee"  # Facebook page username
+  sms: "381622220894"
+  call: "381622220894"
+
 # Payment Information
 payment:
   bank_name: "AIK Banka a.d. Beograd"
