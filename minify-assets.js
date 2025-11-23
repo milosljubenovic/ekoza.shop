@@ -22,9 +22,8 @@ async function minifyFile(src, dest) {
     const result = await minify(code, {
       compress: {
         dead_code: true,
-        drop_console: true, // Remove console.log statements
+        drop_console: false, // Keep console for debugging, they're already disabled in anti-debug
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug'],
         passes: 3
       },
       mangle: {

@@ -84,9 +84,11 @@ exclude:
   - postcss.config.js
   - README.md
   - BUILD.md
+  - SECURITY.md
   - minify-assets.js
   - build-production.sh
   - .github
+  - assets/js/*.js
 
 # Plugins
 plugins:
