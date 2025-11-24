@@ -60,14 +60,14 @@ content:
     path: _data/products.json
     format: json
     fields:
-      - name: products
+      - name: root
         label: Proizvodi
         type: object
         list: true
         fields:
           - name: id
             label: ID
-            type: string
+            type: number
             required: true
           - name: name
             label: Naziv
