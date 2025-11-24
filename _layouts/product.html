@@ -30,7 +30,9 @@ layout: default
       </div>
 
       <div class="mb-6">
-        <p class="text-gray-300 text-lg">{{ page.description }}</p>
+        <div class="text-gray-300 text-lg prose prose-invert prose-lg max-w-none">
+          {{ page.description | markdownify }}
+        </div>
       </div>
 
       <!-- Category -->

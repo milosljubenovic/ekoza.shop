@@ -11,39 +11,27 @@ featured: false
 supports_embroidery: false
 supports_name_embroidery: false
 description: |
-  Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Bag! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Bag je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
+  Uživajte u ultimativnom komforu sa našim personalizovanim **Lazy Bag**! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Bag je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
   
-  Karakteristike proizvoda:
+  ## Karakteristike proizvoda:
   
-   Plišani materijal: Napravljen od najkvalitetnije eko-kože, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.
+  - **Plišani materijal**: Napravljen od najkvalitetnije eko-kože, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.
+  - **Jednobojni dizajn**: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.
+  - **Savršeno uklapanje u svaki dom**: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
   
-   Jednobojni dizajn: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.
+  ## Prednosti:
   
-   Savršeno uklapanje u svaki dom: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
+  - **Komfor i stil**: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.
+  - **Univerzalna upotreba**: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.
   
-  Prednosti:
+  Neka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Bagom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!
   
-   Komfor i stil: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.
+  ## Dostupne veličine (visina/širina):
   
-   Univerzalna upotreba: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.
-  
-   Neka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Bagom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!
-  
-  Lazy Bag se šije us sledećim veličinama (visina/širina):
-  
-   210/90cm: Idealno za manje prostore i personalnu upotrebu.
-  
-   240/100cm: Savršeno za srednje prostore i dodatnu udobnost.
-  
-   270/110cm: Odlično za prostranije sobe i veći komfor.
-  
-   300/130cm: Maksimalna veličina za ultimativno opuštanje i prostranost.
-  
-  Potrebna Vam je pomoć?
-  
-   Kako da poručim presonalizovani LazyBag?
-  
-   Politika Slanja
+  - **210/90cm**: Idealno za manje prostore i personalnu upotrebu.
+  - **240/100cm**: Savršeno za srednje prostore i dodatnu udobnost.
+  - **270/110cm**: Odlično za prostranije sobe i veći komfor.
+  - **300/130cm**: Maksimalna veličina za ultimativno opuštanje i prostranost.
 images:
   - "/assets/images/products/lazy-bag-jednobojni/lazy-bag-jednobojni.png"
 colors:

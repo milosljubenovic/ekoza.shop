@@ -107,7 +107,7 @@ content:
         default: false
       - name: description
         label: Opis
-        type: text
+        type: rich-text
         required: true
       - name: images
         label: Slike

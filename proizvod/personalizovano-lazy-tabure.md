@@ -13,37 +13,24 @@ supports_name_embroidery: false
 description: |
   Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Tabureom! Ovaj jedinstveni komad nameštaja sastoji se od tri dela: dva sedišta i omotača, koji se lako mogu prilagoditi vašim potrebama i preferencijama. Svaki deo je dizajniran da vam pruži maksimalnu udobnost i podršku, bilo da odmarate noge, sedite ili koristite kao dodatni stočić.
   
-  Karakteristike proizvoda:
+  ## Karakteristike proizvoda:
   
-   Prilagodljiv dizajn: Sastavljen od tri delova koji se mogu rasporediti na različite načine, omogućavajući vam da kreirate savršeno mesto za opuštanje.
+  - **Prilagodljiv dizajn**: Sastavljen od tri delova koji se mogu rasporediti na različite načine, omogućavajući vam da kreirate savršeno mesto za opuštanje.
+  - **Personalizacija**: Dodajte svoj lični pečat sa mestom za vez amblema i prostorom za vaš tekst. Bez obzira da li želite da dodate ime, inspirativnu poruku ili omiljeni citat, mogućnosti su beskrajne.
+  - **Visokokvalitetni materijali**: Napravljen od vrhunskih materijala koji osiguravaju dugotrajnost i lako održavanje.
+  - **Savršeno uklapanje u svaki dom**: Moderan dizajn i neutralne boje čine ovaj Lazy Tabure idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
   
-   Personalizacija: Dodajte svoj lični pečat sa mestom za vez amblema i prostorom za vaš tekst. Bez obzira da li želite da dodate ime, inspirativnu poruku ili omiljeni citat, mogućnosti su beskrajne.
+  ## Prednosti:
   
-   Visokokvalitetni materijali: Napravljen od vrhunskih materijala koji osiguravaju dugotrajnost i lako održavanje.
+  - **Komfor i stil**: Kombinacija ergonomskog dizajna i elegantnog izgleda garantuje udobnost i estetiku.
+  - **Fleksibilnost**: Lako prilagodljiv različitim potrebama i prostorima zahvaljujući modularnoj strukturi.
+  - **Lični pečat**: Omogućava vam da izrazite svoju kreativnost i personalizujete vaš prostor.
   
-   Savršeno uklapanje u svaki dom: Moderan dizajn i neutralne boje čine ovaj Lazy Tabure idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
+  ## Veličine:
   
-  Prednosti:
-  
-   Komfor i stil: Kombinacija ergonomskog dizajna i elegantnog izgleda garantuje udobnost i estetiku.
-  
-   Fleksibilnost: Lako prilagodljiv različitim potrebama i prostorima zahvaljujući modularnoj strukturi.
-  
-   Lični pečat: Omogućava vam da izrazite svoju kreativnost i personalizujete vaš prostor.
-  
-  Neka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Tabureom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!
-  
-  Dostupne veličine:
-  
-   100 cm
-  
-   80 cm
-  
-   50 cm
-  
-  Potrebna Vam je pomoć?
-  
-   Kako da poručim presonalizovani LazyBag?
+  - 100 cm
+  - 80 cm
+  - 50 cm
   
    Politika Slanja
 images:

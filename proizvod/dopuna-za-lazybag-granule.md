@@ -11,7 +11,9 @@ featured: false
 supports_embroidery: false
 supports_name_embroidery: false
 description: |
-  1KG granula za dopunu lazy begova, lopti, taburića...
+  **Granule za dopunu Lazy Bag proizvoda**
+  
+  Visokokvalitetne granule za dopunu vreća za sedenje, lopti i taburea. Obezbeđuje dodatni komfor i vraća proizvodu njegovu originalnu mekoću.
 images:
   - "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png"
 colors:

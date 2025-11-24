@@ -13,31 +13,20 @@ supports_name_embroidery: false
 description: |
   Uživajte u ultimativnom komforu sa našim personalizovanim Lazy Teddijem! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Teddy je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
   
-  Karakteristike proizvoda:
+  ## Karakteristike proizvoda:
   
-   Plišani materijal: Napravljen od najkvalitetnijeg pliša, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.
+  - **Plišani materijal**: Napravljen od najkvalitetnijeg pliša, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.
+  - **Jednobojni dizajn**: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.
+  - **Savršeno uklapanje u svaki dom**: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Teddy idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
   
-   Jednobojni dizajn: Iako nije moguće kombinovati više boja, jednobojni dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno uklopiti u vaš dom.
+  ## Prednosti:
   
-   Savršeno uklapanje u svaki dom: Moderan dizajn i mogućnost personalizacije čine ovaj Lazy Teddy idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
+  - **Komfor i stil**: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.
+  - **Univerzalna upotreba**: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.
   
-  Prednosti:
+  ## Veličina:
   
-   Komfor i stil: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.
-  
-   Univerzalna upotreba: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.
-  
-   Neka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Teddijem. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!
-  
-  Lazy Teddy se šije u jednoj veličini (visina/širina)
-  
-   280/130cm
-  
-  Potrebna Vam je pomoć?
-  
-   Kako da poručim presonalizovani LazyBag?
-  
-   Politika Slanja
+  Lazy Teddy se šije u jednoj veličini (visina/širina): **280/130cm**
 images:
   - "/assets/images/products/lazy-teddy/lazy-teddy.png"
 colors:
