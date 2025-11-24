@@ -1,212 +1,19 @@
 media:
-  - name: Products
+  - name: Proizvodi
     input: assets/images/products
     output: assets/images/products
 
-  - name: Blogs
+  - name: Blogovi
     input: assets/images/blogs
     output: assets/images/blogs
 
-  - name: EmbroideryAssets
+  - name: Vezovi
     input: assets/images/embroidery
     output: assets/images/embroidery
     
 content:
-  - name: posts
-    label: Blog
-    type: collection
-    path: _posts
-    extension: html
-    format: yaml-frontmatter
-    filename: "{year}-{month}-{day}-{slug}"
-    fields:
-      - name: layout
-        label: Raspored
-        type: string
-        default: post
-        hidden: true
-      - name: title
-        label: Naslov
-        type: string
-        required: true
-      - name: date
-        label: Datum
-        type: date
-        required: true
-      - name: author
-        label: Autor
-        type: string
-        default: Lazy Pleasure
-      - name: description
-        label: Opis
-        type: text
-        required: false
-      - name: image
-        label: Naslovna slika
-        type: image
-        options:
-          media: Blogs
-      - name: tags
-        label: Tagovi
-        type: string
-        list: true
-      - name: body
-        label: Sadržaj
-        type: rich-text
 
-  - name: product-pages
-    label: Proizvodi (Stranice)
-    type: collection
-    path: _products
-    extension: md
-    format: yaml-frontmatter
-    fields:
-      - name: layout
-        label: Layout
-        type: string
-        default: product
-        hidden: true
-      - name: title
-        label: Naziv proizvoda
-        type: string
-        required: true
-      - name: product_id
-        label: ID proizvoda
-        type: string
-        required: true
-      - name: category
-        label: Kategorija
-        type: string
-        required: true
-      - name: base_price
-        label: Osnovna cena (RSD)
-        type: number
-        required: true
-      - name: price
-        label: Cena (RSD)
-        type: number
-        required: true
-      - name: old_price
-        label: Stara cena (RSD)
-        type: number
-      - name: in_stock
-        label: Na stanju
-        type: boolean
-        default: true
-      - name: featured
-        label: Istaknuto
-        type: boolean
-        default: false
-      - name: supports_embroidery
-        label: Podržava vez
-        type: boolean
-        default: false
-      - name: supports_name_embroidery
-        label: Podržava vez imena
-        type: boolean
-        default: false
-      - name: description
-        label: Opis
-        type: rich-text
-        required: true
-        options:
-          media: false
-      - name: images
-        label: Slike
-        type: image
-        list: true
-        options:
-          media: assets/images/products
-      - name: colors
-        label: Boje
-        type: object
-        list: true
-        fields:
-          - name: name
-            label: Naziv boje
-            type: string
-            required: true
-          - name: hex
-            label: Hex kod
-            type: string
-            required: true
-          - name: price_modifier
-            label: Modifikator cene
-            type: number
-            default: 0
-          - name: image
-            label: Slika boje (default)
-            type: image
-            options:
-              media: Products
-          - name: size_images
-            label: Slike po veličinama
-            type: object
-            list: true
-            fields:
-              - name: size
-                label: Veličina
-                type: string
-                required: true
-              - name: image
-                label: Slika
-                type: image
-                options:
-                  media: Products
-      - name: sizes
-        label: Veličine
-        type: object
-        list: true
-        fields:
-          - name: name
-            label: Naziv veličine
-            type: string
-            required: true
-          - name: price_modifier
-            label: Modifikator cene
-            type: number
-            default: 0
-      - name: tags
-        label: Tagovi
-        type: string
-        list: true
-
-  - name: categories
-    label: Kategorije
-    type: file
-    path: _data/categories.json
-    format: json
-    fields:
-      - name: categories
-        label: Kategorije
-        type: object
-        list: true
-        fields:
-          - name: id
-            label: ID
-            type: string
-            required: true
-          - name: name
-            label: Naziv
-            type: string
-            required: true
-          - name: slug
-            label: URL slug
-            type: string
-            required: true
-          - name: description
-            label: Opis
-            type: text
-          - name: image
-            label: Slika
-            type: image
-            options:
-              media: categories
-          - name: order
-            label: Redosled
-            type: number
-            default: 0
-  # Jekyll configuration
+ # Jekyll configuration
   - name: config
     label: Podešavanja sajta
     path: _config.yml
@@ -263,6 +70,7 @@ content:
           - name: country
             label: Država
             type: string
+            default: Srbija
           - name: phone
             label: Telefon
             type: string
@@ -346,38 +154,171 @@ content:
         type: object
         fields:
           - name: embroidery_price
-            label: Cena običnog veza
+            label: Cena veza slike
             type: number
           - name: name_embroidery_price
             label: Cena veza imena
             type: number
+  - name: posts
+    label: Blog
+    type: collection
+    path: _posts
+    extension: html
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{slug}"
+    fields:
+      - name: layout
+        label: Raspored
+        type: string
+        default: post
+        hidden: true
+      - name: title
+        label: Naslov
+        type: string
+        required: true
+      - name: date
+        label: Datum
+        type: date
+        required: true
+      - name: author
+        label: Autor
+        type: string
+        default: Lazy Pleasure
+      - name: description
+        label: Opis
+        type: text
+        required: false
+      - name: image
+        label: Naslovna slika
+        type: image
+        options:
+          media: Blogovi
+      - name: tags
+        label: Tagovi
+        type: string
+        list: true
+      - name: body
+        label: Sadržaj
+        type: rich-text
 
-      # Build settings
-      - name: markdown
-        label: Markdown procesor
+  - name: product-pages
+    label: Proizvodi (Stranice)
+    type: collection
+    path: _products
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - name: layout
+        label: Layout
         type: string
-        default: kramdown
-  
-      - name: permalink
-        label: Permalink stil
+        default: product
+        hidden: true
+      - name: title
+        label: Naziv proizvoda
         type: string
-  
-      # Collections
-      - name: collections
-        label: Kolekcije
+        required: true
+      - name: product_id
+        label: ID proizvoda
+        type: string
+        required: true
+      - name: category
+        label: Kategorija
+        type: string
+        required: true
+      - name: base_price
+        label: Osnovna cena (RSD)
+        type: number
+        required: true
+      - name: price
+        label: Cena (RSD)
+        type: number
+        required: true
+      - name: old_price
+        label: Stara cena (RSD)
+        type: number
+      - name: in_stock
+        label: Na stanju
+        type: boolean
+        default: true
+      - name: featured
+        label: Istaknuto
+        type: boolean
+        default: false
+      - name: supports_embroidery
+        label: Podržava vez
+        type: boolean
+        default: false
+      - name: supports_name_embroidery
+        label: Podržava vez imena
+        type: boolean
+        default: false
+      - name: description
+        label: Opis
+        type: rich-text
+        required: true
+        options:
+          media: false
+      - name: images
+        label: Slike
+        type: image
+        list: true
+        options:
+          media: Proizvodi
+      - name: colors
+        label: Boje
         type: object
+        list: true
         fields:
-          - name: products
-            label: Proizvodi kolekcija
+          - name: name
+            label: Naziv boje
+            type: string
+            required: true
+          - name: hex
+            label: Hex kod
+            type: string
+            required: true
+          - name: price_modifier
+            label: Modifikator cene
+            type: number
+            default: 0
+          - name: image
+            label: Slika boje (default)
+            type: image
+            options:
+              media: Proizvodi
+          - name: size_images
+            label: Slike po veličinama
             type: object
+            list: true
             fields:
-              - name: output
-                label: Output
-                type: boolean
-              - name: permalink
-                label: Permalink
+              - name: size
+                label: Veličina
                 type: string
+                required: true
+              - name: image
+                label: Slika
+                type: image
+                options:
+                  media: Proizvodi
+      - name: sizes
+        label: Veličine
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Naziv veličine
+            type: string
+            required: true
+          - name: price_modifier
+            label: Modifikator cene
+            type: number
+            default: 0
+      - name: tags
+        label: Tagovi
+        type: string
+        list: true
 
+ 
 
 
 settings:
