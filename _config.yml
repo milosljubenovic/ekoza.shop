@@ -1,96 +1,74 @@
-# Lazy Pleasure - Jekyll eCommerce Configuration
 title: Lazy Pleasure
-description: Online prodavnica za moderne proizvode
-baseurl: ""
-url: "https://ekoza.shop"
-
-# Store Information
+description: Kupite Lazy Bag online sa dostavom u celoj Srbiji! Pogledajte naš
+  najjeftiniji i najkvalitetniji asortiman vreća za sedenje. Akcija i popusti!
+url: https://ekoza.shop
 store:
-  name: "Lazy Pleasure"
-  owner: "Đurđina Stojanović"
-  business_name: "pr Lazy pleasure"
+  name: Lazy Pleasure
+  owner: Đurđina Stojanović
+  business_name: pr Lazy pleasure
   mb: "66357732"
   pib: "112791552"
-  address: "DEDINA BARA bb"
-  city: "Grdelica"
+  address: DEDINA BARA bb
+  city: Grdelica
   postal_code: "16220"
-  country: "Srbija"
-  phone: "+381 62 220894"
-  email: "office@ekoza.shop"
-
-# Contact Channels
+  country: Srbija
+  phone: +381 62 220894
+  email: office@ekoza.shop
 contact:
   viber: "381622220894"
   whatsapp: "381622220894"
-  facebook_messenger: "foteljicee"  # Facebook page username
+  facebook_messenger: foteljicee
   sms: "381622220894"
   call: "381622220894"
-
-# Payment Information
 payment:
-  bank_name: "AIK Banka a.d. Beograd"
-  account_number: "105-0261802000054-45"
-  account_holder: "Lazy Pleasure PR Đurđina Stojanović"
-
-# Shipping Information
+  bank_name: AIK Banka a.d. Beograd
+  account_number: 105-0261802000054-45
+  account_holder: Lazy Pleasure PR Đurđina Stojanović
 shipping:
-  courier_name: "AKS"
+  courier_name: AKS
   standard_price: 400
-  standard_delivery_days: "7 radnih dana"
-  pickup_delivery_days: "3 radna dana"
+  standard_delivery_days: 7 radnih dana
+  pickup_delivery_days: 3 radna dana
   cod_fee: 50
   free_min_order: 15000
-
-# Google Apps Script
 google_apps_script:
-  url: "https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec"
-
-# Customization Options
+  url: https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec
 customization:
   embroidery_price: 300
   name_embroidery_price: 500
   font_options:
-    - name: "Latinica"
-      value: "latin"
-    - name: "Ćirilica"
-      value: "cyrillic"
+    - name: Latinica
+      value: latin
+    - name: Ćirilica
+      value: cyrillic
   embroidery_categories:
-    - name: "Svi"
-      value: "all"
-    - name: "Crtani"
-      value: "cartoon"
-    - name: "Sport"
-      value: "sport"
-    - name: "Životinje"
-      value: "animals"
-    - name: "Priroda"
-      value: "nature"
-    - name: "Ostalo"
-      value: "other"
-
-# Build settings
+    - name: Svi
+      value: all
+    - name: Crtani
+      value: cartoon
+    - name: Sport
+      value: sport
+    - name: Životinje
+      value: animals
+    - name: Priroda
+      value: nature
+    - name: Ostalo
+      value: other
 markdown: kramdown
 permalink: pretty
-
-# Collections
 collections:
   products:
     output: true
     permalink: /proizvodi/:path/
-
-# Defaults
 defaults:
   - scope:
-      path: ""
-      type: "products"
+      type: products
     values:
-      layout: "product"
+      layout: product
   - scope:
-      path: "proizvod"
+      path: proizvod
     values:
-      layout: "product"
-
-# Exclude from processing
+      layout: product
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -105,16 +83,12 @@ exclude:
   - minify-assets.js
   - build-production.sh
   - .github
-
-# Include JavaScript files
 include:
   - assets/js/chat.js
   - assets/js/cart.js
   - assets/js/main.js
   - assets/js/checkout.js
   - assets/js/order-tracking.js
-
-# Plugins
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
