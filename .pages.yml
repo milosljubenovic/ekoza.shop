@@ -109,6 +109,8 @@ content:
         label: Opis
         type: rich-text
         required: true
+        options:
+          media: false
       - name: images
         label: Slike
         type: image
