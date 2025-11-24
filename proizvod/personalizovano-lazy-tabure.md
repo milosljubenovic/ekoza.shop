@@ -52,7 +52,8 @@ colors:
   - name: "Standardna"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/personalizovano-lazy-tabure/personalizovano-lazy-tabure.png" 
+    image: "/assets/images/products/personalizovano-lazy-tabure/personalizovano-lazy-tabure.png"
+    size_images: []
 sizes:
   - name: "100CM"
     price_modifier: 0

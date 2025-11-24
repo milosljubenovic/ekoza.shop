@@ -344,6 +344,22 @@ let selectedSizeModifier = 0;
 let embroideryModifier = 0;
 let nameEmbroideryModifier = 0;
 
+// Store color-size-image mappings
+const colorSizeImages = {
+  {% for color in page.colors %}
+  '{{ color.name }}': {
+    defaultImage: '{{ color.image }}',
+    sizeImages: {
+      {% if color.size_images %}
+      {% for size_img in color.size_images %}
+      '{{ size_img.size }}': '{{ size_img.image }}'{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+      {% endif %}
+    }
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+};
+
 function updatePrice() {
   const totalPrice = basePrice + selectedColorModifier + selectedSizeModifier + embroideryModifier + nameEmbroideryModifier;
   document.getElementById('displayPrice').textContent = totalPrice.toLocaleString('sr-RS') + ' RSD';
@@ -351,6 +367,37 @@ function updatePrice() {
 
 function changeMainImage(imageSrc) {
   document.getElementById('mainImage').src = imageSrc;
+}
+
+function updateImageForColorAndSize() {
+  const selectedColor = document.querySelector('.color-radio:checked');
+  const selectedSize = document.querySelector('.size-radio:checked');
+  
+  if (!selectedColor) {
+    changeMainImage(defaultImage);
+    return;
+  }
+  
+  const colorName = selectedColor.value;
+  const colorData = colorSizeImages[colorName];
+  
+  if (!colorData) {
+    changeMainImage(defaultImage);
+    return;
+  }
+  
+  // If size is selected and we have a size-specific image, use it
+  if (selectedSize && colorData.sizeImages && colorData.sizeImages[selectedSize.value]) {
+    changeMainImage(colorData.sizeImages[selectedSize.value]);
+  } 
+  // Otherwise use the color's default image
+  else if (colorData.defaultImage) {
+    changeMainImage(colorData.defaultImage);
+  } 
+  // Fall back to product default
+  else {
+    changeMainImage(defaultImage);
+  }
 }
 
 // Color selection with radio buttons
@@ -365,10 +412,8 @@ document.querySelectorAll('.color-radio').forEach(radio => {
     selectedColorModifier = parseInt(radio.dataset.priceModifier) || 0;
     document.getElementById('selectedColorName').textContent = radio.value;
     
-    // Change image if color has specific image
-    if (radio.dataset.image) {
-      changeMainImage(radio.dataset.image);
-    }
+    // Update image based on color and size
+    updateImageForColorAndSize();
     updatePrice();
   }
   
@@ -388,12 +433,8 @@ document.querySelectorAll('.color-radio').forEach(radio => {
       selectedColorModifier = parseInt(this.dataset.priceModifier) || 0;
       document.getElementById('selectedColorName').textContent = this.value;
       
-      // Change image if color has specific image, otherwise use default
-      if (this.dataset.image) {
-        changeMainImage(this.dataset.image);
-      } else {
-        changeMainImage(defaultImage);
-      }
+      // Update image based on color and size
+      updateImageForColorAndSize();
       
       updatePrice();
     }
@@ -425,6 +466,10 @@ document.querySelectorAll('.size-radio').forEach(radio => {
       swatch.classList.remove('border-slate-600');
       selectedSizeModifier = parseInt(this.dataset.priceModifier) || 0;
       document.getElementById('selectedSizeName').textContent = this.value;
+      
+      // Update image based on color and size
+      updateImageForColorAndSize();
+      
       updatePrice();
     }
   });

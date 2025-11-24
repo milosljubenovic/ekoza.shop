@@ -58,7 +58,8 @@ colors:
   - name: "Standardna"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/personalizovani-lazy-bag/personalizovani-lazy-bag.png" 
+    image: "/assets/images/products/personalizovani-lazy-bag/personalizovani-lazy-bag.png"
+    size_images: []
 sizes:
   - name: "210/90CM"
     price_modifier: 0

@@ -18,7 +18,16 @@ colors:
   - name: "Standardna"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png" 
+    image: "/assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png"
+    size_images:
+      - size: "0.5KG"
+        image: "/assets/images/products/dopuna-za-lazybag-granule/05kg.png"
+      - size: "1KG"
+        image: "/assets/images/products/dopuna-za-lazybag-granule/1kg.png"
+      - size: "1.5KG"
+        image: "/assets/images/products/dopuna-za-lazybag-granule/15kg.png"
+      - size: "2KG"
+        image: "/assets/images/products/dopuna-za-lazybag-granule/2kg.png"
 sizes:
   - name: "0.5KG"
     price_modifier: 0

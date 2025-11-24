@@ -41,27 +41,33 @@ colors:
   - name: "Lbv01"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv01.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv01.jpg"
+    size_images: []
   - name: "Lbv02"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv02.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv02.jpg"
+    size_images: []
   - name: "Lbv03"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv03.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv03.jpg"
+    size_images: []
   - name: "Lbv04"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv04.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv04.jpg"
+    size_images: []
   - name: "Lbv05"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv05.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv05.jpg"
+    size_images: []
   - name: "Lbv06"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazybag-višebojni/lbv06.jpg" 
+    image: "/assets/images/products/lazybag-višebojni/lbv06.jpg"
+    size_images: []
 sizes:
   - name: "210/90CM"
     price_modifier: 0

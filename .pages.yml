@@ -133,10 +133,24 @@ content:
             type: number
             default: 0
           - name: image
-            label: Slika boje
+            label: Slika boje (default)
             type: image
             options:
               media: assets/images/products
+          - name: size_images
+            label: Slike po veličinama
+            type: object
+            list: true
+            fields:
+              - name: size
+                label: Veličina
+                type: string
+                required: true
+              - name: image
+                label: Slika
+                type: image
+                options:
+                  media: assets/images/products
       - name: sizes
         label: Veličine
         type: object

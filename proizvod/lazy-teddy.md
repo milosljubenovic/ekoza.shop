@@ -44,27 +44,33 @@ colors:
   - name: "Siva"
     hex: "#808080"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/siva.png" 
+    image: "/assets/images/products/lazy-teddy/siva.png"
+    size_images: []
   - name: "Bejbi-roze"
     hex: "#FFC0CB"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/bejbi-roze.png" 
+    image: "/assets/images/products/lazy-teddy/bejbi-roze.png"
+    size_images: []
   - name: "Bela"
     hex: "#FFFFFF"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/bela.png" 
+    image: "/assets/images/products/lazy-teddy/bela.png"
+    size_images: []
   - name: "Nebo-plava"
     hex: "#0000FF"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/nebo-plava.png" 
+    image: "/assets/images/products/lazy-teddy/nebo-plava.png"
+    size_images: []
   - name: "Crna"
     hex: "#000000"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/crna.png" 
+    image: "/assets/images/products/lazy-teddy/crna.png"
+    size_images: []
   - name: "Army-green"
     hex: "#4B5320"
     price_modifier: 0
-    image: "/assets/images/products/lazy-teddy/army-green.png" 
+    image: "/assets/images/products/lazy-teddy/army-green.png"
+    size_images: []
 sizes:
   - name: "M"
     price_modifier: 0
