@@ -8,12 +8,12 @@ layout: default
     <!-- Product Images Gallery -->
     <div>
       <div class="mb-4">
-        <img id="mainImage" src="{{ page.images[0] }}" alt="{{ page.title }}" class="w-full h-96 object-cover rounded-2xl shadow-2xl border border-slate-700 cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageModal('{{ page.images[0] }}')">
+        <img id="mainImage" src="{{ page.images[0] }}" alt="{{ page.title }}" class="w-full h-96 object-contain rounded-2xl shadow-2xl border border-slate-700 cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageModal(this.src)">
       </div>
       <div class="grid grid-cols-4 gap-3">
         {% for image in page.images %}
         <img src="{{ image }}" alt="{{ page.title }}" 
-             class="w-full h-24 object-cover rounded-xl cursor-pointer hover:opacity-75 thumbnail-image border-2 border-slate-700 hover:border-purple-500 transition-all"
+             class="w-full h-24 object-contain rounded-xl cursor-pointer hover:opacity-75 thumbnail-image border-2 border-slate-700 hover:border-purple-500 transition-all"
              onclick="changeMainImage('{{ image }}')">
         {% endfor %}
       </div>
@@ -368,7 +368,10 @@ function updatePrice() {
 }
 
 function changeMainImage(imageSrc) {
-  document.getElementById('mainImage').src = imageSrc;
+  const mainImage = document.getElementById('mainImage');
+  mainImage.src = imageSrc;
+  // Update the onclick handler to open modal with current image
+  mainImage.onclick = function() { openImageModal(imageSrc); };
 }
 
 function updateImageForColorAndSize() {
@@ -551,6 +554,9 @@ function addToCartWithOptions() {
   const colorName = selectedColor ? selectedColor.value : '';
   const sizeName = selectedSize ? selectedSize.value : '';
   
+  // Get the current displayed image
+  const currentImage = document.getElementById('mainImage').src;
+  
   // Check customizations
   const hasEmbroidery = embroideryCheckbox && embroideryCheckbox.checked;
   const hasNameEmbroidery = nameEmbroideryCheckbox && nameEmbroideryCheckbox.checked;
@@ -581,7 +587,7 @@ function addToCartWithOptions() {
     productTitle += ' [Vez: ' + customName + ' - ' + fontLabel + ']';
   }
   
-  addToCart(productTitle, totalPrice, '{{ page.images[0] }}', '{{ page.url }}', quantity);
+  addToCart(productTitle, totalPrice, currentImage, '{{ page.url }}', quantity);
 }
 
 // Embroidery Gallery Functions

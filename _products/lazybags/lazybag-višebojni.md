@@ -6,7 +6,7 @@ category: Lazy Bag
 base_price: 0
 price: 0
 in_stock: false
-featured: false
+featured: true
 supports_embroidery: true
 supports_name_embroidery: true
 description: >-

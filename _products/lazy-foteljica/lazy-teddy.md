@@ -7,7 +7,7 @@ base_price: 5900
 price: 5900
 # old_price: null
 in_stock: true
-featured: false
+featured: true
 supports_embroidery: false
 supports_name_embroidery: false
 description: |
