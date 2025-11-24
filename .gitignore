@@ -10,6 +10,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Testing
+coverage/
+.playwright/
+test-results/
+playwright-report/
+
 # Tailwind
 assets/css/output.css
 
