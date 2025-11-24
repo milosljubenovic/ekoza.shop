@@ -29,16 +29,44 @@ layout: default
         {% endif %}
       </div>
 
-      <div class="mb-6">
-        <div class="text-gray-300 text-lg prose prose-invert prose-lg max-w-none">
-          {{ page.description | markdownify }}
+
+      <!-- Product Details Accordion -->
+      <div class="border-t border-slate-600 pt-6">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold mb-4 text-white">Detalji proizvoda</h3>
+          
+          <!-- Mobile: Collapsible description -->
+          <div class="lg:hidden">
+            <div id="descriptionShort" class="prose prose-sm text-gray-300">
+              <div class="line-clamp-3">
+                {{ page.description | markdownify }}
+              </div>
+            </div>
+            <div id="descriptionFull" class="hidden prose prose-sm text-gray-300">
+              {{ page.description | markdownify }}
+            </div>
+            <button 
+              id="toggleDescriptionBtn" 
+              onclick="toggleDescription()"
+              class="mt-3 text-purple-400 hover:text-purple-300 font-semibold text-sm flex items-center gap-1 transition-colors">
+              <span id="toggleDescriptionText">Prikaži više</span>
+              <svg id="toggleDescriptionIcon" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Desktop: Full description -->
+          <div class="hidden lg:block prose prose-sm text-gray-300">
+            {{ page.description | markdownify }}
+          </div>
         </div>
       </div>
 
       <!-- Category -->
       <div class="mb-6">
         <span class="text-sm text-gray-400">Kategorija:</span>
-        <a href="{{ '/k' | relative_url }}ategorije/{{ page.category | slugify }}" class="text-purple-400 hover:text-purple-300 ml-2 font-semibold">
+        <a href="{{ '/proizvodi' | relative_url }}?category={{ page.category | url_encode }}" class="text-purple-400 hover:text-purple-300 ml-2 font-semibold">
           {{ page.category }}
         </a>
       </div>
@@ -224,15 +252,7 @@ layout: default
         Dodaj u korpu
       </button>
 
-      <!-- Product Details Accordion -->
-      <div class="border-t border-slate-600 pt-6">
-        <div class="mb-4">
-          <h3 class="text-xl font-bold mb-4 text-white">Detalji proizvoda</h3>
-          <div class="prose prose-sm text-gray-300">
-            {{ content }}
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>
@@ -345,6 +365,28 @@ let selectedColorModifier = 0;
 let selectedSizeModifier = 0;
 let embroideryModifier = 0;
 let nameEmbroideryModifier = 0;
+
+// Toggle description for mobile
+function toggleDescription() {
+  const shortDesc = document.getElementById('descriptionShort');
+  const fullDesc = document.getElementById('descriptionFull');
+  const toggleText = document.getElementById('toggleDescriptionText');
+  const toggleIcon = document.getElementById('toggleDescriptionIcon');
+  
+  if (fullDesc.classList.contains('hidden')) {
+    // Show full description
+    shortDesc.classList.add('hidden');
+    fullDesc.classList.remove('hidden');
+    toggleText.textContent = 'Prikaži manje';
+    toggleIcon.classList.add('rotate-180');
+  } else {
+    // Show short description
+    fullDesc.classList.add('hidden');
+    shortDesc.classList.remove('hidden');
+    toggleText.textContent = 'Prikaži više';
+    toggleIcon.classList.remove('rotate-180');
+  }
+}
 
 // Store color-size-image mappings
 const colorSizeImages = {

@@ -214,6 +214,14 @@
     font-size: 2rem;
     animation: wiggle 1s infinite ease-in-out;
   }
+
+  /* Line Clamp Utility for Mobile Description */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Animations */

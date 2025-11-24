@@ -9,29 +9,15 @@ in_stock: false
 featured: true
 supports_embroidery: true
 supports_name_embroidery: true
-description: >-
-  Višebojni Lazy Bag – Savršenstvo udobnosti u četiri veličine!
-
-
-  Uživajte u ultimativnom komforu sa našim višebojnim Lazy Bagom! Ovaj
-  jedinstveni komad nameštaja je dizajniran da vam pruži maksimalnu udobnost i
-  podršku, bilo da se odmarate, čitate ili gledate omiljeni film.
-
-
+description: |
+  Uživajte u ultimativnom komforu sa našim višebojnim Lazy Bagom! <br>
+  Ovaj jedinstveni komad nameštaja je dizajniran da vam pruži maksimalnu udobnost i podršku, bilo da se odmarate, čitate ili gledate omiljeni film. <br>
+  <br>
+  Višebojni Lazy Bag je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
+  <br>
+  <br>
   ## Veličine:
-
-
-  Višebojni Lazy Bag je dostupan u četiri različite veličine kako bi savršeno
-  odgovarao vašem prostoru i potrebama:
-
-
-  *   **210/90cm**: Idealno za manje prostore i personalnu upotrebu.
-      
-  *   **240/100cm**: Savršeno za srednje prostore i dodatnu udobnost.
-      
-  *   **270/110cm**: Odlično za prostranije sobe i veći komfor.
-      
-  *   **300/130cm**: Maksimalna veličina za ultimativno opuštanje i prostranost.
+  Višebojni Lazy Bag je dostupan u četiri veličine (visina/osnova): **210/90cm, 240/100cm, 270/110cm, 300/130cm**
 images:
   - /assets/images/products/lazybag-višebojni/lazybag-višebojni.png
 colors:

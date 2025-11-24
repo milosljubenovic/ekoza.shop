@@ -165,6 +165,27 @@ document.addEventListener('DOMContentLoaded', function() {
   const noResults = document.getElementById('noResults');
   const productCount = document.getElementById('productCount');
 
+  // Check for URL parameters on page load
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get('category');
+  
+  if (categoryParam) {
+    // Uncheck "all categories"
+    document.querySelector('.category-filter[value="all"]').checked = false;
+    
+    // Check the matching category
+    categoryFilters.forEach(filter => {
+      if (filter.value === categoryParam) {
+        filter.checked = true;
+      } else if (filter.value !== 'all') {
+        filter.checked = false;
+      }
+    });
+    
+    // Apply filters
+    filterProducts();
+  }
+
   function filterProducts() {
     let visibleCount = 0;
     const searchTerm = searchInput.value.toLowerCase();

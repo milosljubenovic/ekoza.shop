@@ -9,12 +9,15 @@ in_stock: true
 featured: false
 supports_embroidery: false
 supports_name_embroidery: false
-description: >-
-  **Granule za dopunu Lazy Bag proizvoda**
-
-
-  Visokokvalitetne granule za dopunu vreća za sedenje, lopti i taburea.
+description: |
+  **Granule za dopunu Lazy Bag proizvoda** <br>
+  <br>
+  Visokokvalitetne granule za dopunu vreća za sedenje, lopti i taburea. <br>
   Obezbeđuje dodatni komfor i vraća proizvodu njegovu originalnu mekoću.
+  <br>
+  <br>
+  ## Dostupne veličine:
+  Dopuna je dostupna u sledećim količinama: **0.5KG, 1KG, 1.5KG, 2KG**
 images:
   - /assets/images/products/dopuna-za-lazybag-granule/dopuna-za-lazybag-granule.png
 colors:

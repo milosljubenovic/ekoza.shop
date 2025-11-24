@@ -11,27 +11,14 @@ featured: false
 supports_embroidery: true
 supports_name_embroidery: true
 description: |
-  Uživajte u ultimativnom komforu sa našim **Lazy Loptama**! Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. Lazy Lopta je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
-  
-  ## Karakteristike proizvoda:
-  
-  - **Plišani materijal**: Napravljen od najkvalitetnije eko-kože, koji osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog dana.
-  - **Višebojni dizajn**: Raznovrsni dizajni omogućavaju vam da izaberete vašu omiljenu kombinaciju koja će se savršeno uklopiti u vaš dom.
-  - **Savršeno uklapanje u svaki dom**: Moderan dizajn i mogućnost personalizacije čine ovu Lazy Loptu idealnim dodatkom za bilo koju sobu, od dnevne do spavaće, pa čak i dečije sobe.
-  
-  ## Prednosti:
-  
-  - **Komfor i stil**: Kombinacija mekog pliša i elegantnog izgleda garantuje udobnost i estetiku.
-  - **Univerzalna upotreba**: Savršen za različite aktivnosti poput opuštanja, čitanja ili kao dekorativni element.
-  
-  Neka vaš dom postane oaza mira i udobnosti sa Lazy Loptom. Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno novom nivou!
-  
-  ## Dostupne veličine (obim):
-  
-  - 230cm
-  - 250cm
-  - 270cm
-  - 300cm
+  Uživajte u ultimativnom komforu sa našim Lazy Loptama! <br>
+  Ovaj jedinstveni komad nameštaja izrađen je od visokokvalitetnog plišanog materijala, pružajući vam neverovatnu mekoću i udobnost. <br>
+  <br>
+  Lazy Lopta je savršen dodatak svakom domu, bilo da ga koristite za opuštanje, čitanje ili jednostavno kao dekorativni element.
+  <br>
+  <br>
+  ## Veličine:
+  Lazy Lopta je dostupna u četiri veličine (obim): **230cm, 250cm, 270cm, 300cm**
 images:
   - "/assets/images/products/lazy-lopta/lazy-lopta.png"
 colors:
