@@ -194,6 +194,200 @@ content:
             label: Redosled
             type: number
             default: 0
+  # Jekyll configuration
+  - name: config
+    label: Podešavanja sajta
+    path: _config.yml
+    type: file
+    fields:
+  
+      # Basic site configuration
+      - name: title
+        label: Naziv sajta
+        type: string
+  
+      - name: description
+        label: Opis sajta
+        type: text
+  
+      - name: baseurl
+        label: Base URL
+        type: string
+  
+      - name: url
+        label: URL sajta
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+  
+      # Store Information
+      - name: store
+        label: Informacije o prodavnici
+        type: object
+        fields:
+          - name: name
+            label: Naziv radnje
+            type: string
+          - name: owner
+            label: Vlasnik
+            type: string
+          - name: business_name
+            label: Poslovno ime
+            type: string
+          - name: mb
+            label: Matični broj (MB)
+            type: string
+          - name: pib
+            label: PIB
+            type: string
+          - name: address
+            label: Adresa
+            type: string
+          - name: city
+            label: Grad
+            type: string
+          - name: postal_code
+            label: Poštanski broj
+            type: string
+          - name: country
+            label: Država
+            type: string
+          - name: phone
+            label: Telefon
+            type: string
+          - name: email
+            label: Email
+            type: string
+            pattern: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+  
+      # Contact Channels
+      - name: contact
+        label: Kontakt kanali
+        type: object
+        fields:
+          - name: viber
+            label: Viber
+            type: string
+          - name: whatsapp
+            label: WhatsApp
+            type: string
+          - name: facebook_messenger
+            label: Facebook Messenger username
+            type: string
+          - name: sms
+            label: SMS broj
+            type: string
+          - name: call
+            label: Broj za poziv
+            type: string
+  
+      # Payment Information
+      - name: payment
+        label: Detalji plaćanja
+        type: object
+        fields:
+          - name: bank_name
+            label: Naziv banke
+            type: string
+          - name: account_number
+            label: Broj računa
+            type: string
+          - name: account_holder
+            label: Vlasnik računa
+            type: string
+  
+      # Shipping Information
+      - name: shipping
+        label: Dostava
+        type: object
+        fields:
+          - name: courier_name
+            label: Kurirska služba
+            type: string
+          - name: standard_price
+            label: Cena standardne dostave
+            type: number
+          - name: standard_delivery_days
+            label: Rok standardne dostave
+            type: string
+          - name: pickup_delivery_days
+            label: Rok za isporuku preuzimanja
+            type: string
+          - name: cod_fee
+            label: Dodatak za pouzeće
+            type: number
+          - name: free_min_order
+            label: Minimalna porudžbina za besplatnu dostavu
+            type: number
+  
+      # Google Apps Script
+      - name: google_apps_script
+        label: Google Apps Script
+        type: object
+        fields:
+          - name: url
+            label: URL
+            type: string
+  
+      # Customization Options
+      - name: customization
+        label: Podešavanje izrade proizvoda
+        type: object
+        fields:
+          - name: embroidery_price
+            label: Cena običnog veza
+            type: number
+          - name: name_embroidery_price
+            label: Cena veza imena
+            type: number
+  
+          - name: font_options
+            label: Fontovi
+            type: list
+            fields:
+              - name: name
+                label: Naziv fonta
+                type: string
+              - name: value
+                label: Vrednost
+                type: string
+  
+          - name: embroidery_categories
+            label: Kategorije vezova
+            type: list
+            fields:
+              - name: name
+                label: Naziv kategorije
+                type: string
+              - name: value
+                label: Vrednost
+                type: string
+  
+      # Build settings
+      - name: markdown
+        label: Markdown procesor
+        type: string
+        default: kramdown
+  
+      - name: permalink
+        label: Permalink stil
+        type: string
+  
+      # Collections
+      - name: collections
+        label: Kolekcije
+        type: object
+        fields:
+          - name: products
+            label: Proizvodi kolekcija
+            type: object
+            fields:
+              - name: output
+                label: Output
+                type: boolean
+              - name: permalink
+                label: Permalink
+                type: string
+
 
 
 settings:
