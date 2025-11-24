@@ -7,8 +7,8 @@ base_price: 0
 price: 0
 in_stock: false
 featured: false
-supports_embroidery: false
-supports_name_embroidery: false
+supports_embroidery: true
+supports_name_embroidery: true
 description: >-
   Višebojni Lazy Bag – Savršenstvo udobnosti u četiri veličine!
 
