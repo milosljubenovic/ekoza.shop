@@ -23,10 +23,11 @@ title: Proizvodi
               <input type="checkbox" class="category-filter w-5 h-5 text-purple-600 rounded border-slate-600 bg-slate-700" value="all" checked>
               <span class="ml-3 text-sm text-gray-300 group-hover:text-white transition-colors">Sve kategorije</span>
             </label>
-            {% for category in site.data.categories %}
+            {% assign categories = site.products | map: "category" | uniq | sort %}
+            {% for category in categories %}
             <label class="flex items-center group cursor-pointer">
-              <input type="checkbox" class="category-filter w-5 h-5 text-purple-600 rounded border-slate-600 bg-slate-700" value="{{ category.name }}">
-              <span class="ml-3 text-sm text-gray-300 group-hover:text-white transition-colors">{{ category.name }}</span>
+              <input type="checkbox" class="category-filter w-5 h-5 text-purple-600 rounded border-slate-600 bg-slate-700" value="{{ category }}">
+              <span class="ml-3 text-sm text-gray-300 group-hover:text-white transition-colors">{{ category }}</span>
             </label>
             {% endfor %}
           </div>
@@ -89,21 +90,21 @@ title: Proizvodi
 
       <!-- Products Count -->
       <div class="mb-6">
-        <p class="text-gray-400">Prikazano <span id="productCount" class="text-purple-400 font-bold">{{ site.data.products.size }}</span> proizvoda</p>
+        <p class="text-gray-400">Prikazano <span id="productCount" class="text-purple-400 font-bold">{{ site.products.size }}</span> proizvoda</p>
       </div>
 
       <!-- Products Grid -->
       <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for product in site.data.products %}
+        {% for product in site.products %}
         <div class="product-card product-item" 
-             data-id="{{ product.id }}"
-             data-name="{{ product.name | downcase }}"
+             data-id="{{ product.product_id }}"
+             data-name="{{ product.title | downcase }}"
              data-category="{{ product.category }}"
              data-price="{{ product.price }}"
              data-in-stock="{{ product.in_stock }}">
-          <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/">
+          <a href="{{ product.url }}">
             <div class="relative overflow-hidden rounded-t-2xl">
-              <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
+              <img src="{{ product.images[0] }}" alt="{{ product.title }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
               {% if product.old_price %}
               <span class="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                 -{{ product.old_price | minus: product.price | times: 100 | divided_by: product.old_price }}%
@@ -116,7 +117,7 @@ title: Proizvodi
               {% endunless %}
             </div>
             <div class="p-5">
-              <h3 class="font-bold text-white mb-2 hover:text-purple-400 transition-colors text-lg">{{ product.name }}</h3>
+              <h3 class="font-bold text-white mb-2 hover:text-purple-400 transition-colors text-lg">{{ product.title }}</h3>
               <p class="text-sm text-gray-400 mb-4">{{ product.category }}</p>
               <div class="flex items-center justify-between mb-4">
                 <div>
@@ -129,7 +130,7 @@ title: Proizvodi
             </div>
           </a>
           <div class="px-5 pb-5">
-            <button onclick="addToCart('{{ product.name }}', {{ product.price }}, '{{ product.images[0] }}', '/proizvod/{{ product.id }}/')" 
+            <button onclick="addToCart('{{ product.title }}', {{ product.price }}, '{{ product.images[0] }}', '{{ product.url }}')" 
                     class="w-full btn-primary-modern"
                     {% unless product.in_stock %}disabled{% endunless %}>
               Dodaj u korpu

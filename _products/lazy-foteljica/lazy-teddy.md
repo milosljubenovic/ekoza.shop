@@ -2,12 +2,12 @@
 layout: product
 title: "Lazy Teddy"
 product_id: "lazy-teddy"
-category: "Lazy Teddy"
+category: "Lazy Foteljica"
 base_price: 5900
 price: 5900
 # old_price: null
 in_stock: true
-featured: false
+featured: true
 supports_embroidery: false
 supports_name_embroidery: false
 description: |

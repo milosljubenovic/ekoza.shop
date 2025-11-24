@@ -2,7 +2,7 @@
 layout: product
 title: "Personalizovani Lazy Bag"
 product_id: "personalizovani-lazy-bag"
-category: "Lazy Bag Jednobojni"
+category: "Lazy Bag"
 base_price: 3600
 price: 3600
 # old_price: null

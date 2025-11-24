@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadOrderSummary() {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   const summaryContainer = document.getElementById('orderSummaryItems');
+  const itemCountElement = document.getElementById('orderItemCount');
+  
+  // Update item count
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  if (itemCountElement) {
+    itemCountElement.textContent = totalItems === 1 ? '1 proizvod' : `${totalItems} proizvoda`;
+  }
   
   if (cart.length === 0) {
     summaryContainer.innerHTML = `

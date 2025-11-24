@@ -2,12 +2,12 @@
 layout: product
 title: "Personalizovano Lazy Tabure"
 product_id: "personalizovano-lazy-tabure"
-category: "Lazy Tabure"
+category: "Lazy Foteljica"
 base_price: 2300
 price: 2300
 # old_price: null
 in_stock: true
-featured: false
+featured: true
 supports_embroidery: false
 supports_name_embroidery: false
 description: |

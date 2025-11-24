@@ -38,11 +38,24 @@
   
   <script src="{{ '/assets/js/cart.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-  <script src="{{ '/assets/js/chat.js' | relative_url }}"></script>
+  <parameter name="script src="{{ '/assets/js/chat.js' | relative_url }}"></script>
   
   <!-- Products data for search -->
   <script id="productsData" type="application/json">
-    {{ site.data.products | jsonify }}
+    [
+    {%- for product in site.products -%}
+      {
+        "id": "{{ product.product_id }}",
+        "title": "{{ product.title | escape }}",
+        "url": "{{ product.url }}",
+        "price": {{ product.price }},
+        "category": "{{ product.category }}",
+        "image": "{{ product.images[0] }}",
+        "in_stock": {{ product.in_stock }},
+        "featured": {{ product.featured }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+    ]
   </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 layout: product
 title: Dopuna za LazyBag (Granule)
 product_id: dopuna-za-lazybag-granule
-category: Dopune za lazy bag (granule)
+category: Ostalo
 base_price: 500
 price: 500
 in_stock: true
