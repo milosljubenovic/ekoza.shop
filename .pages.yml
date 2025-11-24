@@ -54,6 +54,107 @@ content:
         label: Sadržaj
         type: rich-text
 
+  - name: product-pages
+    label: Proizvodi (Stranice)
+    type: collection
+    path: proizvod
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - name: layout
+        label: Layout
+        type: string
+        default: product
+        hidden: true
+      - name: title
+        label: Naziv proizvoda
+        type: string
+        required: true
+      - name: product_id
+        label: ID proizvoda
+        type: string
+        required: true
+      - name: category
+        label: Kategorija
+        type: string
+        required: true
+      - name: base_price
+        label: Osnovna cena (RSD)
+        type: number
+        required: true
+      - name: price
+        label: Cena (RSD)
+        type: number
+        required: true
+      - name: old_price
+        label: Stara cena (RSD)
+        type: number
+      - name: in_stock
+        label: Na stanju
+        type: boolean
+        default: true
+      - name: featured
+        label: Istaknuto
+        type: boolean
+        default: false
+      - name: supports_embroidery
+        label: Podržava vez
+        type: boolean
+        default: false
+      - name: supports_name_embroidery
+        label: Podržava vez imena
+        type: boolean
+        default: false
+      - name: description
+        label: Opis
+        type: text
+        required: true
+      - name: images
+        label: Slike
+        type: image
+        list: true
+        options:
+          media: assets/images/products
+      - name: colors
+        label: Boje
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Naziv boje
+            type: string
+            required: true
+          - name: hex
+            label: Hex kod
+            type: string
+            required: true
+          - name: price_modifier
+            label: Modifikator cene
+            type: number
+            default: 0
+          - name: image
+            label: Slika boje
+            type: image
+            options:
+              media: assets/images/products
+      - name: sizes
+        label: Veličine
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Naziv veličine
+            type: string
+            required: true
+          - name: price_modifier
+            label: Modifikator cene
+            type: number
+            default: 0
+      - name: tags
+        label: Tagovi
+        type: string
+        list: true
+
   - name: products
     label: Proizvodi
     type: file
