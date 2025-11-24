@@ -339,29 +339,7 @@ content:
           - name: name_embroidery_price
             label: Cena veza imena
             type: number
-  
-          - name: font_options
-            label: Fontovi
-            type: list
-            fields:
-              - name: name
-                label: Naziv fonta
-                type: string
-              - name: value
-                label: Vrednost
-                type: string
-  
-          - name: embroidery_categories
-            label: Kategorije vezova
-            type: list
-            fields:
-              - name: name
-                label: Naziv kategorije
-                type: string
-              - name: value
-                label: Vrednost
-                type: string
-  
+
       # Build settings
       - name: markdown
         label: Markdown procesor
