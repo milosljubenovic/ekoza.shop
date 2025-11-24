@@ -59,16 +59,36 @@ permalink: pretty
 collections:
   products:
     output: true
-    permalink: /proizvodi/:path/
+    permalink: /proizvod/:name/
 defaults:
   - scope:
       type: products
     values:
       layout: product
   - scope:
-      path: proizvod
+      path: "_products/lazybags"
+      type: "products"
     values:
-      layout: product
+      layout: "product"
+      category: "Lazy Bag"
+  - scope:
+      path: "_products/lazy-lopta"
+      type: "products"
+    values:
+      layout: "product"
+      category: "Lazy Lopta"
+  - scope:
+      path: "_products/lazy-foteljica"
+      type: "products"
+    values:
+      layout: "product"
+      category: "Lazy Foteljica"
+  - scope:
+      path: "_products/ostalo"
+      type: "products"
+    values:
+      layout: "product"
+      category: "Ostalo"
 exclude:
   - Gemfile
   - Gemfile.lock

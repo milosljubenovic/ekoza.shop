@@ -13,7 +13,7 @@ title: Početna
     <div class="floating-shape shape-4"></div>
   </div>
 
-  {% assign featured = site.data.products | where: "featured", true | first %}
+  {% assign featured = site.products | where: "featured", true | first %}
   <div class="container mx-auto px-4 py-20 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Left Content -->
@@ -68,12 +68,12 @@ title: Početna
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </a>
-          <button onclick="addToCart('{{ featured.name }}', {{ featured.price }}, '{{ featured.images[0] }}', '/proizvod/{{ featured.id }}/')" class="btn-hero-secondary group">
+          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
             </svg>
           </button>
-          <button onclick="addToCart('{{ featured.name }}', {{ featured.price }}, '{{ featured.images[0] }}', '/proizvod/{{ featured.id }}/')" class="btn-hero-secondary group">
+          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
@@ -107,19 +107,23 @@ title: Početna
       Izaberite <span class="text-gradient">Kategoriju</span>
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {% for category in site.data.categories %}
-      <a href="{{ '/k' | relative_url }}ategorije/{{ category.slug }}/" class="category-card group">
+      {% assign categories = site.products | map: "category" | uniq | sort %}
+      {% for category in categories %}
+      {% assign category_products = site.products | where: "category", category %}
+      {% assign first_product = category_products | first %}
+      <a href="{{ '/proizvodi/' | relative_url }}#{{ category | slugify }}" class="category-card group">
         <div class="relative h-48 bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center overflow-hidden rounded-t-2xl border border-slate-600">
           <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 group-hover:from-purple-600/40 group-hover:to-pink-600/40 transition-all duration-500"></div>
-          {% if category.image %}
-          <img src="{{ category.image }}" alt="{{ category.name }}" class="relative z-10 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          {% else %}
-          <div class="text-6xl relative z-10 group-hover:scale-110 transition-transform duration-300">{{ category.icon }}</div>
+          {% if first_product.images[0] %}
+          <img src="{{ first_product.images[0] }}" alt="{{ category }}" class="relative z-10 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           {% endif %}
         </div>
         <div class="p-4">
-          <h3 class="font-bold text-white text-lg mb-2 group-hover:text-purple-400 transition-colors">{{ category.name }}</h3>
-          <p class="text-gray-400 text-sm">{{ category.description | truncate: 50 }}</p>
+          <h3 class="font-bold text-white text-lg mb-2 group-hover:text-purple-400 transition-colors">{{ category }}</h3>
+          <p class="text-gray-400 text-sm">
+            {% assign count = site.products | where: "category", category | size %}
+            {{ count }} {% if count == 1 %}proizvod{% else %}proizvoda{% endif %}
+          </p>
         </div>
       </a>
       {% endfor %}
@@ -141,12 +145,12 @@ title: Početna
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {% assign featured_products = site.data.products | where: "featured", true | slice: 0, 8 %}
+      {% assign featured_products = site.products | where: "featured", true | slice: 0, 8 %}
       {% for product in featured_products %}
       <div class="product-card">
-        <a href="{{ '/p' | relative_url }}roizvod/{{ product.id }}/">
+        <a href="{{ product.url }}">
           <div class="relative overflow-hidden rounded-t-2xl">
-            <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
+            <img src="{{ product.images[0] }}" alt="{{ product.title }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
             {% if product.old_price %}
             <span class="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
               -{{ product.old_price | minus: product.price | times: 100 | divided_by: product.old_price }}%
@@ -154,7 +158,7 @@ title: Početna
             {% endif %}
           </div>
           <div class="p-5">
-            <h3 class="font-bold text-white mb-2 hover:text-purple-400 transition-colors">{{ product.name }}</h3>
+            <h3 class="font-bold text-white mb-2 hover:text-purple-400 transition-colors">{{ product.title }}</h3>
             <p class="text-sm text-gray-400 mb-4">{{ product.category }}</p>
             <div class="flex items-center justify-between mb-4">
               <div>
@@ -164,7 +168,7 @@ title: Početna
                 {% endif %}
               </div>
             </div>
-            <button onclick="addToCart('{{ product.name }}', {{ product.price }}, '{{ product.images[0] }}', '/proizvod/{{ product.id }}/')" 
+            <button onclick="addToCart('{{ product.title }}', {{ product.price }}, '{{ product.images[0] }}', '{{ product.url }}')" 
                     class="w-full btn-primary-modern">
               Dodaj u korpu
             </button>

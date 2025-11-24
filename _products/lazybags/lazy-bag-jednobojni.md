@@ -2,7 +2,7 @@
 layout: product
 title: Lazy Bag - Jednobojni
 product_id: lazy-bag-jednobojni
-category: Lazy Bag Jednobojni
+category: Lazy Bag
 base_price: 3600
 price: 3600
 in_stock: true
