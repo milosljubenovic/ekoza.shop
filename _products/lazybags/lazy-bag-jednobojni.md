@@ -17,41 +17,6 @@ description: >-
   jednostavno kao dekorativni element.
 
 
-  ##   
-    
-  Karakteristike proizvoda:
-
-
-  *   **Plišani materijal**: Napravljen od najkvalitetnije eko-kože, koji
-  osigurava dugotrajnost i lako održavanje, pružajući vam luksuzni osećaj svakog
-  dana.
-      
-  *   **Jednobojni dizajn**: Iako nije moguće kombinovati više boja, jednobojni
-  dizajn omogućava vam da izaberete vašu omiljenu nijansu koja će se savršeno
-  uklopiti u vaš dom.
-      
-  *   **Savršeno uklapanje u svaki dom**: Moderan dizajn i mogućnost
-  personalizacije čine ovaj Lazy Bag idealnim dodatkom za bilo koju sobu, od
-  dnevne do spavaće, pa čak i dečije sobe.
-      
-
-  ##   
-    
-  Prednosti:
-
-
-  *   **Komfor i stil**: Kombinacija mekog pliša i elegantnog izgleda garantuje
-  udobnost i estetiku.
-      
-  *   **Univerzalna upotreba**: Savršen za različite aktivnosti poput opuštanja,
-  čitanja ili kao dekorativni element.
-      
-
-  Neka vaš dom postane oaza mira i udobnosti sa personalizovanim Lazy Bagom.
-  Iskoristite priliku da uživate u svakodnevnim trenucima odmora na potpuno
-  novom nivou!
-
-
   ## Dostupne veličine (visina/širina):
 
 
