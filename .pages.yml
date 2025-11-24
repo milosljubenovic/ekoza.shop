@@ -45,7 +45,7 @@ content:
         label: Naslovna slika
         type: image
         options:
-          media: assets/images/blogs
+          media: Blogs
       - name: tags
         label: Tagovi
         type: string
