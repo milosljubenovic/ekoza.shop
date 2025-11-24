@@ -51,119 +51,47 @@ colors:
     hex: "#0000FF"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/tamno-plava-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/tamno-plava-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/tamno-plava-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/tamno-plava-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/tamno-plava-300130cm.png"
+    size_images: []
   - name: "Cyan"
     hex: "#00FFFF"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/cyan-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/cyan-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/cyan-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/cyan-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/cyan-300130cm.png"
+    size_images: []
   - name: "Siva"
     hex: "#808080"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/siva-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/siva-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/siva-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/siva-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/siva-300130cm.png"
+    size_images: []
   - name: "Braon"
     hex: "#8B4513"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/braon-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/braon-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/braon-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/braon-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/braon-300130cm.png"
+    size_images: []
   - name: "Crna"
     hex: "#000000"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/crna-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crna-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crna-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crna-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crna-300130cm.png"
+    size_images: []
   - name: "Crvena"
     hex: "#FF0000"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/crvena-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crvena-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crvena-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crvena-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/crvena-300130cm.png"
+    size_images: []
   - name: "Ljubičasta"
     hex: "#800080"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/ljubičasta-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/ljubičasta-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/ljubičasta-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/ljubičasta-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/ljubičasta-300130cm.png"
+    size_images: []
   - name: "Oker"
     hex: "#CC7722"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/oker-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/oker-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/oker-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/oker-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/oker-300130cm.png"
+    size_images: []
   - name: "Baby roze"
     hex: "#FFC0CB"
     price_modifier: 0
     image: "/assets/images/products/lazy-bag-jednobojni/baby-roze-21090cm.png"
-    size_images:
-      - size: "210/90CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/baby-roze-21090cm.png"
-      - size: "240/100CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/baby-roze-240100cm.png"
-      - size: "270/110CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/baby-roze-270110cm.png"
-      - size: "300/130CM"
-        image: "/assets/images/products/lazy-bag-jednobojni/baby-roze-300130cm.png"
+    size_images: []
 sizes:
   - name: "210/90CM"
     price_modifier: 0
