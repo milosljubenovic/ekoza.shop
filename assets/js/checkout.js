@@ -121,13 +121,18 @@ function setupFormHandlers() {
   };
   
   document.getElementById('submitOrderBtn')?.addEventListener('click', handleOrderSubmit);
+  
+  // Debug: Log that the event listener was attached
+  console.log('Submit order button event listener attached');
 }
 
 async function handleOrderSubmit() {
+  console.log('handleOrderSubmit called');
   const form = document.getElementById('checkoutForm');
   
   // Validate form
   if (!form.checkValidity()) {
+    console.log('Form validation failed');
     form.reportValidity();
     return;
   }
@@ -138,6 +143,7 @@ async function handleOrderSubmit() {
     return;
   }
 
+  console.log('Starting order submission...');
   try {
     // Disable button
     const submitBtn = document.getElementById('submitOrderBtn');
