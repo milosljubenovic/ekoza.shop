@@ -120,14 +120,10 @@ function setupFormHandlers() {
     call: '381622220894'
   };
   
-  document.getElementById('orderViberBtn')?.addEventListener('click', () => handleOrderSubmit('viber', channels));
-  document.getElementById('orderWhatsAppBtn')?.addEventListener('click', () => handleOrderSubmit('whatsapp', channels));
-  document.getElementById('orderFacebookBtn')?.addEventListener('click', () => handleOrderSubmit('facebook', channels));
-  document.getElementById('orderSMSBtn')?.addEventListener('click', () => handleOrderSubmit('sms', channels));
-  document.getElementById('orderCallBtn')?.addEventListener('click', () => handleOrderSubmit('call', channels));
+  document.getElementById('submitOrderBtn')?.addEventListener('click', handleOrderSubmit);
 }
 
-async function handleOrderSubmit(channel, channels) {
+async function handleOrderSubmit() {
   const form = document.getElementById('checkoutForm');
   
   // Validate form
@@ -143,71 +139,44 @@ async function handleOrderSubmit(channel, channels) {
   }
 
   try {
+    // Disable button
+    const submitBtn = document.getElementById('submitOrderBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg class="animate-spin w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Slanje...';
+
     const orderData = collectOrderData();
-    const message = createWhatsAppMessage(orderData);
     
-    // Save order to localStorage
-    const orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
-    orderHistory.push({
-      orderNumber: orderData.orderNumber,
-      timestamp: orderData.timestamp,
-      total: orderData.pricing.total,
-      status: 'pending',
-      channel: channel
+    // Call placeOrder API
+    const response = await fetch('https://ekozashop-orders.7kqq5yynhz.workers.dev', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(orderData)
     });
-    localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+    if (!response.ok) {
+      throw new Error('Failed to place order');
+    }
+
+    const result = await response.json();
     
+    if (!result.success) {
+      throw new Error(result.message || 'Failed to place order');
+    }
+
     // Clear cart
     localStorage.removeItem('cart');
     updateCartCount();
-
-    // Create appropriate URL based on channel
-    let url;
-    switch(channel) {
-      case 'viber':
-        url = `viber://chat?number=%2B${channels.viber}&text=${encodeURIComponent(message)}`;
-        break;
-      case 'whatsapp':
-        url = `https://wa.me/${channels.whatsapp}?text=${encodeURIComponent(message)}`;
-        break;
-      case 'facebook':
-        // Copy message to clipboard
-        try {
-          navigator.clipboard.writeText(message);
-          showFacebookInstructions(orderData.orderNumber);
-        } catch (err) {
-          console.error('Failed to copy to clipboard:', err);
-          alert(`Vaša porudžbina ${orderData.orderNumber} je spremna!\n\nMolimo pošaljite sledeću poruku na Facebook:\n\n${message.substring(0, 200)}...`);
-        }
-        url = `https://m.me/${channels.facebook}`;
-        break;
-      case 'sms':
-        url = `sms:+${channels.sms}?body=${encodeURIComponent(message)}`;
-        break;
-      case 'call':
-        url = `tel:+${channels.call}`;
-        alert(`Vaša porudžbina ${orderData.orderNumber} je spremna!\n\nMolimo spomenite broj porudžbine prilikom poziva.`);
-        break;
-    }
     
-    // Open the URL
-    if (channel !== 'facebook') {
-      window.open(url, '_blank');
-    }
-    
-    // Show success message (not for Facebook since we have custom modal)
-    if (channel !== 'facebook') {
-      setTimeout(() => {
-        alert(`✅ Porudžbina ${orderData.orderNumber} je spremna!\n\nHvala vam na poverenju!`);
-        window.location.href = '/';
-      }, 500);
-    }
+    // Show redirect spinner
+    showRedirectSpinner(result.orderId, orderData.phone);
     
     // Analytics
     if (typeof gtag !== 'undefined') {
       gtag('event', 'purchase', {
-        transaction_id: orderData.orderNumber,
-        value: orderData.pricing.total,
+        transaction_id: result.orderId,
+        value: orderData.total,
         currency: 'RSD',
         items: orderData.items.map(item => ({
           item_id: item.id,
@@ -220,8 +189,48 @@ async function handleOrderSubmit(channel, channels) {
 
   } catch (error) {
     console.error('Error submitting order:', error);
-    alert('Došlo je do greške. Molimo pokušajte ponovo.');
+    alert('Došlo je do greške prilikom slanja porudžbine. Molimo pokušajte ponovo.');
+    
+    // Re-enable button
+    const submitBtn = document.getElementById('submitOrderBtn');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Poruči';
   }
+}
+
+function showRedirectSpinner(orderId, phone) {
+  const modalHtml = `
+    <div id="redirectSpinner" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+      <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 max-w-md w-full text-center">
+        <div class="mb-6">
+          <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-white mb-2">Porudžbina primljena! 🎉</h2>
+          <div class="bg-slate-900 rounded-xl p-3 mb-4">
+            <p class="text-sm text-gray-400 mb-1">Broj porudžbine:</p>
+            <p class="text-xl font-bold text-gradient">${orderId}</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <svg class="animate-spin w-8 h-8 text-purple-400" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="text-gray-300 text-lg">Prebacujem vas na stranicu za praćenje pošiljke...</p>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+  
+  // Redirect after 2 seconds
+  setTimeout(() => {
+    window.location.href = `/pracenje-porudzbine/?order=${orderId}&phonenumber=${encodeURIComponent(phone)}`;
+  }, 2000);
 }
 
 function showFacebookInstructions(orderNumber) {
@@ -341,51 +350,35 @@ function collectOrderData() {
     shipping = 0;
   }
   
-  // Add COD fee if payment method is pouzecem (currently set to 0)
+  const total = subtotal + shipping;
+
+  // Get payment method
   const paymentMethod = formData.get('paymentMethod');
-  const codFee = 0; // Set to 0 for now, can be configured later
-  
-  const total = subtotal + shipping + codFee;
+  const paymentMethodDisplay = paymentMethod === 'pouzecem' ? 'Pouzeće' : 'Uplata na račun';
 
-  // Generate order number: EK + last 8 digits of timestamp
-  const orderNumber = 'EK' + Date.now().toString().slice(-8);
-
-  // Prepare order data
+  // Prepare order data in the format expected by the API
   const orderData = {
-    orderNumber: orderNumber,
-    timestamp: new Date().toISOString(),
-    customer: {
-      firstName: formData.get('firstName').trim(),
-      lastName: formData.get('lastName').trim(),
-      email: formData.get('email').trim().toLowerCase(),
-      phone: formData.get('phone').trim()
-    },
-    shipping: {
-      address: formData.get('address').trim(),
-      city: formData.get('city').trim(),
-      postalCode: formData.get('postalCode').trim(),
-      country: 'Srbija', // Hardcoded since field is disabled
-      method: formData.get('shippingMethod')
-    },
-    paymentMethod: formData.get('paymentMethod'),
-    notes: formData.get('notes')?.trim() || '',
+    name: `${formData.get('firstName').trim()} ${formData.get('lastName').trim()}`,
+    email: formData.get('email').trim().toLowerCase(),
+    phone: formData.get('phone').trim(),
+    address: formData.get('address').trim(),
+    city: formData.get('city').trim(),
+    postalCode: formData.get('postalCode').trim(),
+    paymentMethod: paymentMethodDisplay,
     items: cart.map(item => ({
-      id: item.id,
+      id: item.id.toString(),
       name: item.name,
       price: item.price,
       quantity: item.quantity,
-      color: item.color || null,
-      size: item.size || null,
       image: item.image,
-      url: item.url
+      customization: {
+        color: item.color || null,
+        size: item.size || null
+      }
     })),
-    pricing: {
-      subtotal: subtotal,
-      shipping: shipping,
-      codFee: codFee,
-      total: total
-    },
-    status: 'pending'
+    total: total,
+    shipping: shipping,
+    notes: formData.get('notes')?.trim() || ''
   };
 
   return orderData;
