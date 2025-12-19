@@ -11,6 +11,50 @@ title: Završi Porudžbinu
       <p class="text-gray-300 text-lg">Popunite podatke i izaberite način plaćanja</p>
     </div>
 
+    {% if site.maintenance_mode %}
+    <!-- Maintenance Mode Message -->
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-8 shadow-2xl">
+        <div class="text-center">
+          <svg class="w-20 h-20 mx-auto mb-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <h2 class="text-3xl font-bold text-white mb-4">
+            Poručivanje privremeno nedostupno
+          </h2>
+          <p class="text-white text-lg mb-6">
+            Izvinjavamo se zbog tehničkih problema. Naš sistem za poručivanje je trenutno nedostupan.
+          </p>
+          <p class="text-white mb-8">
+            Molimo vas da nastavite porudžbinu preko naše Facebook stranice gde će vam naš tim rado pomoći!
+          </p>
+          <div class="flex flex-col gap-3 max-w-md mx-auto">
+            <a href="https://www.facebook.com/foteljicee/" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center justify-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg">
+              <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Posetite našu Facebook stranicu
+            </a>
+            <a href="https://m.me/{{ site.contact.facebook_messenger }}" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center justify-center px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg">
+              <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.898 1.445 5.48 3.698 7.164V22l3.485-1.914c.93.256 1.91.395 2.817.395 5.523 0 10-4.145 10-9.243S17.523 2 12 2zm1.041 12.443l-2.567-2.737-5.006 2.737 5.509-5.847 2.631 2.737 4.942-2.737-5.509 5.847z"/>
+              </svg>
+              Kontaktirajte nas preko Messengera
+            </a>
+          </div>
+          <div class="mt-8 pt-6 border-t border-white border-opacity-30">
+            <p class="text-white text-sm mb-2">Alternativno, možete nas pozvati na:</p>
+            <a href="tel:{{ site.store.phone }}" class="text-white text-xl font-bold hover:underline">
+              {{ site.store.phone }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
       <!-- Order Form -->
       <div class="xl:col-span-2 space-y-6">
@@ -368,6 +412,7 @@ title: Završi Porudžbinu
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 
@@ -416,7 +461,9 @@ title: Završi Porudžbinu
     call: '{{ site.contact.call }}'
   };
 </script>
+{% unless site.maintenance_mode %}
 <script src="/assets/js/checkout.js"></script>
+{% endunless %}
 <script>
 // Check if both shipping and payment methods are selected, enable/disable button
 function checkOrderButtonState() {
