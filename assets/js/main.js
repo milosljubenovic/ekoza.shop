@@ -105,13 +105,60 @@ window.toggleMobileMenu = toggleMobileMenu;
 window.toggleSearch = toggleSearch;
 window.searchProducts = searchProducts;
 
-// Close search results when clicking outside
+// Orders dropdown toggle
+function toggleOrdersDropdown() {
+  alert('Toggle function called!'); // Debug alert
+  
+  const dropdown = document.getElementById('ordersDropdown');
+  if (!dropdown) {
+    console.error('ordersDropdown element not found');
+    alert('Dropdown element not found!');
+    return;
+  }
+  
+  const isHidden = dropdown.classList.contains('hidden');
+  console.log('Toggle orders dropdown, currently hidden:', isHidden);
+  console.log('Dropdown element:', dropdown);
+  
+  if (isHidden) {
+    // Load and display orders
+    const content = document.getElementById('ordersDropdownContent');
+    
+    if (window.orderStatusTracker) {
+      console.log('Tracker found, getting HTML');
+      const html = window.orderStatusTracker.getOrdersDropdownHTML();
+      console.log('Generated HTML length:', html.length);
+      content.innerHTML = html;
+    } else {
+      console.warn('orderStatusTracker not available');
+      // Tracker not ready yet, show loading or empty state
+      content.innerHTML = '<div class="p-6 text-center"><p class="text-gray-400">Učitavanje...</p></div>';
+    }
+    dropdown.classList.remove('hidden');
+    console.log('Dropdown should now be visible');
+  } else {
+    dropdown.classList.add('hidden');
+  }
+}
+
+window.toggleOrdersDropdown = toggleOrdersDropdown;
+
+// Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {
   const searchBar = document.getElementById('searchBar');
   const searchResults = document.getElementById('searchResults');
+  const ordersDropdown = document.getElementById('ordersDropdown');
   
   if (searchBar && searchResults && !searchBar.contains(event.target)) {
     searchResults.classList.add('hidden');
+  }
+  
+  // Close orders dropdown if clicking outside
+  if (ordersDropdown && !ordersDropdown.contains(event.target)) {
+    const ordersButton = event.target.closest('button[onclick="toggleOrdersDropdown()"]');
+    if (!ordersButton) {
+      ordersDropdown.classList.add('hidden');
+    }
   }
 });
 

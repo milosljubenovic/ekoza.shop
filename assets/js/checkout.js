@@ -151,6 +151,7 @@ async function handleOrderSubmit() {
     submitBtn.innerHTML = '<svg class="animate-spin w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Slanje...';
 
     const orderData = collectOrderData();
+    console.log('Order data:', orderData);
     
     // Call placeOrder API
     const response = await fetch('https://ekozashop-orders.7kqq5yynhz.workers.dev', {
@@ -161,11 +162,14 @@ async function handleOrderSubmit() {
       body: JSON.stringify(orderData)
     });
 
+    console.log('API response status:', response.status);
+    
     if (!response.ok) {
       throw new Error('Failed to place order');
     }
 
     const result = await response.json();
+    console.log('API result:', result);
     
     if (!result.success) {
       throw new Error(result.message || 'Failed to place order');
@@ -174,6 +178,15 @@ async function handleOrderSubmit() {
     // Clear cart
     localStorage.removeItem('cart');
     updateCartCount();
+    
+    // Start tracking order status
+    const orderPlacedEvent = new CustomEvent('orderPlaced', {
+      detail: {
+        orderId: result.orderId,
+        phone: orderData.phone
+      }
+    });
+    window.dispatchEvent(orderPlacedEvent);
     
     // Show redirect spinner
     showRedirectSpinner(result.orderId, orderData.phone);
