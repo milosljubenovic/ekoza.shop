@@ -10,7 +10,6 @@ const CHAT_CONFIG = {
   apiBaseUrl: '{{ site.chat.api_base_url }}',
   sharedSecret: '{{ site.chat.shared_secret }}',
   sessionStorageKey: '{{ site.chat.session_storage_key }}',
-  cursorStorageKey: '{{ site.chat.cursor_storage_key }}',
   maxMessageLength: {{ site.chat.max_message_length | default: 500 }},
   polling: {
     activeInterval: {{ site.chat.polling.active_interval | default: 5 }} * 1000,
@@ -20,12 +19,13 @@ const CHAT_CONFIG = {
 };
 const chatState = {
   sessionId: null,
-  cursor: 0,
   isOpen: false,
   isActive: false,
   lastActivity: Date.now(),
   messages: [],
   pollInterval: null,
+  unreadCount: 0,
+  lastMessageId: null,
   userInfo: {
     fullName: '',
     email: '',
@@ -66,17 +66,11 @@ async function initializeChat() {
     if (chatInput) chatInput.disabled = false;
     if (sendButton) sendButton.disabled = false;
     
-    // Load messages from cursor 0 to get full history
-    const originalCursor = chatState.cursor;
-    chatState.cursor = 0;
-    await pollMessages();
+    // Load all messages
+    await loadAllMessages();
     
-    // If no messages were loaded, restore the original cursor
-    if (chatState.messages.length === 0 && originalCursor > 0) {
-      chatState.cursor = originalCursor;
-    }
-    
-    startPolling();
+    // Start polling in background regardless of modal state
+    startBackgroundPolling();
     
     console.log('Loaded', chatState.messages.length, 'messages');
   }
@@ -89,12 +83,10 @@ async function initializeChat() {
  */
 function loadSessionFromStorage() {
   const sessionId = localStorage.getItem(CHAT_CONFIG.sessionStorageKey);
-  const cursor = localStorage.getItem(CHAT_CONFIG.cursorStorageKey);
   
   if (sessionId) {
     chatState.sessionId = sessionId;
-    chatState.cursor = parseInt(cursor) || 0;
-    console.log('Loaded session from storage:', sessionId, 'cursor:', chatState.cursor);
+    console.log('Loaded session from storage:', sessionId);
   }
 }
 
@@ -104,7 +96,6 @@ function loadSessionFromStorage() {
 function saveSessionToStorage() {
   if (chatState.sessionId) {
     localStorage.setItem(CHAT_CONFIG.sessionStorageKey, chatState.sessionId);
-    localStorage.setItem(CHAT_CONFIG.cursorStorageKey, chatState.cursor.toString());
   }
 }
 
@@ -115,6 +106,7 @@ function setupEventListeners() {
   const chatForm = document.getElementById('chatForm');
   const chatInput = document.getElementById('chatInput');
   const chatButton = document.getElementById('chatButton');
+  const closeChatButton = document.getElementById('closeChatButton');
   
   // Form submission
   if (chatForm) {
@@ -126,6 +118,11 @@ function setupEventListeners() {
     chatInput.addEventListener('input', handleInputChange);
     chatInput.addEventListener('focus', handleChatActivity);
     chatInput.addEventListener('keypress', handleChatActivity);
+  }
+  
+  // Close button click
+  if (closeChatButton) {
+    closeChatButton.addEventListener('click', toggleChat);
   }
   
   // Note: Chat button click is handled via onclick attribute in HTML
@@ -199,31 +196,35 @@ function checkChatActivity() {
 }
 
 /**
+ * Start background polling (always runs every 5 seconds)
+ */
+function startBackgroundPolling() {
+  if (chatState.pollInterval) return; // Already polling
+  
+  console.log('Starting background polling every 5 seconds');
+  
+  chatState.pollInterval = setInterval(() => {
+    pollMessages();
+  }, 5000); // Poll every 5 seconds
+}
+
+/**
  * Adjust polling interval based on activity
  */
 function adjustPollingInterval() {
+  // No longer needed, but keeping for compatibility
   if (!chatState.sessionId) return;
   
   stopPolling();
-  startPolling();
+  startBackgroundPolling();
 }
 
 /**
  * Start polling for messages
  */
 function startPolling() {
-  if (chatState.pollInterval) return; // Already polling
-  
-  const interval = chatState.isActive 
-    ? CHAT_CONFIG.polling.activeInterval 
-    : CHAT_CONFIG.polling.inactiveInterval;
-  
-  console.log('Starting polling with interval:', interval / 1000, 'seconds');
-  
-  chatState.pollInterval = setInterval(() => {
-    checkChatActivity(); // Check and update activity status
-    pollMessages();
-  }, interval);
+  // Redirect to background polling
+  startBackgroundPolling();
 }
 
 /**
@@ -257,6 +258,10 @@ function toggleChat() {
     chatState.isActive = true;
     handleChatActivity();
     
+    // Clear unread count and update badge
+    chatState.unreadCount = 0;
+    updateBadge();
+    
     // If no session, show contact form
     if (!chatState.sessionId) {
       console.log('No session, showing contact form');
@@ -267,14 +272,15 @@ function toggleChat() {
       const chatInput = document.getElementById('chatInput');
       if (chatInput) chatInput.focus();
       
-      // Start polling if we have a session
-      startPolling();
+      // Start background polling if we have a session
+      if (!chatState.pollInterval) {
+        startBackgroundPolling();
+      }
     }
   } else {
     chatModal.classList.add('hidden');
     chatModal.classList.remove('flex');
     chatState.isActive = false;
-    adjustPollingInterval(); // This will use inactive interval
   }
 }
 
@@ -377,7 +383,6 @@ async function startChatSession() {
     
     if (data.ok && data.sessionId) {
       chatState.sessionId = data.sessionId;
-      chatState.cursor = 0;
       saveSessionToStorage();
       
       console.log('Chat session started:', data.sessionId);
@@ -385,11 +390,11 @@ async function startChatSession() {
       // Clear contact form and show chat interface
       showChatInterface();
       
-      // Start polling
-      startPolling();
+      // Start background polling
+      startBackgroundPolling();
       
-      // Fetch initial messages
-      await pollMessages();
+      // Load all messages
+      await loadAllMessages();
     } else {
       throw new Error('Invalid response from chat API');
     }
@@ -503,7 +508,51 @@ async function sendMessageToAPI(text) {
 }
 
 /**
- * Poll for new messages
+ * Load all messages from /chat/all
+ */
+async function loadAllMessages() {
+  if (!chatState.sessionId) {
+    console.log('No session ID, skipping message load');
+    return;
+  }
+  
+  try {
+    const url = `${CHAT_CONFIG.apiBaseUrl}/chat/all?sessionId=${chatState.sessionId}`;
+    
+    console.log('Loading all messages...');
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'x-shared-secret': CHAT_CONFIG.sharedSecret
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to load all messages');
+    }
+    
+    const data = await response.json();
+    
+    console.log('All messages response:', data);
+    
+    if (Array.isArray(data) && data.length > 0) {
+      console.log('Processing', data.length, 'messages');
+      
+      // Process all messages
+      data.forEach(message => {
+        processMessage(message);
+      });
+    } else {
+      console.log('No messages found');
+    }
+  } catch (error) {
+    console.error('Error loading all messages:', error);
+  }
+}
+
+/**
+ * Poll for new messages (returns last message only)
  */
 async function pollMessages() {
   if (!chatState.sessionId) {
@@ -512,9 +561,9 @@ async function pollMessages() {
   }
   
   try {
-    const url = `${CHAT_CONFIG.apiBaseUrl}/chat/poll?sessionId=${chatState.sessionId}&cursor=${chatState.cursor}&limit=200`;
+    const url = `${CHAT_CONFIG.apiBaseUrl}/chat/poll?sessionId=${chatState.sessionId}&ts=${Date.now()}`;
     
-    console.log('Polling messages from cursor:', chatState.cursor);
+    console.log('Polling for new message...');
     
     const response = await fetch(url, {
       method: 'GET',
@@ -531,19 +580,11 @@ async function pollMessages() {
     
     console.log('Poll response:', data);
     
-    if (data.ok && data.messages && data.messages.length > 0) {
-      console.log('Processing', data.messages.length, 'messages');
-      
-      // Process new messages
-      data.messages.forEach(message => {
+    if (Array.isArray(data) && data.length > 0) {
+      console.log('Processing', data.length, 'new message(s)');
+      data.forEach(message => {
         processMessage(message);
       });
-      
-      // Update cursor
-      if (data.cursor) {
-        chatState.cursor = data.cursor;
-        saveSessionToStorage();
-      }
     } else {
       console.log('No new messages');
     }
@@ -563,6 +604,9 @@ function processMessage(message) {
   // Add to state
   chatState.messages.push(message);
   
+  // Track last message ID
+  chatState.lastMessageId = message.id;
+  
   // Determine message type
   let type = 'system';
   if (message.source === 'web') {
@@ -578,8 +622,14 @@ function processMessage(message) {
     return;
   }
   
+  // Increment unread count if modal is closed and it's a bot message
+  if (!chatState.isOpen && type === 'bot') {
+    chatState.unreadCount++;
+    updateBadge();
+  }
+  
   // Add to UI
-  addMessageToUI(type, message.text, message.from, message.timestamp);
+  addMessageToUI(type, message.text, message.from, message.ts || message.timestamp);
 }
 
 /**
@@ -669,6 +719,21 @@ function addMessageToUI(type, text, from = null, timestamp = null) {
 }
 
 /**
+ * Update badge count
+ */
+function updateBadge() {
+  const badge = document.getElementById('chatBadge');
+  if (!badge) return;
+  
+  if (chatState.unreadCount > 0) {
+    badge.textContent = chatState.unreadCount > 99 ? '99+' : chatState.unreadCount.toString();
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+/**
  * Clear chat
  */
 function clearChat() {
@@ -678,12 +743,12 @@ function clearChat() {
   
   // Clear state
   chatState.sessionId = null;
-  chatState.cursor = 0;
   chatState.messages = [];
+  chatState.lastMessageId = null;
+  chatState.unreadCount = 0;
   
   // Clear storage
   localStorage.removeItem(CHAT_CONFIG.sessionStorageKey);
-  localStorage.removeItem(CHAT_CONFIG.cursorStorageKey);
   
   // Stop polling
   stopPolling();

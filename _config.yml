@@ -36,7 +36,7 @@ google_apps_script:
   url: https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec
 chat:
   enabled: true
-  api_base_url: https://chat.7kqq5yynhz.workers.dev
+  api_base_url: https://chat-gateway.7kqq5yynhz.workers.dev
   shared_secret: XKGCirQDhhE4uQMvvPVzP3JewecRgoSm5Twc1fJ73aaYUVu10sGFVeieyHH6wI97GX0ZQZV9jiGHQXi0UDRwMwVVmsWACUqjxRD95BEIWLcySFit1FwG6Ho
   polling:
     active_interval: 1
@@ -44,7 +44,6 @@ chat:
     inactivity_threshold: 30
   max_message_length: 500
   session_storage_key: ekoza_chat_session
-  cursor_storage_key: ekoza_chat_cursor
 customization:
   embroidery_price: 300
   name_embroidery_price: 500

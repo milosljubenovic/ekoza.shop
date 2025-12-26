@@ -9,6 +9,13 @@
   justify-content: flex-end !important;
 }
 
+@media (max-width: 768px) {
+  #chatModal {
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+}
+
 .chat-container {
   animation: slideUpRight 0.3s ease-out;
   margin-left: auto;
@@ -16,6 +23,15 @@
   flex-direction: column;
   height: 780px;
   max-height: calc(100vh - 2rem);
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+    animation: slideUp 0.3s ease-out;
+  }
 }
 
 @keyframes slideUp {
