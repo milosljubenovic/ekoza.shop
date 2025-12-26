@@ -1,29 +1,36 @@
+---
+---
 /**
  * Ekoza Shop Chat Integration
- * Integrates with the Ekoza Shop Chat API
+ * Integrates with the Chat API for customer support
  */
 
-// Configuration
+// Configuration - will be loaded from Jekyll config
 const CHAT_CONFIG = {
-  // Change to your production URL when deploying
-  apiBaseUrl: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:8000' 
-    : 'https://your-production-url.com',
-  sessionStorageKey: 'ekoza_session_id',
-  maxMessageLength: 500,
-  apiTimeout: 30000 // 30 seconds
+  apiBaseUrl: '{{ site.chat.api_base_url }}',
+  sharedSecret: '{{ site.chat.shared_secret }}',
+  sessionStorageKey: '{{ site.chat.session_storage_key }}',
+  cursorStorageKey: '{{ site.chat.cursor_storage_key }}',
+  maxMessageLength: {{ site.chat.max_message_length | default: 500 }},
+  polling: {
+    activeInterval: {{ site.chat.polling.active_interval | default: 5 }} * 1000,
+    inactiveInterval: {{ site.chat.polling.inactive_interval | default: 15 }} * 1000,
+    inactivityThreshold: {{ site.chat.polling.inactivity_threshold | default: 30 }} * 1000
+  }
 };
-
-// Chat State
 const chatState = {
   sessionId: null,
+  cursor: 0,
   isOpen: false,
-  isLoading: false,
-  messageHistory: [],
-  unreadCount: 0,
-  agents: [],
-  selectedAgent: '', // empty = auto-routing
-  agentHealth: {} // tracks agent availability from /health endpoint
+  isActive: false,
+  lastActivity: Date.now(),
+  messages: [],
+  pollInterval: null,
+  userInfo: {
+    fullName: '',
+    email: '',
+    phone: ''
+  }
 };
 
 /**
@@ -37,832 +44,660 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initialize chat functionality
  */
 async function initializeChat() {
-  // Load session from storage
-  loadSession();
-  
-  // Load available agents
-  await loadAgents();
-  
-  // Check agent health status
-  await checkAgentHealth();
+  // Load session from localStorage
+  loadSessionFromStorage();
   
   // Setup event listeners
   setupEventListeners();
   
-  // Load message history from storage or API
-  await loadMessageHistory();
+  // If we have a session, prepare chat interface and load message history
+  if (chatState.sessionId) {
+    console.log('Existing session found, loading chat history...');
+    
+    // Replace contact form with empty chat ready for messages
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+      chatMessages.innerHTML = '';
+    }
+    
+    // Enable input
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendButton');
+    if (chatInput) chatInput.disabled = false;
+    if (sendButton) sendButton.disabled = false;
+    
+    // Load messages from cursor 0 to get full history
+    const originalCursor = chatState.cursor;
+    chatState.cursor = 0;
+    await pollMessages();
+    
+    // If no messages were loaded, restore the original cursor
+    if (chatState.messages.length === 0 && originalCursor > 0) {
+      chatState.cursor = originalCursor;
+    }
+    
+    startPolling();
+    
+    console.log('Loaded', chatState.messages.length, 'messages');
+  }
   
   console.log('Chat initialized. Session ID:', chatState.sessionId || 'None');
 }
 
 /**
- * Load available agents from API
+ * Load session from localStorage
  */
-async function loadAgents() {
-  try {
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/agents`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      chatState.agents = data.agents || [];
-      renderAgentSelector();
-      console.log(`Loaded ${chatState.agents.length} agents`);
-    }
-  } catch (error) {
-    console.error('Failed to load agents:', error);
-    // Continue with default behavior (auto-routing)
+function loadSessionFromStorage() {
+  const sessionId = localStorage.getItem(CHAT_CONFIG.sessionStorageKey);
+  const cursor = localStorage.getItem(CHAT_CONFIG.cursorStorageKey);
+  
+  if (sessionId) {
+    chatState.sessionId = sessionId;
+    chatState.cursor = parseInt(cursor) || 0;
+    console.log('Loaded session from storage:', sessionId, 'cursor:', chatState.cursor);
   }
 }
 
 /**
- * Check agent health status from /health endpoint
+ * Save session to localStorage
  */
-async function checkAgentHealth() {
-  try {
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/health`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      signal: AbortSignal.timeout(5000)
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      
-      // Store agent health status
-      if (data.agents) {
-        chatState.agentHealth = data.agents;
-        console.log('Agent health status:', chatState.agentHealth);
-      }
-      
-      // Re-render agent selector with health status
-      renderAgentSelector();
-      
-      // Enable chat
-      enableChat();
-      
-      return true;
-    } else {
-      // Health check failed
-      console.error('Health check failed with status:', response.status);
-      disableChat();
-      return false;
-    }
-  } catch (error) {
-    console.warn('Failed to check agent health:', error);
-    // Disable chat when health check fails
-    disableChat();
-  }
-  return false;
-}
-
-/**
- * Render agent selector in UI
- */
-function renderAgentSelector() {
-  const agentSelectorContainer = document.getElementById('agentSelector');
-  if (!agentSelectorContainer || chatState.agents.length === 0) return;
-  
-  const select = document.createElement('select');
-  select.id = 'agentSelect';
-  select.className = 'w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all';
-  
-  // Auto-routing option
-  const autoOption = document.createElement('option');
-  autoOption.value = '';
-  autoOption.textContent = '🤖 Auto-odabir agenta';
-  select.appendChild(autoOption);
-  
-  // Agent options
-  chatState.agents.forEach(agent => {
-    const option = document.createElement('option');
-    option.value = agent.id;
-    option.textContent = agent.name;
-    select.appendChild(option);
-  });
-  
-  select.addEventListener('change', (e) => {
-    chatState.selectedAgent = e.target.value;
-    console.log('Selected agent:', chatState.selectedAgent || 'auto');
-  });
-  
-  agentSelectorContainer.innerHTML = '';
-  agentSelectorContainer.appendChild(select);
-}
-
-/**
- * Load available agents from API
- */
-async function loadAgents() {
-  try {
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/agents`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      chatState.agents = data.agents || [];
-      renderAgentSelector();
-      console.log(`Loaded ${chatState.agents.length} agents`);
-    }
-  } catch (error) {
-    console.error('Failed to load agents:', error);
-    // Continue with default behavior (auto-routing)
+function saveSessionToStorage() {
+  if (chatState.sessionId) {
+    localStorage.setItem(CHAT_CONFIG.sessionStorageKey, chatState.sessionId);
+    localStorage.setItem(CHAT_CONFIG.cursorStorageKey, chatState.cursor.toString());
   }
 }
 
 /**
- * Render agent selector in UI
- */
-function renderAgentSelector() {
-  // Check if this is first visit (no session and no messages)
-  const isFirstVisit = !chatState.sessionId && chatState.messageHistory.length === 0;
-  
-  if (isFirstVisit) {
-    // Show Intercom-style agent cards
-    renderAgentCards();
-  } else {
-    // Show dropdown selector for existing sessions
-    renderAgentDropdown();
-  }
-}
-
-/**
- * Render Intercom-style agent selection cards
- */
-function renderAgentCards() {
-  const agentWelcome = document.getElementById('agentWelcome');
-  const agentCards = document.getElementById('agentCards');
-  
-  if (!agentWelcome || !agentCards || chatState.agents.length === 0) return;
-  
-  agentWelcome.classList.remove('hidden');
-  agentCards.innerHTML = '';
-  
-  chatState.agents.forEach(agent => {
-    // Check if agent is available
-    const isAvailable = chatState.agentHealth[agent.id] !== false;
-    const isDisabled = !isAvailable;
-    
-    const card = document.createElement('button');
-    card.className = `w-full border rounded-xl p-4 text-left transition-all ${
-      isDisabled 
-        ? 'bg-slate-800/50 border-slate-700/50 opacity-50 cursor-not-allowed' 
-        : 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 border-slate-600 hover:scale-105 hover:shadow-lg'
-    }`;
-    
-    if (!isDisabled) {
-      card.onclick = () => selectAgentCard(agent.id, agent.name);
-    }
-    
-    // Agent icon based on type
-    const icons = {
-      'general': '🤖',
-      'orders': '🛒',
-      'info': 'ℹ️',
-      'tracking': '📦',
-      'returns': '↩️'
-    };
-    const icon = icons[agent.id] || '💬';
-    
-    const statusBadge = isDisabled 
-      ? '<span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">Nedostupan</span>' 
-      : '';
-    
-    card.innerHTML = `
-      <div class="flex items-start space-x-3">
-        <div class="text-3xl flex-shrink-0 ${ isDisabled ? 'grayscale' : '' }">${icon}</div>
-        <div class="flex-1">
-          <div class="flex items-center justify-between mb-1">
-            <h4 class="font-bold text-white text-sm">${agent.name}</h4>
-            ${statusBadge}
-          </div>
-          <p class="text-gray-300 text-xs">${agent.description}</p>
-        </div>
-      </div>
-    `;
-    
-    agentCards.appendChild(card);
-  });
-}
-
-/**
- * Handle agent card selection
- */
-function selectAgentCard(agentId, agentName) {
-  // Hide welcome screen
-  const agentWelcome = document.getElementById('agentWelcome');
-  if (agentWelcome) {
-    agentWelcome.classList.add('hidden');
-  }
-  
-  // Set selected agent
-  chatState.selectedAgent = agentId;
-  
-  // Show agent selector dropdown
-  const selectorContainer = document.getElementById('agentSelectorContainer');
-  if (selectorContainer) {
-    selectorContainer.classList.remove('hidden');
-  }
-  
-  // Render dropdown and set value
-  renderAgentDropdown();
-  const select = document.getElementById('agentSelect');
-  if (select) {
-    select.value = agentId;
-  }
-  
-  // Add system message
-  addMessageToUI('bot', `Povezao sam vas sa: **${agentName}**. Kako mogu da vam pomognem?`);
-  
-  // Focus input
-  const chatInput = document.getElementById('chatInput');
-  if (chatInput) {
-    chatInput.focus();
-  }
-  
-  console.log('Agent selected from card:', agentId);
-}
-
-/**
- * Render agent dropdown selector
- */
-function renderAgentDropdown() {
-  const agentSelectorContainer = document.getElementById('agentSelectorContainer');
-  const agentSelector = document.getElementById('agentSelector');
-  if (!agentSelector || chatState.agents.length === 0) return;
-  
-  // Show container
-  if (agentSelectorContainer) {
-    agentSelectorContainer.classList.remove('hidden');
-  }
-  
-  const select = document.createElement('select');
-  select.id = 'agentSelect';
-  select.className = 'w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all';
-  
-  // Auto-routing option
-  const autoOption = document.createElement('option');
-  autoOption.value = '';
-  autoOption.textContent = '🤖 Auto-odabir agenta';
-  select.appendChild(autoOption);
-  
-  // Agent options
-  chatState.agents.forEach(agent => {
-    const option = document.createElement('option');
-    option.value = agent.id;
-    
-    // Check if agent is available
-    const isAvailable = chatState.agentHealth[agent.id] !== false;
-    
-    if (!isAvailable) {
-      option.disabled = true;
-      option.textContent = `${agent.name} (Nedostupan)`;
-      option.style.opacity = '0.5';
-    } else {
-      option.textContent = agent.name;
-    }
-    
-    option.title = agent.description;
-    select.appendChild(option);
-  });
-  
-  select.addEventListener('change', (e) => {
-    chatState.selectedAgent = e.target.value;
-    console.log('Selected agent:', chatState.selectedAgent || 'auto');
-  });
-  
-  agentSelector.innerHTML = '';
-  agentSelector.appendChild(select);
-}
-
-/**
- * Setup all event listeners
+ * Setup event listeners
  */
 function setupEventListeners() {
   const chatForm = document.getElementById('chatForm');
   const chatInput = document.getElementById('chatInput');
-  const chatModal = document.getElementById('chatModal');
+  const chatButton = document.getElementById('chatButton');
   
   // Form submission
   if (chatForm) {
     chatForm.addEventListener('submit', handleSendMessage);
   }
   
-  // Character counter
+  // Input changes
   if (chatInput) {
-    chatInput.addEventListener('input', updateCharacterCount);
-    chatInput.addEventListener('input', toggleSendButton);
+    chatInput.addEventListener('input', handleInputChange);
+    chatInput.addEventListener('focus', handleChatActivity);
+    chatInput.addEventListener('keypress', handleChatActivity);
   }
   
-  // Close modal on backdrop click
+  // Note: Chat button click is handled via onclick attribute in HTML
+  
+  // Track chat window activity
+  const chatModal = document.getElementById('chatModal');
   if (chatModal) {
-    chatModal.addEventListener('click', function(e) {
-      if (e.target === chatModal) {
-        toggleChat();
-      }
-    });
+    chatModal.addEventListener('click', handleChatActivity);
+    chatModal.addEventListener('mousemove', handleChatActivity);
   }
   
-  // ESC key to close chat
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && chatState.isOpen) {
-      toggleChat();
-    }
-  });
+  // Track window visibility
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  
+  // Track mouse/keyboard activity globally when chat is open
+  window.addEventListener('mousemove', handleGlobalActivity);
+  window.addEventListener('keypress', handleGlobalActivity);
 }
 
 /**
- * Toggle chat modal visibility
+ * Handle chat activity
  */
-async function toggleChat() {
-  const chatModal = document.getElementById('chatModal');
-  const chatButton = document.getElementById('chatButton');
+function handleChatActivity() {
+  chatState.lastActivity = Date.now();
   
-  if (!chatModal) return;
+  if (!chatState.isActive && chatState.isOpen) {
+    chatState.isActive = true;
+    console.log('Chat became active');
+    adjustPollingInterval();
+  }
+}
+
+/**
+ * Handle global activity (only when chat is open)
+ */
+function handleGlobalActivity() {
+  if (chatState.isOpen) {
+    handleChatActivity();
+  }
+}
+
+/**
+ * Handle visibility change
+ */
+function handleVisibilityChange() {
+  if (document.hidden) {
+    chatState.isActive = false;
+    adjustPollingInterval();
+  } else if (chatState.isOpen) {
+    chatState.isActive = true;
+    handleChatActivity();
+    adjustPollingInterval();
+  }
+}
+
+/**
+ * Check if chat is currently active
+ */
+function checkChatActivity() {
+  const timeSinceLastActivity = Date.now() - chatState.lastActivity;
+  const wasActive = chatState.isActive;
+  
+  chatState.isActive = chatState.isOpen && 
+                       !document.hidden && 
+                       timeSinceLastActivity < CHAT_CONFIG.polling.inactivityThreshold;
+  
+  if (wasActive !== chatState.isActive) {
+    console.log('Chat activity changed:', chatState.isActive ? 'active' : 'inactive');
+    adjustPollingInterval();
+  }
+}
+
+/**
+ * Adjust polling interval based on activity
+ */
+function adjustPollingInterval() {
+  if (!chatState.sessionId) return;
+  
+  stopPolling();
+  startPolling();
+}
+
+/**
+ * Start polling for messages
+ */
+function startPolling() {
+  if (chatState.pollInterval) return; // Already polling
+  
+  const interval = chatState.isActive 
+    ? CHAT_CONFIG.polling.activeInterval 
+    : CHAT_CONFIG.polling.inactiveInterval;
+  
+  console.log('Starting polling with interval:', interval / 1000, 'seconds');
+  
+  chatState.pollInterval = setInterval(() => {
+    checkChatActivity(); // Check and update activity status
+    pollMessages();
+  }, interval);
+}
+
+/**
+ * Stop polling for messages
+ */
+function stopPolling() {
+  if (chatState.pollInterval) {
+    clearInterval(chatState.pollInterval);
+    chatState.pollInterval = null;
+    console.log('Stopped polling');
+  }
+}
+
+/**
+ * Toggle chat modal
+ */
+function toggleChat() {
+  console.log('toggleChat called');
+  const chatModal = document.getElementById('chatModal');
+  if (!chatModal) {
+    console.error('Chat modal not found!');
+    return;
+  }
   
   chatState.isOpen = !chatState.isOpen;
+  console.log('Chat state isOpen:', chatState.isOpen);
   
   if (chatState.isOpen) {
     chatModal.classList.remove('hidden');
     chatModal.classList.add('flex');
-    chatButton?.classList.add('hidden');
+    chatState.isActive = true;
+    handleChatActivity();
     
-    // Load history when opening (if not already loaded)
-    if (chatState.sessionId && chatState.messageHistory.length === 0) {
-      await fetchSessionHistory();
+    // If no session, show contact form
+    if (!chatState.sessionId) {
+      console.log('No session, showing contact form');
+      showContactForm();
+    } else {
+      console.log('Has session, showing chat interface');
+      // Focus input
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) chatInput.focus();
+      
+      // Start polling if we have a session
+      startPolling();
     }
-    
-    // Focus input
-    setTimeout(() => {
-      document.getElementById('chatInput')?.focus();
-    }, 100);
-    
-    // Clear badge count when opening chat
-    clearBadge();
-    
-    // Scroll to bottom
-    scrollToBottom();
   } else {
     chatModal.classList.add('hidden');
     chatModal.classList.remove('flex');
-    chatButton?.classList.remove('hidden');
+    chatState.isActive = false;
+    adjustPollingInterval(); // This will use inactive interval
   }
 }
 
 /**
- * Handle message sending
+ * Show contact form to start chat
+ */
+function showContactForm() {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  chatMessages.innerHTML = `
+    <div class="text-center py-4">
+      <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-white mb-2">Započnite razgovor</h3>
+      <p class="text-gray-300 text-sm mb-6">Molimo vas da unesete svoje podatke da bismo mogli da vam pomognemo.</p>
+      
+      <form id="contactForm" class="space-y-4 text-left">
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-1">Ime i prezime *</label>
+          <input type="text" id="fullName" required 
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Vaše ime i prezime">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-1">Email *</label>
+          <input type="email" id="email" required 
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="vas.email@example.com">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-1">Telefon *</label>
+          <input type="tel" id="phone" required 
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="+381 64 123 4567">
+        </div>
+        <button type="submit" 
+          class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all font-medium">
+          Započni razgovor
+        </button>
+      </form>
+    </div>
+  `;
+  
+  // Setup form handler
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', handleContactFormSubmit);
+  }
+}
+
+/**
+ * Handle contact form submission
+ */
+async function handleContactFormSubmit(e) {
+  e.preventDefault();
+  
+  const fullName = document.getElementById('fullName')?.value;
+  const email = document.getElementById('email')?.value;
+  const phone = document.getElementById('phone')?.value;
+  
+  if (!fullName || !email || !phone) {
+    alert('Molimo vas da popunite sva polja.');
+    return;
+  }
+  
+  chatState.userInfo = { fullName, email, phone };
+  
+  // Start chat session
+  await startChatSession();
+}
+
+/**
+ * Start a new chat session
+ */
+async function startChatSession() {
+  try {
+    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/chat/start`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-shared-secret': CHAT_CONFIG.sharedSecret
+      },
+      body: JSON.stringify({
+        fullName: chatState.userInfo.fullName,
+        email: chatState.userInfo.email,
+        phone: chatState.userInfo.phone,
+        page: window.location.href
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to start chat session');
+    }
+    
+    const data = await response.json();
+    
+    if (data.ok && data.sessionId) {
+      chatState.sessionId = data.sessionId;
+      chatState.cursor = 0;
+      saveSessionToStorage();
+      
+      console.log('Chat session started:', data.sessionId);
+      
+      // Clear contact form and show chat interface
+      showChatInterface();
+      
+      // Start polling
+      startPolling();
+      
+      // Fetch initial messages
+      await pollMessages();
+    } else {
+      throw new Error('Invalid response from chat API');
+    }
+  } catch (error) {
+    console.error('Error starting chat session:', error);
+    alert('Nije moguće pokrenuti razgovor. Molimo vas pokušajte ponovo.');
+  }
+}
+
+/**
+ * Show chat interface
+ */
+function showChatInterface() {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  chatMessages.innerHTML = '';
+  
+  // Enable input
+  const chatInput = document.getElementById('chatInput');
+  const sendButton = document.getElementById('sendButton');
+  
+  if (chatInput) {
+    chatInput.disabled = false;
+    chatInput.focus();
+  }
+  if (sendButton) {
+    sendButton.disabled = false;
+  }
+}
+
+/**
+ * Handle input change
+ */
+function handleInputChange(e) {
+  const chatInput = e.target;
+  const sendButton = document.getElementById('sendButton');
+  const charCount = document.getElementById('charCount');
+  
+  if (sendButton) {
+    sendButton.disabled = chatInput.value.trim().length === 0;
+  }
+  
+  if (charCount) {
+    charCount.textContent = `${chatInput.value.length}/${CHAT_CONFIG.maxMessageLength}`;
+  }
+  
+  handleChatActivity();
+}
+
+/**
+ * Handle send message
  */
 async function handleSendMessage(e) {
   e.preventDefault();
   
-  const input = document.getElementById('chatInput');
-  const message = input.value.trim();
+  const chatInput = document.getElementById('chatInput');
+  const message = chatInput?.value.trim();
   
-  if (!message || chatState.isLoading) return;
+  if (!message || !chatState.sessionId) return;
   
   // Clear input immediately
-  input.value = '';
-  updateCharacterCount();
-  toggleSendButton();
+  chatInput.value = '';
+  handleInputChange({ target: chatInput });
   
-  // Add user message to UI
+  // Add message to UI immediately
   addMessageToUI('user', message);
   
   // Send to API
   await sendMessageToAPI(message);
+  
+  handleChatActivity();
 }
 
 /**
  * Send message to API
  */
-async function sendMessageToAPI(message) {
-  chatState.isLoading = true;
-  showTypingIndicator();
-  setStatus('Piše...');
-  
+async function sendMessageToAPI(text) {
   try {
-    const requestBody = {
-      message: message
-    };
-    
-    // Add session_id if exists
-    if (chatState.sessionId) {
-      requestBody.session_id = chatState.sessionId;
-    }
-    
-    // Add agent_id if manually selected
-    if (chatState.selectedAgent) {
-      requestBody.agent_id = chatState.selectedAgent;
-    }
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), CHAT_CONFIG.apiTimeout);
-    
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/chat`, {
+    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/chat/send`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-shared-secret': CHAT_CONFIG.sharedSecret
       },
-      body: JSON.stringify(requestBody),
-      signal: controller.signal
+      body: JSON.stringify({
+        sessionId: chatState.sessionId,
+        text: text
+      })
     });
     
-    clearTimeout(timeoutId);
-    
     if (!response.ok) {
-      if (response.status === 404) {
-        // Session not found, clear and retry
-        console.log('Session not found, starting new session');
-        clearSession();
-        await sendMessageToAPI(message);
-        return;
-      }
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error('Failed to send message');
     }
     
     const data = await response.json();
     
-    // Save session ID
-    if (data.session_id) {
-      saveSession(data.session_id);
+    if (data.ok && data.cursor) {
+      chatState.cursor = data.cursor;
+      saveSessionToStorage();
+      
+      // Poll immediately to get any responses
+      setTimeout(() => pollMessages(), 500);
     }
-    
-    // Add bot response to UI
-    addMessageToUI('bot', data.response, false, null, data.agent_used);
-    
-    // Log which agent handled the message
-    if (data.agent_used) {
-      console.log('Agent used:', data.agent_used);
-    }
-    
-    // Increment badge if chat is closed
-    if (!chatState.isOpen) {
-      incrementBadge();
-    }
-    
-    setStatus('Online');
-    
   } catch (error) {
-    console.error('Chat API Error:', error);
+    console.error('Error sending message:', error);
     
-    let errorMessage = 'Greška u komunikaciji. Molimo pokušajte ponovo.';
+    // Add error message to UI
+    addMessageToUI('system', 'Greška pri slanju poruke. Molimo vas pokušajte ponovo.');
+  }
+}
+
+/**
+ * Poll for new messages
+ */
+async function pollMessages() {
+  if (!chatState.sessionId) {
+    console.log('No session ID, skipping poll');
+    return;
+  }
+  
+  try {
+    const url = `${CHAT_CONFIG.apiBaseUrl}/chat/poll?sessionId=${chatState.sessionId}&cursor=${chatState.cursor}&limit=200`;
     
-    if (error.name === 'AbortError') {
-      errorMessage = 'Zahtev je istekao. Molimo pokušajte ponovo.';
-    } else if (!navigator.onLine) {
-      errorMessage = 'Nema internet konekcije. Proverite vašu mrežu.';
+    console.log('Polling messages from cursor:', chatState.cursor);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'x-shared-secret': CHAT_CONFIG.sharedSecret
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to poll messages');
     }
     
-    addMessageToUI('bot', errorMessage, true);
-    setStatus('Greška');
+    const data = await response.json();
     
-  } finally {
-    chatState.isLoading = false;
-    hideTypingIndicator();
+    console.log('Poll response:', data);
+    
+    if (data.ok && data.messages && data.messages.length > 0) {
+      console.log('Processing', data.messages.length, 'messages');
+      
+      // Process new messages
+      data.messages.forEach(message => {
+        processMessage(message);
+      });
+      
+      // Update cursor
+      if (data.cursor) {
+        chatState.cursor = data.cursor;
+        saveSessionToStorage();
+      }
+    } else {
+      console.log('No new messages');
+    }
+  } catch (error) {
+    console.error('Error polling messages:', error);
+  }
+}
+
+/**
+ * Process a message from the API
+ */
+function processMessage(message) {
+  // Check if we already have this message
+  const exists = chatState.messages.find(m => m.id === message.id);
+  if (exists) return;
+  
+  // Add to state
+  chatState.messages.push(message);
+  
+  // Determine message type
+  let type = 'system';
+  if (message.source === 'web') {
+    type = 'user';
+  } else if (message.source === 'telegram' || message.source === 'agent') {
+    type = 'bot';
+  } else if (message.source === 'system') {
+    type = 'system';
+  }
+  
+  // Skip system messages about chat start
+  if (message.source === 'system' && message.text.includes('Chat started')) {
+    return;
+  }
+  
+  // Add to UI
+  addMessageToUI(type, message.text, message.from, message.timestamp);
+}
+
+/**
+ * Format timestamp for display
+ */
+function formatTimestamp(timestamp) {
+  if (!timestamp) return '';
+  const date = new Date(timestamp);
+  const now = new Date();
+  const isToday = date.toDateString() === now.toDateString();
+  
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  
+  if (isToday) {
+    return `${hours}:${minutes}`;
+  } else {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    return `${day}.${month}. ${hours}:${minutes}`;
   }
 }
 
 /**
  * Add message to UI
  */
-function addMessageToUI(sender, text, isError = false, messageTimestamp = null, agentUsed = null) {
-  const messagesContainer = document.getElementById('chatMessages');
-  if (!messagesContainer) return;
+function addMessageToUI(type, text, from = null, timestamp = null) {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
   
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${sender}-message fade-in`;
+  const timeStr = formatTimestamp(timestamp);
   
-  // Use provided timestamp or create new one
-  let timestamp;
-  if (messageTimestamp) {
-    // Parse ISO timestamp from API
-    const date = new Date(messageTimestamp);
-    timestamp = date.toLocaleTimeString('sr-RS', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  } else {
-    timestamp = new Date().toLocaleTimeString('sr-RS', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  }
+  const messageWrapper = document.createElement('div');
   
-  if (sender === 'user') {
-    messageDiv.innerHTML = `
-      <div class="flex items-start space-x-2 justify-end">
-        <div class="message-bubble user bg-gradient-to-r from-purple-600 to-pink-600 text-white p-3 rounded-2xl rounded-tr-sm max-w-[80%]">
-          <p class="text-sm">${escapeHtml(text)}</p>
-          <span class="text-xs opacity-75 mt-1 block">${timestamp}</span>
-        </div>
-        <div class="w-8 h-8 bg-gradient-to-r from-slate-600 to-slate-700 rounded-full flex items-center justify-center flex-shrink-0">
+  if (type === 'user') {
+    messageWrapper.className = 'w-full flex justify-end';
+    const userName = chatState.userInfo.fullName || 'Vi';
+    messageWrapper.innerHTML = `
+      <div class="flex items-start space-x-2 flex-row-reverse space-x-reverse">
+        <div class="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>
         </div>
+        <div class="flex flex-col items-end">
+          <div class="text-xs text-gray-400 mb-1">${escapeHtml(userName)} ${timeStr ? `<span class="text-gray-500">• ${timeStr}</span>` : ''}</div>
+          <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white p-3 rounded-2xl rounded-tr-sm">
+            ${escapeHtml(text)}
+          </div>
+        </div>
       </div>
     `;
-  } else {
-    const messageClass = isError ? 'bg-red-500/20 border border-red-500/50' : 'bg-gradient-to-br from-slate-800 to-slate-700';
-    const iconColor = isError ? 'from-red-500 to-red-600' : 'from-purple-500 to-pink-500';
-    
-    // Find agent name if agentUsed is provided
-    let agentBadge = '';
-    if (agentUsed && chatState.agents.length > 0) {
-      const agent = chatState.agents.find(a => a.id === agentUsed);
-      if (agent) {
-        agentBadge = `<span class="inline-block bg-purple-500/30 text-purple-200 text-xs px-2 py-0.5 rounded-full mr-2" title="${agent.description}">${agent.name}</span>`;
-      }
-    }
-    
-    messageDiv.innerHTML = `
+  } else if (type === 'bot') {
+    messageWrapper.className = 'w-full flex justify-start';
+    const botName = from?.name || from?.first_name || from?.username || 'Podrška';
+    messageWrapper.innerHTML = `
       <div class="flex items-start space-x-2">
-        <div class="w-8 h-8 bg-gradient-to-r ${iconColor} rounded-full flex items-center justify-center flex-shrink-0">
+        <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
           </svg>
         </div>
-        <div class="message-bubble bot ${messageClass} text-white p-3 rounded-2xl rounded-tl-sm max-w-[80%]">
-          ${agentBadge}<p class="text-sm">${formatBotMessage(text)}</p>
-          <span class="text-xs opacity-75 mt-1 block">${timestamp}</span>
+        <div class="flex flex-col items-start">
+          <div class="text-xs text-gray-400 mb-1">${escapeHtml(botName)} ${timeStr ? `<span class="text-gray-500">• ${timeStr}</span>` : ''}</div>
+          <div class="bg-gradient-to-br from-slate-800 to-slate-700 text-white p-3 rounded-2xl rounded-tl-sm">
+            ${escapeHtml(text)}
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    // system message
+    messageWrapper.className = 'w-full';
+    messageWrapper.innerHTML = `
+      <div class="w-full text-center">
+        <div class="inline-block bg-slate-800/50 text-gray-400 px-4 py-2 rounded-full text-xs">
+          ${escapeHtml(text)}
         </div>
       </div>
     `;
   }
   
-  messagesContainer.appendChild(messageDiv);
-  
-  // Save to history
-  chatState.messageHistory.push({ sender, text, timestamp: Date.now() });
-  saveMessageHistory();
+  chatMessages.appendChild(messageWrapper);
   
   // Scroll to bottom
-  scrollToBottom();
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 /**
- * Format bot message (support basic markdown-like formatting)
- */
-function formatBotMessage(text) {
-  let formatted = escapeHtml(text);
-  
-  // Bold: **text**
-  formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
-  // Italic: *text*
-  formatted = formatted.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  
-  // Line breaks
-  formatted = formatted.replace(/\n/g, '<br>');
-  
-  // Links (if any)
-  formatted = formatted.replace(
-    /(https?:\/\/[^\s]+)/g, 
-    '<a href="$1" target="_blank" class="underline hover:text-purple-300">$1</a>'
-  );
-  
-  return formatted;
-}
-
-/**
- * Show typing indicator
- */
-function showTypingIndicator() {
-  const indicator = document.getElementById('typingIndicator');
-  if (indicator) {
-    indicator.classList.remove('hidden');
-    scrollToBottom();
-  }
-}
-
-/**
- * Hide typing indicator
- */
-function hideTypingIndicator() {
-  const indicator = document.getElementById('typingIndicator');
-  if (indicator) {
-    indicator.classList.add('hidden');
-  }
-}
-
-/**
- * Update character counter
- */
-function updateCharacterCount() {
-  const input = document.getElementById('chatInput');
-  const counter = document.getElementById('charCount');
-  
-  if (input && counter) {
-    const length = input.value.length;
-    counter.textContent = `${length}/${CHAT_CONFIG.maxMessageLength}`;
-    
-    if (length > CHAT_CONFIG.maxMessageLength * 0.9) {
-      counter.classList.add('text-red-400');
-    } else {
-      counter.classList.remove('text-red-400');
-    }
-  }
-}
-
-/**
- * Toggle send button based on input
- */
-function toggleSendButton() {
-  const input = document.getElementById('chatInput');
-  const button = document.getElementById('sendButton');
-  
-  if (input && button) {
-    const hasText = input.value.trim().length > 0;
-    button.disabled = !hasText || chatState.isLoading;
-  }
-}
-
-/**
- * Set chat status
- */
-function setStatus(status) {
-  const statusElement = document.getElementById('chatStatus');
-  if (statusElement) {
-    statusElement.textContent = status;
-  }
-}
-
-/**
- * Scroll messages to bottom
- */
-function scrollToBottom() {
-  const messagesContainer = document.getElementById('chatMessages');
-  if (messagesContainer) {
-    setTimeout(() => {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 100);
-  }
-}
-
-/**
- * Clear chat conversation
+ * Clear chat
  */
 function clearChat() {
   if (!confirm('Da li ste sigurni da želite da obrišete razgovor?')) {
     return;
   }
   
-  const messagesContainer = document.getElementById('chatMessages');
-  if (!messagesContainer) return;
+  // Clear state
+  chatState.sessionId = null;
+  chatState.cursor = 0;
+  chatState.messages = [];
   
-  // Clear UI (keep welcome message)
-  const messages = messagesContainer.querySelectorAll('.chat-message');
-  messages.forEach((msg, index) => {
-    if (index > 0) { // Skip welcome message
-      msg.remove();
-    }
-  });
+  // Clear storage
+  localStorage.removeItem(CHAT_CONFIG.sessionStorageKey);
+  localStorage.removeItem(CHAT_CONFIG.cursorStorageKey);
   
-  // Clear session and history
-  clearSession();
-  chatState.messageHistory = [];
-  localStorage.removeItem('ekoza_chat_history');
+  // Stop polling
+  stopPolling();
+  
+  // Clear UI
+  const chatMessages = document.getElementById('chatMessages');
+  if (chatMessages) {
+    chatMessages.innerHTML = '';
+  }
+  
+  // Show contact form again
+  showContactForm();
   
   console.log('Chat cleared');
-}
-
-/**
- * Save session ID
- */
-function saveSession(sessionId) {
-  chatState.sessionId = sessionId;
-  localStorage.setItem(CHAT_CONFIG.sessionStorageKey, sessionId);
-  console.log('Session saved:', sessionId);
-}
-
-/**
- * Load session ID
- */
-function loadSession() {
-  const sessionId = localStorage.getItem(CHAT_CONFIG.sessionStorageKey);
-  if (sessionId) {
-    chatState.sessionId = sessionId;
-    console.log('Session loaded:', sessionId);
-  }
-}
-
-/**
- * Clear session
- */
-function clearSession() {
-  chatState.sessionId = null;
-  localStorage.removeItem(CHAT_CONFIG.sessionStorageKey);
-  console.log('Session cleared');
-}
-
-/**
- * Save message history
- */
-function saveMessageHistory() {
-  try {
-    // Keep only last 20 messages
-    const historyToSave = chatState.messageHistory.slice(-20);
-    localStorage.setItem('ekoza_chat_history', JSON.stringify(historyToSave));
-  } catch (e) {
-    console.error('Failed to save message history:', e);
-  }
-}
-
-/**
- * Load message history
- */
-async function loadMessageHistory() {
-  // First, try to load from API if we have a session
-  if (chatState.sessionId) {
-    const historyLoaded = await fetchSessionHistory();
-    if (historyLoaded) {
-      console.log('Loaded message history from API');
-      return;
-    }
-  }
-  
-  // Fallback to localStorage
-  try {
-    const saved = localStorage.getItem('ekoza_chat_history');
-    if (saved) {
-      chatState.messageHistory = JSON.parse(saved);
-      
-      // Restore messages to UI (skip if too old, e.g., > 24 hours)
-      const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
-      const recentMessages = chatState.messageHistory.filter(msg => msg.timestamp > oneDayAgo);
-      
-      if (recentMessages.length > 0 && recentMessages.length !== chatState.messageHistory.length) {
-        chatState.messageHistory = recentMessages;
-        saveMessageHistory();
-      }
-    }
-  } catch (e) {
-    console.error('Failed to load message history:', e);
-  }
-}
-
-/**
- * Fetch session history from API
- */
-async function fetchSessionHistory() {
-  if (!chatState.sessionId) {
-    return false;
-  }
-  
-  try {
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/history/${chatState.sessionId}`, {
-      method: 'GET',
-      signal: AbortSignal.timeout(5000)
-    });
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        console.log('Session history not found, starting fresh');
-        clearSession();
-        return false;
-      }
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // Clear existing UI messages (except welcome message)
-    const messagesContainer = document.getElementById('chatMessages');
-    if (messagesContainer) {
-      const messages = messagesContainer.querySelectorAll('.chat-message');
-      messages.forEach((msg, index) => {
-        if (index > 0) { // Keep welcome message
-          msg.remove();
-        }
-      });
-    }
-    
-    // Add messages from API to UI
-    if (data.messages && data.messages.length > 0) {
-      data.messages.forEach(msg => {
-        const sender = msg.role === 'user' ? 'user' : 'bot';
-        addMessageToUI(sender, msg.content, false, msg.timestamp);
-      });
-      
-      console.log(`Loaded ${data.total_messages} messages from API`);
-    }
-    
-    return true;
-    
-  } catch (error) {
-    console.error('Failed to fetch session history:', error);
-    return false;
-  }
 }
 
 /**
@@ -874,133 +709,6 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-/**
- * Show notification (when chat is closed)
- */
-function showChatNotification() {
-  const badge = document.getElementById('chatBadge');
-  if (badge && !chatState.isOpen) {
-    badge.classList.remove('hidden');
-  }
-}
-
-/**
- * Update badge count
- */
-function updateBadgeCount(count) {
-  const badge = document.getElementById('chatBadge');
-  if (badge) {
-    chatState.unreadCount = count;
-    if (count > 0) {
-      badge.textContent = count > 9 ? '9+' : count.toString();
-      badge.classList.remove('hidden');
-    } else {
-      badge.classList.add('hidden');
-    }
-  }
-}
-
-/**
- * Increment badge count
- */
-function incrementBadge() {
-  if (!chatState.isOpen) {
-    updateBadgeCount(chatState.unreadCount + 1);
-  }
-}
-
-/**
- * Clear badge count
- */
-function clearBadge() {
-  updateBadgeCount(0);
-}
-
-/**
- * Check API health (optional)
- */
-async function checkAPIHealth() {
-  try {
-    const response = await fetch(`${CHAT_CONFIG.apiBaseUrl}/`, {
-      method: 'GET',
-      signal: AbortSignal.timeout(5000)
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('API Health:', data);
-      return true;
-    }
-  } catch (error) {
-    console.warn('API health check failed:', error);
-  }
-  return false;
-}
-
-/**
- * Disable chat when health check fails
- */
-function disableChat() {
-  const chatButton = document.getElementById('chatButton');
-  const chatFab = chatButton?.querySelector('.chat-fab');
-  
-  if (chatButton && chatFab) {
-    // Disable button
-    chatFab.disabled = true;
-    chatFab.onclick = null;
-    
-    // Add disabled styling
-    chatFab.classList.add('opacity-50', 'cursor-not-allowed', 'grayscale');
-    chatFab.classList.remove('hover:scale-110');
-    
-    // Update badge to show error
-    const badge = document.getElementById('chatBadge');
-    if (badge) {
-      badge.textContent = '!';
-      badge.classList.remove('bg-red-500', 'hidden');
-      badge.classList.add('bg-yellow-500');
-      badge.title = 'Chat je trenutno nedostupan';
-    }
-    
-    console.log('Chat disabled due to health check failure');
-  }
-}
-
-/**
- * Enable chat when health check succeeds
- */
-function enableChat() {
-  const chatButton = document.getElementById('chatButton');
-  const chatFab = chatButton?.querySelector('.chat-fab');
-  
-  if (chatButton && chatFab) {
-    // Enable button
-    chatFab.disabled = false;
-    chatFab.onclick = toggleChat;
-    
-    // Remove disabled styling
-    chatFab.classList.remove('opacity-50', 'cursor-not-allowed', 'grayscale');
-    chatFab.classList.add('hover:scale-110');
-    
-    // Reset badge
-    const badge = document.getElementById('chatBadge');
-    if (badge) {
-      badge.classList.remove('bg-yellow-500');
-      badge.classList.add('bg-red-500', 'hidden');
-      badge.title = '';
-    }
-    
-    console.log('Chat enabled');
-  }
-}
-
-// Export functions for use in HTML
+// Make functions available globally
 window.toggleChat = toggleChat;
 window.clearChat = clearChat;
-window.checkAPIHealth = checkAPIHealth;
-window.checkAgentHealth = checkAgentHealth;
-window.fetchSessionHistory = fetchSessionHistory;
-window.updateBadgeCount = updateBadgeCount;
-window.incrementBadge = incrementBadge;
-window.selectAgentCard = selectAgentCard;
-window.clearBadge = clearBadge;
