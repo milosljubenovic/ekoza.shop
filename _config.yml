@@ -46,7 +46,7 @@ chat:
   session_storage_key: ekoza_chat_session
 customization:
   embroidery_price: 300
-  name_embroidery_price: 500
+  name_embroidery_price: 200
   font_options:
     - name: Latinica
       value: latin
@@ -77,29 +77,29 @@ defaults:
     values:
       layout: product
   - scope:
-      path: "_products/lazybags"
-      type: "products"
+      path: _products/lazybags
+      type: products
     values:
-      layout: "product"
-      category: "Lazy Bag"
+      layout: product
+      category: Lazy Bag
   - scope:
-      path: "_products/lazy-lopta"
-      type: "products"
+      path: _products/lazy-lopta
+      type: products
     values:
-      layout: "product"
-      category: "Lazy Lopta"
+      layout: product
+      category: Lazy Lopta
   - scope:
-      path: "_products/lazy-foteljica"
-      type: "products"
+      path: _products/lazy-foteljica
+      type: products
     values:
-      layout: "product"
-      category: "Lazy Foteljica"
+      layout: product
+      category: Lazy Foteljica
   - scope:
-      path: "_products/ostalo"
-      type: "products"
+      path: _products/ostalo
+      type: products
     values:
-      layout: "product"
-      category: "Ostalo"
+      layout: product
+      category: Ostalo
 exclude:
   - Gemfile
   - Gemfile.lock
