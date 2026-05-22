@@ -44,7 +44,7 @@ title: Početna
         </div>
 
         <p class="text-xl text-gray-300 max-w-md">
-          {{ featured.name }} {{ featured.icon | default: "🧸" }}
+          {{ featured.title }} {{ featured.icon | default: "🧸" }}
         </p>
 
         <!-- Decorative Icons - Mobile: Behind text -->
@@ -62,7 +62,7 @@ title: Početna
         </div>
 
         <div class="flex space-x-4 pt-4">
-          <a href="{{ '/p' | relative_url }}roizvod/{{ featured.id }}/" class="btn-hero group">
+          <a href="{{ featured.url | relative_url }}" class="btn-hero group">
             <span>PORUČI</span>
             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

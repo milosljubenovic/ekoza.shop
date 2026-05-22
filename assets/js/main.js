@@ -82,22 +82,23 @@ function searchProducts(event) {
     return;
   }
 
-  // Get products data from the script tag
+  // Get products data from the script tag. The JSON producer in
+  // _layouts/default.html emits {id, title, url, price, category, image, ...}
+  // -- note `title` and `image` (singular), not `name` and `images[]`.
   const products = window.productsData || [];
 
   const results = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm) ||
-    product.category.toLowerCase().includes(searchTerm) ||
-    (product.tags && product.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
+    product.title.toLowerCase().includes(searchTerm) ||
+    product.category.toLowerCase().includes(searchTerm)
   );
 
   if (results.length > 0) {
     searchResults.innerHTML = results.slice(0, 5).map(product => `
-      <a href="/proizvod/${encodeURIComponent(product.id)}/" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors">
+      <a href="${escapeHtml(product.url)}" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors">
         <div class="flex gap-3">
-          <img src="${escapeHtml(product.images[0])}" alt="${escapeHtml(product.name)}" class="w-16 h-16 object-cover rounded-lg border border-slate-600">
+          <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}" class="w-16 h-16 object-cover rounded-lg border border-slate-600">
           <div class="flex-1">
-            <h4 class="font-semibold text-white text-sm mb-1">${escapeHtml(product.name)}</h4>
+            <h4 class="font-semibold text-white text-sm mb-1">${escapeHtml(product.title)}</h4>
             <p class="text-xs text-gray-400 mb-2">${escapeHtml(product.category)}</p>
             <p class="text-sm font-bold text-gradient">${escapeHtml(product.price)} RSD</p>
           </div>
