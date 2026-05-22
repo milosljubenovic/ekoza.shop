@@ -94,7 +94,7 @@ function searchProducts(event) {
 
   if (results.length > 0) {
     searchResults.innerHTML = results.slice(0, 5).map(product => `
-      <a href="${escapeHtml(product.url)}" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors">
+      <a href="${escapeHtml(product.url)}" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors${product.in_stock ? '' : ' opacity-60'}">
         <div class="flex gap-3">
           <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}" class="w-16 h-16 object-cover rounded-lg border border-slate-600">
           <div class="flex-1">
@@ -102,6 +102,7 @@ function searchProducts(event) {
             <p class="text-xs text-gray-400 mb-2">${escapeHtml(product.category)}</p>
             <p class="text-sm font-bold text-gradient">${escapeHtml(product.price)} RSD</p>
           </div>
+          ${product.in_stock ? '' : '<span class="self-start bg-slate-900/80 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full font-semibold whitespace-nowrap">Rasprodato</span>'}
         </div>
       </a>
     `).join('');

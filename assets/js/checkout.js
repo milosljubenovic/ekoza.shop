@@ -147,6 +147,16 @@ async function handleOrderSubmit() {
     return;
   }
 
+  // Block submission if any cart item went out of stock since it was added.
+  // Realistic case: user adds an item, the warehouse marks it sold out, user
+  // returns to checkout later. The Worker should also enforce this server-side
+  // (this guard is client-side only), but rejecting here avoids the round-trip.
+  const outOfStockItems = findOutOfStockCartItems();
+  if (outOfStockItems.length > 0) {
+    showOutOfStockCartModal(outOfStockItems);
+    return;
+  }
+
   isSubmitting = true;
   const submitBtn = document.getElementById('submitOrderBtn');
   const originalBtnHtml = submitBtn.innerHTML;
@@ -215,6 +225,78 @@ async function handleOrderSubmit() {
     isSubmitting = false;
   }
 }
+
+// Return cart items whose corresponding product has in_stock: false in the
+// productsData blob emitted by _layouts/default.html. Matching is by `url`
+// because cart items store the product URL (which is stable) but the cart's
+// `name` field may include size/embroidery variations and doesn't match the
+// canonical product title.
+function findOutOfStockCartItems() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const products = window.productsData || [];
+  if (products.length === 0) {
+    // No reference data -- don't block legit orders on a data-loading failure.
+    return [];
+  }
+  return cart.filter(item => {
+    const product = products.find(p => p.url === item.url);
+    return product && product.in_stock === false;
+  });
+}
+
+function removeOutOfStockFromCart() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const products = window.productsData || [];
+  const filtered = cart.filter(item => {
+    const product = products.find(p => p.url === item.url);
+    return !product || product.in_stock !== false;
+  });
+  localStorage.setItem('cart', JSON.stringify(filtered));
+  updateCartCount();
+  loadOrderSummary();
+}
+
+function showOutOfStockCartModal(outOfStockItems) {
+  const escapeHtml = value => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+  const itemsList = outOfStockItems
+    .map(item => `<li class="text-gray-300">• ${escapeHtml(item.name)}</li>`)
+    .join('');
+  const modalHtml = `
+    <div id="outOfStockCartModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+         onclick="if (event.target === this) this.remove();">
+      <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 max-w-md w-full text-center shadow-2xl">
+        <div class="w-20 h-20 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-3">Proizvod trenutno nije dostupan</h2>
+        <p class="text-gray-300 mb-4">Sledeći proizvodi u vašoj korpi su rasprodati:</p>
+        <ul class="bg-slate-900 rounded-xl p-4 mb-6 text-left">${itemsList}</ul>
+        <p class="text-gray-300 mb-6 text-sm">Molimo uklonite ih da biste nastavili sa porudžbinom.</p>
+        <div class="flex flex-col gap-3">
+          <button type="button" onclick="removeOutOfStockFromCart(); document.getElementById('outOfStockCartModal').remove();"
+                  class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-purple-600 transition-all">
+            Ukloni rasprodate proizvode
+          </button>
+          <button type="button" onclick="document.getElementById('outOfStockCartModal').remove();"
+                  class="text-gray-400 hover:text-gray-300 text-sm py-2 transition-colors">
+            Otkaži
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+// Expose for inline onclick handlers in the modal markup above.
+window.removeOutOfStockFromCart = removeOutOfStockFromCart;
 
 function showRedirectSpinner(orderId, phone) {
   const modalHtml = `
