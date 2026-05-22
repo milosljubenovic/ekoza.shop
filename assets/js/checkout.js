@@ -121,18 +121,22 @@ function setupFormHandlers() {
   };
   
   document.getElementById('submitOrderBtn')?.addEventListener('click', handleOrderSubmit);
-  
-  // Debug: Log that the event listener was attached
-  console.log('Submit order button event listener attached');
 }
 
+// Re-entrancy guard: setting `disabled` on the button only takes effect after the
+// click event finishes propagating, so a fast double-click can fire two
+// handleOrderSubmit calls before the first POST completes. This flag is checked
+// synchronously at the very top of the handler.
+let isSubmitting = false;
+
 async function handleOrderSubmit() {
-  console.log('handleOrderSubmit called');
+  if (isSubmitting) {
+    return;
+  }
+
   const form = document.getElementById('checkoutForm');
-  
-  // Validate form
+
   if (!form.checkValidity()) {
-    console.log('Form validation failed');
     form.reportValidity();
     return;
   }
@@ -143,17 +147,16 @@ async function handleOrderSubmit() {
     return;
   }
 
-  console.log('Starting order submission...');
+  isSubmitting = true;
+  const submitBtn = document.getElementById('submitOrderBtn');
+  const originalBtnHtml = submitBtn.innerHTML;
+
   try {
-    // Disable button
-    const submitBtn = document.getElementById('submitOrderBtn');
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<svg class="animate-spin w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Slanje...';
 
     const orderData = collectOrderData();
-    console.log('Order data:', orderData);
-    
-    // Call placeOrder API
+
     const response = await fetch('https://ekozashop-orders.7kqq5yynhz.workers.dev', {
       method: 'POST',
       headers: {
@@ -162,15 +165,12 @@ async function handleOrderSubmit() {
       body: JSON.stringify(orderData)
     });
 
-    console.log('API response status:', response.status);
-    
     if (!response.ok) {
       throw new Error('Failed to place order');
     }
 
     const result = await response.json();
-    console.log('API result:', result);
-    
+
     if (!result.success) {
       throw new Error(result.message || 'Failed to place order');
     }
@@ -209,11 +209,10 @@ async function handleOrderSubmit() {
   } catch (error) {
     console.error('Error submitting order:', error);
     alert('Došlo je do greške prilikom slanja porudžbine. Molimo pokušajte ponovo.');
-    
-    // Re-enable button
-    const submitBtn = document.getElementById('submitOrderBtn');
+
     submitBtn.disabled = false;
-    submitBtn.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Poruči';
+    submitBtn.innerHTML = originalBtnHtml;
+    isSubmitting = false;
   }
 }
 

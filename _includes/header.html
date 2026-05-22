@@ -1,26 +1,21 @@
 <header class="bg-slate-900/95 backdrop-blur-md shadow-2xl sticky top-0 z-50 border-b border-slate-700/50">
   <script>
-    // Define toggleOrdersDropdown early to avoid reference errors
+    // Defined inline so buttons rendered before main.js loads still resolve the handler.
     function toggleOrdersDropdown() {
       const dropdown = document.getElementById('ordersDropdown');
       if (!dropdown) {
         console.error('ordersDropdown element not found');
         return;
       }
-      
+
       const isHidden = dropdown.classList.contains('hidden');
-      console.log('Toggle orders dropdown, currently hidden:', isHidden);
-      
+
       if (isHidden) {
         const content = document.getElementById('ordersDropdownContent');
-        
+
         if (window.orderStatusTracker) {
-          console.log('Tracker found, getting HTML');
-          const html = window.orderStatusTracker.getOrdersDropdownHTML();
-          console.log('Generated HTML length:', html.length);
-          content.innerHTML = html;
+          content.innerHTML = window.orderStatusTracker.getOrdersDropdownHTML();
         } else {
-          console.warn('orderStatusTracker not available');
           content.innerHTML = '<div class="p-6 text-center"><p class="text-gray-400">Učitavanje...</p></div>';
         }
         dropdown.classList.remove('hidden');
