@@ -68,12 +68,12 @@ title: Početna
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </a>
-          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group">
+          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group" {% unless featured.in_stock %}disabled aria-label="Rasprodato"{% endunless %}>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
             </svg>
           </button>
-          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group">
+          <button onclick="addToCart('{{ featured.title }}', {{ featured.price }}, '{{ featured.images[0] }}', '{{ featured.url }}')" class="btn-hero-secondary group" {% unless featured.in_stock %}disabled aria-label="Rasprodato"{% endunless %}>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
@@ -156,6 +156,11 @@ title: Početna
               -{{ product.old_price | minus: product.price | times: 100 | divided_by: product.old_price }}%
             </span>
             {% endif %}
+            {% unless product.in_stock %}
+            <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
+              Rasprodato
+            </span>
+            {% endunless %}
           </div>
           <div class="p-5">
             <h3 class="font-bold text-white mb-2 hover:text-purple-400 transition-colors">{{ product.title }}</h3>
@@ -168,9 +173,10 @@ title: Početna
                 {% endif %}
               </div>
             </div>
-            <button onclick="addToCart('{{ product.title }}', {{ product.price }}, '{{ product.images[0] }}', '{{ product.url }}')" 
-                    class="w-full btn-primary-modern">
-              Dodaj u korpu
+            <button onclick="addToCart('{{ product.title }}', {{ product.price }}, '{{ product.images[0] }}', '{{ product.url }}')"
+                    class="w-full btn-primary-modern"
+                    {% unless product.in_stock %}disabled{% endunless %}>
+              {% if product.in_stock %}Dodaj u korpu{% else %}Rasprodato{% endif %}
             </button>
           </div>
         </a>
