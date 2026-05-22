@@ -1,9 +1,32 @@
 // Google Apps Script for handling ekoza.shop orders
 // Deploy this as a Web App: Deploy > New deployment > Web app
 // Set "Execute as" to "Me" and "Who has access" to "Anyone"
+//
+// Required script properties (Project Settings > Script Properties):
+//   SHEET_ID    - the spreadsheet ID (from docs.google.com/spreadsheets/d/SHEET_ID/edit)
+//   ADMIN_EMAIL - address that receives new-order notifications
+// Run setupScriptProperties() once after deploy to set them interactively, or set
+// them in the UI. getRequiredProperty() throws a clear error if they're missing,
+// so failures are loud instead of silently writing to nowhere.
 
-// Your Google Sheet ID (get from URL: docs.google.com/spreadsheets/d/SHEET_ID/edit)
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+function getRequiredProperty(name) {
+  const value = PropertiesService.getScriptProperties().getProperty(name);
+  if (!value) {
+    throw new Error(
+      'Missing required script property: ' + name +
+      '. Set it under Project Settings > Script Properties.'
+    );
+  }
+  return value;
+}
+
+function getSheetId() {
+  return getRequiredProperty('SHEET_ID');
+}
+
+function getAdminEmail() {
+  return getRequiredProperty('ADMIN_EMAIL');
+}
 
 function doPost(e) {
   try {
@@ -34,7 +57,7 @@ function doPost(e) {
 }
 
 function addOrderToSheet(orderData) {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const ss = SpreadsheetApp.openById(getSheetId());
   let ordersSheet = ss.getSheetByName('Orders');
   
   // Create Orders sheet if it doesn't exist
@@ -159,9 +182,8 @@ function getPaymentMethodName(method) {
 }
 
 function sendOrderNotification(orderData) {
-  // Configure your email address to receive notifications
-  const ADMIN_EMAIL = 'your-email@example.com';
-  
+  const adminEmail = getAdminEmail();
+
   const subject = `Nova porudžbina #${orderData.orderNumber}`;
   
   const itemsList = orderData.items.map(item => 
@@ -203,8 +225,8 @@ ${orderData.notes ? 'NAPOMENA:\n' + orderData.notes : ''}
 ekoza.shop
   `;
   
-  MailApp.sendEmail(ADMIN_EMAIL, subject, body);
-  
+  MailApp.sendEmail(adminEmail, subject, body);
+
   // Send confirmation email to customer
   sendCustomerConfirmation(orderData);
 }
@@ -257,23 +279,26 @@ Email: kontakt@ekoza.shop
   MailApp.sendEmail(orderData.customer.email, subject, body);
 }
 
-// Function to check order status (can be called via GET request)
+// Function to check order status (can be called via GET request).
+// Requires BOTH orderNumber and phone parameters. The previous version
+// accepted only orderNumber, which let anyone enumerate orders by guessing IDs.
 function doGet(e) {
   const orderNumber = e.parameter.orderNumber;
-  
-  if (!orderNumber) {
+  const phone = e.parameter.phone;
+
+  if (!orderNumber || !phone) {
     return ContentService.createTextOutput(JSON.stringify({
-      error: 'Order number is required'
+      error: 'Order number and phone are required'
     })).setMimeType(ContentService.MimeType.JSON);
   }
-  
+
   try {
-    const orderStatus = getOrderStatus(orderNumber);
-    
+    const orderStatus = getOrderStatus(orderNumber, phone);
+
     return ContentService
       .createTextOutput(JSON.stringify(orderStatus))
       .setMimeType(ContentService.MimeType.JSON);
-      
+
   } catch (error) {
     return ContentService
       .createTextOutput(JSON.stringify({
@@ -283,29 +308,49 @@ function doGet(e) {
   }
 }
 
-function getOrderStatus(orderNumber) {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
+// Strip non-digits and leading zeros so trivial formatting differences
+// (spaces, +381 vs 0...) don't cause spurious "not found" responses.
+function normalizePhone(value) {
+  if (value === null || value === undefined) return '';
+  return String(value).replace(/[^\d]/g, '').replace(/^0+/, '');
+}
+
+function getOrderStatus(orderNumber, phone) {
+  const ss = SpreadsheetApp.openById(getSheetId());
   const ordersSheet = ss.getSheetByName('Orders');
-  
+
   if (!ordersSheet) {
     throw new Error('Orders sheet not found');
   }
-  
+
   const data = ordersSheet.getDataRange().getValues();
-  
-  // Find order by order number
+  const headers = data[0];
+  const col = {
+    orderNumber: headers.indexOf('Order Number'),
+    date: headers.indexOf('Date/Time'),
+    status: headers.indexOf('Status'),
+    customerName: headers.indexOf('Customer Name'),
+    phone: headers.indexOf('Phone'),
+    total: headers.indexOf('Total (RSD)')
+  };
+
+  const requestedPhone = normalizePhone(phone);
+
   for (let i = 1; i < data.length; i++) {
-    if (data[i][0] === orderNumber) {
-      return {
-        orderNumber: data[i][0],
-        date: data[i][1],
-        status: data[i][2],
-        customerName: data[i][3],
-        total: data[i][14],
-        found: true
-      };
-    }
+    if (data[i][col.orderNumber] !== orderNumber) continue;
+    if (normalizePhone(data[i][col.phone]) !== requestedPhone) continue;
+
+    return {
+      orderNumber: data[i][col.orderNumber],
+      date: data[i][col.date],
+      status: data[i][col.status],
+      customerName: data[i][col.customerName],
+      total: data[i][col.total],
+      found: true
+    };
   }
-  
+
+  // Same response for "no such order" and "valid order, wrong phone"
+  // so an attacker can't distinguish the two.
   return { found: false };
 }

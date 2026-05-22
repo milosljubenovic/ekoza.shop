@@ -61,11 +61,22 @@ function toggleSearch() {
   }
 }
 
+// Escape HTML special chars so user-controlled strings can't break out of attributes / inject markup.
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // Product search functionality
 function searchProducts(event) {
-  const searchTerm = event.target.value.toLowerCase();
+  const rawTerm = event.target.value;
+  const searchTerm = rawTerm.toLowerCase();
   const searchResults = document.getElementById('searchResults');
-  
+
   if (searchTerm.length < 2) {
     searchResults.classList.add('hidden');
     return;
@@ -73,8 +84,8 @@ function searchProducts(event) {
 
   // Get products data from the script tag
   const products = window.productsData || [];
-  
-  const results = products.filter(product => 
+
+  const results = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm) ||
     product.category.toLowerCase().includes(searchTerm) ||
     (product.tags && product.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
@@ -82,20 +93,23 @@ function searchProducts(event) {
 
   if (results.length > 0) {
     searchResults.innerHTML = results.slice(0, 5).map(product => `
-      <a href="/proizvod/${product.id}/" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors">
+      <a href="/proizvod/${encodeURIComponent(product.id)}/" class="block p-4 hover:bg-slate-700 border-b border-slate-600 transition-colors">
         <div class="flex gap-3">
-          <img src="${product.images[0]}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg border border-slate-600">
+          <img src="${escapeHtml(product.images[0])}" alt="${escapeHtml(product.name)}" class="w-16 h-16 object-cover rounded-lg border border-slate-600">
           <div class="flex-1">
-            <h4 class="font-semibold text-white text-sm mb-1">${product.name}</h4>
-            <p class="text-xs text-gray-400 mb-2">${product.category}</p>
-            <p class="text-sm font-bold text-gradient">${product.price} RSD</p>
+            <h4 class="font-semibold text-white text-sm mb-1">${escapeHtml(product.name)}</h4>
+            <p class="text-xs text-gray-400 mb-2">${escapeHtml(product.category)}</p>
+            <p class="text-sm font-bold text-gradient">${escapeHtml(product.price)} RSD</p>
           </div>
         </div>
       </a>
     `).join('');
     searchResults.classList.remove('hidden');
   } else {
-    searchResults.innerHTML = `<div class="p-4 text-center text-gray-400">Nema rezultata za "${searchTerm}"</div>`;
+    const noResults = document.createElement('div');
+    noResults.className = 'p-4 text-center text-gray-400';
+    noResults.textContent = `Nema rezultata za "${rawTerm}"`;
+    searchResults.replaceChildren(noResults);
     searchResults.classList.remove('hidden');
   }
 }
@@ -105,43 +119,8 @@ window.toggleMobileMenu = toggleMobileMenu;
 window.toggleSearch = toggleSearch;
 window.searchProducts = searchProducts;
 
-// Orders dropdown toggle
-function toggleOrdersDropdown() {
-  alert('Toggle function called!'); // Debug alert
-  
-  const dropdown = document.getElementById('ordersDropdown');
-  if (!dropdown) {
-    console.error('ordersDropdown element not found');
-    alert('Dropdown element not found!');
-    return;
-  }
-  
-  const isHidden = dropdown.classList.contains('hidden');
-  console.log('Toggle orders dropdown, currently hidden:', isHidden);
-  console.log('Dropdown element:', dropdown);
-  
-  if (isHidden) {
-    // Load and display orders
-    const content = document.getElementById('ordersDropdownContent');
-    
-    if (window.orderStatusTracker) {
-      console.log('Tracker found, getting HTML');
-      const html = window.orderStatusTracker.getOrdersDropdownHTML();
-      console.log('Generated HTML length:', html.length);
-      content.innerHTML = html;
-    } else {
-      console.warn('orderStatusTracker not available');
-      // Tracker not ready yet, show loading or empty state
-      content.innerHTML = '<div class="p-6 text-center"><p class="text-gray-400">Učitavanje...</p></div>';
-    }
-    dropdown.classList.remove('hidden');
-    console.log('Dropdown should now be visible');
-  } else {
-    dropdown.classList.add('hidden');
-  }
-}
-
-window.toggleOrdersDropdown = toggleOrdersDropdown;
+// toggleOrdersDropdown is defined inline in _includes/header.html so it's
+// available before main.js loads (some buttons reference it during render).
 
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {

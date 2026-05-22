@@ -26,4 +26,9 @@ echo ""
 echo "Press Ctrl+C to stop the server"
 echo ""
 
-bundle exec jekyll serve --livereload --host 0.0.0.0
+CONFIG="_config.yml"
+if [ -f "_config.local.yml" ]; then
+    CONFIG="_config.yml,_config.local.yml"
+fi
+
+bundle exec jekyll serve --livereload --host 0.0.0.0 --config "$CONFIG"

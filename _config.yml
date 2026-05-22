@@ -37,7 +37,10 @@ google_apps_script:
 chat:
   enabled: true
   api_base_url: https://chat-gateway.7kqq5yynhz.workers.dev
-  shared_secret: XKGCirQDhhE4uQMvvPVzP3JewecRgoSm5Twc1fJ73aaYUVu10sGFVeieyHH6wI97GX0ZQZV9jiGHQXi0UDRwMwVVmsWACUqjxRD95BEIWLcySFit1FwG6Ho
+  # The real value is loaded from the gitignored _config.local.yml at build time
+  # (see _config.local.yml.example). The previous value committed here must be
+  # rotated on the chat-gateway side; treat the old value as fully compromised.
+  shared_secret: ""
   polling:
     active_interval: 1
     inactive_interval: 10
