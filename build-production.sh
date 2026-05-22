@@ -11,11 +11,7 @@ npm run build:css
 
 # Build Jekyll site (HTML will be minified by plugin)
 echo "🏗️  Building Jekyll site..."
-CONFIG="_config.yml"
-if [ -f "_config.local.yml" ]; then
-    CONFIG="_config.yml,_config.local.yml"
-fi
-bundle exec jekyll build --config "$CONFIG"
+bundle exec jekyll build
 
 # Minify and obfuscate JavaScript
 echo "🔒 Minifying and obfuscating JavaScript..."
