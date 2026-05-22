@@ -41,6 +41,3 @@ vendor/
 # Environment
 .env
 .env.local
-
-# Local Jekyll config overrides (secrets like chat.shared_secret live here)
-_config.local.yml

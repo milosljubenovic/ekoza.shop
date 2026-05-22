@@ -34,19 +34,6 @@ shipping:
   free_min_order: 15000
 google_apps_script:
   url: https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec
-chat:
-  enabled: true
-  api_base_url: https://chat-gateway.7kqq5yynhz.workers.dev
-  # The real value is loaded from the gitignored _config.local.yml at build time
-  # (see _config.local.yml.example). The previous value committed here must be
-  # rotated on the chat-gateway side; treat the old value as fully compromised.
-  shared_secret: ""
-  polling:
-    active_interval: 1
-    inactive_interval: 10
-    inactivity_threshold: 30
-  max_message_length: 500
-  session_storage_key: ekoza_chat_session
 customization:
   embroidery_price: 300
   name_embroidery_price: 200
@@ -118,7 +105,6 @@ exclude:
   - build-production.sh
   - .github
 include:
-  - assets/js/chat.js
   - assets/js/cart.js
   - assets/js/main.js
   - assets/js/checkout.js
