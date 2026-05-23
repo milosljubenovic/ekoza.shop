@@ -1,0 +1,56 @@
+<!--
+  Privacy / localStorage notice banner.
+  Appears on first visit; the user clicks "Razumem" to dismiss, which writes a
+  flag to localStorage so the banner doesn't show again. The script also bails
+  out early if the flag is already set, so there's no flash on every page load.
+
+  We currently only use localStorage for essential things (cart, theme, order
+  tracking) -- no analytics or marketing trackers -- so this is informational
+  rather than a hard consent gate. The moment any third-party tracker is
+  added, this should be upgraded to a real consent mechanism that blocks
+  scripts until the user opts in.
+-->
+<div id="cookieBanner" class="hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-purple-500/40 shadow-2xl">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+      <div class="flex-1 text-sm text-gray-300">
+        <p>
+          🍪 Naš sajt koristi <strong class="text-white">lokalno skladištenje (localStorage)</strong>
+          za pamćenje vaše korpe, tematske postavke i broja porudžbine — bez analitike i bez praćenja.
+          Više informacija u
+          <a href="{{ '/politika-privatnosti/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Politici privatnosti</a>.
+        </p>
+      </div>
+      <button onclick="dismissCookieBanner()" class="flex-shrink-0 bg-gradient-to-r from-purple-600 to-purple-500 text-white px-6 py-2.5 rounded-xl font-semibold hover:from-purple-700 hover:to-purple-600 transition-all shadow-lg whitespace-nowrap">
+        Razumem
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var STORAGE_KEY = 'ekozaCookieConsent';
+    function showBannerIfNeeded() {
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === 'true') return;
+      } catch (e) {
+        // localStorage blocked (private browsing on some clients) -- show
+        // the banner anyway; clicking dismiss will silently no-op the
+        // setItem and re-show on next visit, which is acceptable.
+      }
+      var el = document.getElementById('cookieBanner');
+      if (el) el.classList.remove('hidden');
+    }
+    window.dismissCookieBanner = function () {
+      try { localStorage.setItem('ekozaCookieConsent', 'true'); } catch (e) {}
+      var el = document.getElementById('cookieBanner');
+      if (el) el.classList.add('hidden');
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', showBannerIfNeeded);
+    } else {
+      showBannerIfNeeded();
+    }
+  })();
+</script>

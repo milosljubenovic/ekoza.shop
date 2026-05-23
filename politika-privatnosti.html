@@ -158,14 +158,42 @@ title: Politika privatnosti
         </p>
       </section>
 
-      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
-        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">8. Kontakt</h2>
-        <p class="text-gray-300 light-mode:text-gray-700 mb-4">
-          Za sva pitanja vezana za zaštitu podataka, kontaktirajte nas:
+      <section class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 light-mode:from-purple-50 light-mode:to-pink-50 rounded-2xl p-6 border-2 border-purple-500/40 light-mode:border-purple-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">8. Rukovalac podacima (identitet i kontakt)</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-3">
+          U skladu sa članom 23. Zakona o zaštiti podataka o ličnosti (Sl. glasnik RS br. 87/2018),
+          identifikujemo rukovaoca koji odlučuje o svrsi i načinu obrade podataka:
         </p>
-        <ul class="space-y-2">
-          <li class="text-gray-300 light-mode:text-gray-700"><strong class="text-white light-mode:text-gray-900">Email:</strong> <a href="mailto:{{ site.store.email }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.email }}</a></li>
-          <li class="text-gray-300 light-mode:text-gray-700"><strong class="text-white light-mode:text-gray-900">Telefon:</strong> <a href="tel:{{ site.store.phone }}" class="text-purple-400 light-mode:text-purple-600 hover:text-pink-400 light-mode:hover:text-pink-600 underline">{{ site.store.phone }}</a></li>
+        <div class="bg-slate-900 light-mode:bg-white rounded-xl p-4 border border-slate-700 light-mode:border-gray-200">
+          <p class="text-white light-mode:text-gray-900 font-semibold mb-1">{{ site.store.business_name }}</p>
+          <p class="text-gray-300 light-mode:text-gray-700 text-sm">Vlasnik: {{ site.store.owner }}</p>
+          <p class="text-gray-300 light-mode:text-gray-700 text-sm">{{ site.store.address }}, {{ site.store.postal_code }} {{ site.store.city }}, {{ site.store.country }}</p>
+          <p class="text-gray-300 light-mode:text-gray-700 text-sm mt-1">MB: {{ site.store.mb }} · PIB: {{ site.store.pib }}</p>
+          <p class="text-gray-300 light-mode:text-gray-700 text-sm mt-2">
+            Kontakt za pitanja zaštite podataka:
+            <a href="mailto:{{ site.store.email }}" class="text-purple-400 hover:text-purple-300 underline">{{ site.store.email }}</a> ·
+            <a href="tel:{{ site.store.phone }}" class="text-purple-400 hover:text-purple-300 underline">{{ site.store.phone }}</a>
+          </p>
+        </div>
+        <p class="text-gray-300 light-mode:text-gray-700 text-sm mt-4">
+          Imajući u vidu obim obrade (mala prodavnica sa paušalnim oporezivanjem, bez automatizovane
+          obrade visokog rizika), rukovalac nije u obavezi da imenuje Lice za zaštitu podataka o
+          ličnosti, ali sva pitanja zaštite podataka rešava lično vlasnik na navedeni kontakt.
+        </p>
+      </section>
+
+      <section class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl p-6 border border-slate-600 light-mode:border-gray-200 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-white light-mode:text-gray-900">9. Nadzorni organ — Poverenik</h2>
+        <p class="text-gray-300 light-mode:text-gray-700 mb-3">
+          Ukoliko smatrate da su vaši podaci obrađeni suprotno Zakonu, imate pravo da podnesete
+          pritužbu <strong class="text-white light-mode:text-gray-900">Povereniku za informacije od
+          javnog značaja i zaštitu podataka o ličnosti</strong>:
+        </p>
+        <ul class="space-y-1 text-gray-300 light-mode:text-gray-700 text-sm ml-1">
+          <li>Adresa: Bulevar kralja Aleksandra 15, 11000 Beograd</li>
+          <li>Telefon: +381 11 3408 900</li>
+          <li>Email: <a href="mailto:office@poverenik.rs" class="text-purple-400 hover:text-purple-300 underline">office@poverenik.rs</a></li>
+          <li>Web: <a href="https://www.poverenik.rs" target="_blank" rel="noopener" class="text-purple-400 hover:text-purple-300 underline">www.poverenik.rs</a></li>
         </ul>
       </section>
 
