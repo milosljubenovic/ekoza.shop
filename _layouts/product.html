@@ -684,23 +684,22 @@ function addToCartWithOptions() {
   }
   
   const totalPrice = basePrice + selectedColorModifier + selectedSizeModifier + embroideryModifier + nameEmbroideryModifier;
-  
-  let productTitle = '{{ page.title }}' + 
-                    (colorName ? ' - ' + colorName : '') + 
-                    (sizeName ? ' (' + sizeName + ')' : '');
-  
-  // Add customization info to title
-  if (hasEmbroidery && selectedEmbroideryName) {
-    productTitle += ' [Vez: ' + selectedEmbroideryName + ']';
-  } else if (hasEmbroidery) {
-    productTitle += ' [Vez: Logo/Slika]';
-  }
-  if (hasNameEmbroidery) {
-    const fontLabel = fontStyle === 'cyrillic' ? 'Ćirilica' : 'Latinica';
-    productTitle += ' [Vez: ' + customName + ' - ' + fontLabel + ']';
-  }
-  
-  addToCart(productTitle, totalPrice, currentImage, '{{ page.url }}', quantity);
+
+  // Keep the product title clean -- color/size/vez go through the structured
+  // customization object below so they appear on dedicated lines in the cart,
+  // the checkout summary, and the Telegram order message.
+  const productTitle = '{{ page.title }}';
+
+  const fontLabel = fontStyle === 'cyrillic' ? 'Ćirilica' : 'Latinica';
+  const customization = {
+    color: colorName || null,
+    size: sizeName || null,
+    embroidery: hasEmbroidery ? (selectedEmbroideryName || 'Logo/Slika') : null,
+    customName: hasNameEmbroidery ? customName.trim() : null,
+    font: hasNameEmbroidery ? fontLabel : null,
+  };
+
+  addToCart(productTitle, totalPrice, currentImage, '{{ page.url }}', quantity, customization);
 }
 
 // Embroidery Gallery Functions

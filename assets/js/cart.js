@@ -14,9 +14,23 @@ class ShoppingCart {
     localStorage.setItem('cart', JSON.stringify(this.items));
   }
 
-  addItem(name, price, image, url, quantity = 1, color = null, size = null) {
-    const existingItemIndex = this.items.findIndex(item => 
-      item.name === name && item.color === color && item.size === size
+  addItem(name, price, image, url, quantity = 1, customization = null) {
+    const cust = customization || {};
+    const color = cust.color || null;
+    const size = cust.size || null;
+    const embroidery = cust.embroidery || null;
+    const customName = cust.customName || null;
+    const font = cust.font || null;
+
+    // Two cart entries are "the same" only if EVERY customization field
+    // matches -- different vez or different ime should be a separate line item.
+    const existingItemIndex = this.items.findIndex(item =>
+      item.name === name &&
+      (item.color || null) === color &&
+      (item.size || null) === size &&
+      (item.embroidery || null) === embroidery &&
+      (item.customName || null) === customName &&
+      (item.font || null) === font
     );
 
     if (existingItemIndex > -1) {
@@ -30,6 +44,9 @@ class ShoppingCart {
         quantity,
         color,
         size,
+        embroidery,
+        customName,
+        font,
         id: Date.now()
       });
     }
@@ -100,17 +117,19 @@ class ShoppingCart {
           </h3>
           ${item.color ? `<p class="text-xs text-gray-500">Boja: ${item.color}</p>` : ''}
           ${item.size ? `<p class="text-xs text-gray-500">Veličina: ${item.size}</p>` : ''}
+          ${item.embroidery ? `<p class="text-xs text-gray-500">Vez: ${item.embroidery}</p>` : ''}
+          ${item.customName ? `<p class="text-xs text-gray-500">Ime: ${item.customName}${item.font ? ` (${item.font})` : ''}</p>` : ''}
           <div class="flex items-center gap-2 mt-2">
-            <button onclick="cart.updateQuantity(${item.id}, ${item.quantity - 1})" 
+            <button onclick="cart.updateQuantity(${item.id}, ${item.quantity - 1})"
                     class="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300 text-sm">-</button>
             <span class="text-sm">${item.quantity}</span>
-            <button onclick="cart.updateQuantity(${item.id}, ${item.quantity + 1})" 
+            <button onclick="cart.updateQuantity(${item.id}, ${item.quantity + 1})"
                     class="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300 text-sm">+</button>
           </div>
         </div>
         <div class="text-right">
           <p class="font-semibold text-primary-600">${item.price * item.quantity} RSD</p>
-          <button onclick="cart.removeItem(${item.id})" 
+          <button onclick="cart.removeItem(${item.id})"
                   class="text-red-500 hover:text-red-700 text-xs mt-2">Ukloni</button>
         </div>
       </div>
@@ -139,18 +158,15 @@ class ShoppingCart {
 // Initialize cart
 const cart = new ShoppingCart();
 
-// Global functions for use in HTML
-function addToCart(name, price, image, url, quantity = 1) {
-  // Get selected color and size if on product page
-  const selectedColor = document.querySelector('.color-option.ring-2');
-  const selectedSize = document.querySelector('.size-option.border-primary-600');
-  const quantityInput = document.getElementById('quantity');
-
-  const color = selectedColor ? selectedColor.dataset.color : null;
-  const size = selectedSize ? selectedSize.dataset.size : null;
-  const qty = quantityInput ? parseInt(quantityInput.value) : quantity;
-
-  cart.addItem(name, price, image, url, qty, color, size);
+// Global function used by every "Dodaj u korpu" button.
+// Quick-add buttons (homepage hero / grid / proizvodi listing) call this with
+// 4 args -- the cart item ends up with no customization, which is correct
+// because those buttons aren't variant-aware. The product detail page builds
+// a `customization` object (color/size/embroidery/customName/font) and passes
+// it as the 6th arg so the cart UI, checkout summary, and Telegram message
+// can all show structured details.
+function addToCart(name, price, image, url, quantity = 1, customization = null) {
+  cart.addItem(name, price, image, url, quantity, customization);
 }
 
 function toggleCart() {

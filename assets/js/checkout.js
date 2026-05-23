@@ -45,6 +45,10 @@ function loadOrderSummary() {
         <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
         <div class="flex-1">
           <h4 class="font-semibold text-white text-sm">${item.name}</h4>
+          ${item.color ? `<p class="text-xs text-gray-400">Boja: ${item.color}</p>` : ''}
+          ${item.size ? `<p class="text-xs text-gray-400">Veličina: ${item.size}</p>` : ''}
+          ${item.embroidery ? `<p class="text-xs text-gray-400">Vez: ${item.embroidery}</p>` : ''}
+          ${item.customName ? `<p class="text-xs text-gray-400">Ime: ${item.customName}${item.font ? ` (${item.font})` : ''}</p>` : ''}
           <p class="text-xs text-gray-400">Količina: ${item.quantity}</p>
           <p class="text-sm font-bold text-gradient">${itemTotal.toLocaleString('sr-RS')} RSD</p>
         </div>
@@ -471,9 +475,15 @@ function collectOrderData() {
       price: item.price,
       quantity: item.quantity,
       image: item.image,
+      // Worker's Telegram formatter looks for embroidery / name / font under
+      // customization. Note: customization.name (the embroidered name) is
+      // distinct from item.name (the product title) -- the Worker reads both.
       customization: {
         color: item.color || null,
-        size: item.size || null
+        size: item.size || null,
+        embroidery: item.embroidery || null,
+        name: item.customName || null,
+        font: item.font || null,
       }
     })),
     total: total,
