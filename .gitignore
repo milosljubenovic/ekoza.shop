@@ -15,6 +15,8 @@ coverage/
 .playwright/
 test-results/
 playwright-report/
+e2e-live/screens/
+e2e-live/test-results/
 
 # Tailwind
 assets/css/output.css

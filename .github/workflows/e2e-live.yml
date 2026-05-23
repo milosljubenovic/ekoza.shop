@@ -1,0 +1,70 @@
+name: E2E - live site smoke tests
+
+# Runs the Playwright suite against the deployed https://ekoza.shop.
+# Three triggers:
+#   1. Whenever the Jekyll deploy workflow finishes (catches regressions
+#      that the deploy itself wouldn't surface)
+#   2. Daily at 06:00 UTC (08:00 Belgrade) -- ongoing health check
+#   3. Manual via Actions tab (workflow_dispatch)
+#
+# Intentionally NOT triggered on pull_request -- this hits the live deployed
+# site, so a PR run would test the *current* main, not the PR's code. To
+# validate PRs, use the existing local-jekyll suite (npm run test:e2e).
+
+on:
+  workflow_run:
+    workflows: ["Deploy Jekyll site to Pages"]
+    types: [completed]
+    branches: [main]
+  schedule:
+    # 06:00 UTC daily. Cloudflare/GitHub Pages occasionally hiccup; a
+    # nightly run catches outages we'd otherwise hear about via customers.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  e2e-live:
+    # Skip if the upstream deploy itself failed -- no point e2e-testing a
+    # site that hasn't actually deployed.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # GitHub Pages CDN propagation can lag a few seconds after the deploy
+      # workflow reports success. A short settle helps avoid flakes when
+      # running on workflow_run.
+      - name: Wait for CDN settle
+        if: ${{ github.event_name == 'workflow_run' }}
+        run: sleep 30
+
+      - name: Run live e2e
+        run: npm run test:e2e:live
+        env:
+          # No baseURL needed; spec uses absolute https://ekoza.shop URLs.
+          CI: 'true'
+
+      - name: Upload Playwright artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-live-artifacts-${{ github.run_id }}
+          path: |
+            e2e-live/screens/
+            e2e-live/test-results/
+          retention-days: 14
