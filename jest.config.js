@@ -18,6 +18,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/_site/',
-    '/e2e/'
+    '/e2e/',
+    '/e2e-live/'
   ]
 };
