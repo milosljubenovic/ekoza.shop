@@ -1,11 +1,10 @@
 name: E2E - live site smoke tests
 
 # Runs the Playwright suite against the deployed https://ekoza.shop.
-# Three triggers:
-#   1. Whenever the Jekyll deploy workflow finishes (catches regressions
-#      that the deploy itself wouldn't surface)
-#   2. Daily at 06:00 UTC (08:00 Belgrade) -- ongoing health check
-#   3. Manual via Actions tab (workflow_dispatch)
+# Two triggers:
+#   1. Whenever the Jekyll deploy workflow finishes on main (catches deploy
+#      regressions before customers do)
+#   2. Manual via Actions tab (workflow_dispatch)
 #
 # Intentionally NOT triggered on pull_request -- this hits the live deployed
 # site, so a PR run would test the *current* main, not the PR's code. To
@@ -16,10 +15,6 @@ on:
     workflows: ["Deploy Jekyll site to Pages"]
     types: [completed]
     branches: [main]
-  schedule:
-    # 06:00 UTC daily. Cloudflare/GitHub Pages occasionally hiccup; a
-    # nightly run catches outages we'd otherwise hear about via customers.
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
