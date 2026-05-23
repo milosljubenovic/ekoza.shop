@@ -19,11 +19,13 @@ class ShoppingCart {
     const color = cust.color || null;
     const size = cust.size || null;
     const embroidery = cust.embroidery || null;
+    const embroideryImage = cust.embroideryImage || null;
     const customName = cust.customName || null;
     const font = cust.font || null;
 
     // Two cart entries are "the same" only if EVERY customization field
     // matches -- different vez or different ime should be a separate line item.
+    // embroideryImage isn't in the key because it's a 1:1 with `embroidery`.
     const existingItemIndex = this.items.findIndex(item =>
       item.name === name &&
       (item.color || null) === color &&
@@ -45,6 +47,7 @@ class ShoppingCart {
         color,
         size,
         embroidery,
+        embroideryImage,
         customName,
         font,
         id: Date.now()

@@ -695,6 +695,7 @@ function addToCartWithOptions() {
     color: colorName || null,
     size: sizeName || null,
     embroidery: hasEmbroidery ? (selectedEmbroideryName || 'Logo/Slika') : null,
+    embroideryImage: hasEmbroidery && selectedEmbroideryImage ? selectedEmbroideryImage : null,
     customName: hasNameEmbroidery ? customName.trim() : null,
     font: hasNameEmbroidery ? fontLabel : null,
   };
