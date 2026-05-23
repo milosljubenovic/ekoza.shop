@@ -17,7 +17,7 @@ title: Blog
       <a href="{{ post.url | relative_url }}">
         <div class="h-56 overflow-hidden relative">
           <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
-          <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
         </div>
       </a>
       {% endif %}

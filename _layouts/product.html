@@ -2,6 +2,35 @@
 layout: default
 ---
 
+{%- comment -%}
+Product schema.org JSON-LD. Google + other search engines surface price,
+stock status, and reviews from this in search results. `jsonify` filter
+handles string escaping so we don't have to worry about quotes/newlines
+in titles or descriptions.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ page.title | jsonify }},
+  "sku": {{ page.product_id | jsonify }},
+  "description": {{ page.description | strip_html | strip_newlines | strip | jsonify }},
+  "image": [{% for img in page.images %}{{ img | absolute_url | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
+  "brand": {
+    "@type": "Brand",
+    "name": {{ site.store.name | jsonify }}
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ page.url | absolute_url | jsonify }},
+    "priceCurrency": "RSD",
+    "price": {{ page.price | jsonify }},
+    "availability": "{% if page.in_stock %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
+
 <div class="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen py-16">
 <div class="container mx-auto px-4 py-8">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
@@ -12,7 +41,7 @@ layout: default
       </div>
       <div class="grid grid-cols-4 gap-3">
         {% for image in page.images %}
-        <img src="{{ image }}" alt="{{ page.title }}" 
+        <img src="{{ image }}" alt="{{ page.title }}" loading="lazy"
              class="w-full h-24 object-contain rounded-xl cursor-pointer hover:opacity-75 thumbnail-image border-2 border-slate-700 hover:border-purple-500 transition-all"
              onclick="changeMainImage('{{ image }}')">
         {% endfor %}
@@ -88,7 +117,7 @@ layout: default
             {% if color.image %}
             <div class="w-14 h-14 rounded-full border-3 border-slate-600 hover:border-purple-400 transition-all flex items-center justify-center color-swatch overflow-hidden bg-white"
                  title="{{ color.name }}{% if color.price_modifier > 0 %} (+{{ color.price_modifier }} RSD){% endif %}">
-              <img src="{{ color.image }}" alt="{{ color.name }}" class="w-full h-full object-cover">
+              <img src="{{ color.image }}" alt="{{ color.name }}" loading="lazy" class="w-full h-full object-cover">
               <svg class="w-8 h-8 text-purple-500 absolute inset-0 m-auto hidden check-icon drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
@@ -342,7 +371,7 @@ layout: default
              onclick="selectEmbroideryDesign('{{ design.id }}', '{{ design.name }}', '{{ design.image }}')">
           <div class="bg-slate-900 rounded-xl p-4 border-2 border-slate-600 hover:border-purple-500 transition-all group-hover:scale-105">
             <div class="aspect-square bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-              <img src="{{ design.image }}" alt="{{ design.name }}" class="w-full h-full object-contain">
+              <img src="{{ design.image }}" alt="{{ design.name }}" loading="lazy" class="w-full h-full object-contain">
             </div>
             <p class="text-white text-sm font-semibold text-center truncate">{{ design.name }}</p>
           </div>

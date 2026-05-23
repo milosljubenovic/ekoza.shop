@@ -104,7 +104,7 @@ title: Proizvodi
              data-in-stock="{{ product.in_stock }}">
           <a href="{{ product.url }}">
             <div class="relative overflow-hidden rounded-t-2xl">
-              <img src="{{ product.images[0] }}" alt="{{ product.title }}" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
+              <img src="{{ product.images[0] }}" alt="{{ product.title }}" loading="lazy" class="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-500">
               {% if product.old_price %}
               <span class="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                 -{{ product.old_price | minus: product.price | times: 100 | divided_by: product.old_price }}%
