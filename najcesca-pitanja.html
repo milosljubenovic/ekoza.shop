@@ -1,0 +1,190 @@
+---
+layout: default
+title: Najčešća pitanja
+description: Odgovori na najčešća pitanja o porudžbinama, dostavi, plaćanju, povraćaju i personalizaciji Lazy Bag proizvoda.
+---
+
+<style>
+  /* Make the <summary> markers consistent across browsers and theme-friendly. */
+  details > summary { cursor: pointer; list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::marker { content: ''; }
+  details[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-chevron { transition: transform 200ms ease; }
+</style>
+
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 light-mode:from-gray-50 light-mode:to-white min-h-screen py-16 transition-colors duration-300">
+  <div class="container mx-auto px-4 py-8 max-w-3xl">
+
+    <h1 class="text-4xl font-bold mb-4 text-white light-mode:text-gray-900">Najčešća pitanja</h1>
+    <p class="text-gray-400 light-mode:text-gray-600 mb-10">
+      Odgovori na pitanja koja kupci najčešće postavljaju. Ako vas zanima nešto drugo, pišite nam na
+      <a href="mailto:{{ site.store.email }}" class="text-purple-400 hover:text-purple-300 underline">{{ site.store.email }}</a>.
+    </p>
+
+    {%- assign faqs = "" | split: '' -%}
+
+    <div class="space-y-3">
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Kako mogu da poručim?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>Sve je veoma jednostavno:</p>
+          <ol class="list-decimal list-inside ml-2 space-y-1">
+            <li>Otvorite stranicu <a href="{{ '/proizvodi/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Proizvodi</a> i izaberite šta želite.</li>
+            <li>Izaberite boju, veličinu i (po želji) vez.</li>
+            <li>Kliknite na <em>Dodaj u korpu</em>.</li>
+            <li>U korpi kliknite na <em>Poruči</em> i popunite kontakt podatke i adresu dostave.</li>
+            <li>Stiže vam email i SMS sa potvrdom, kao i link za praćenje porudžbine.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Koji su rokovi isporuke?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Standardna dostava preko {{ site.shipping.courier_name }} kurirske službe traje do
+            <strong class="text-white light-mode:text-gray-900">{{ site.shipping.standard_delivery_days }}</strong>.
+            Lično preuzimanje (ako je dostupno) — do {{ site.shipping.pickup_delivery_days }}.
+          </p>
+          <p>Više informacija na stranici <a href="{{ '/dostava/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Dostava i povraćaj</a>.</p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Koliko košta dostava i postoji li besplatna?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Standardna dostava košta <strong class="text-white light-mode:text-gray-900">{{ site.shipping.standard_price }} RSD</strong>.
+            Za porudžbine preko <strong class="text-white light-mode:text-gray-900">{{ site.shipping.free_min_order | divided_by: 1000.0 }},000 RSD</strong> dostava je besplatna.
+          </p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Kako mogu da platim?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>Dva načina plaćanja:</p>
+          <ul class="list-disc list-inside ml-2 space-y-1">
+            <li><strong class="text-white light-mode:text-gray-900">Pouzeće</strong> — plaćanje kuriru pri preuzimanju (gotovina ili kartica).</li>
+            <li><strong class="text-white light-mode:text-gray-900">Uplata na račun</strong> — uplatu šaljete pre slanja proizvoda. Detalji na strani <a href="{{ '/nacin-placanja/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Načini plaćanja</a>.</li>
+          </ul>
+          <p class="text-sm text-gray-400 light-mode:text-gray-600 mt-2">Cene su konačne — prodavac nije u sistemu PDV-a.</p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Šta ako želim da odustanem od porudžbine?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Imate pravo na jednostrani raskid ugovora u roku od <strong class="text-white light-mode:text-gray-900">14 dana</strong>
+            od preuzimanja proizvoda, bez navođenja razloga. Detalji i obrazac:
+            <a href="{{ '/pravo-na-odustanak/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Pravo na odustanak</a>.
+          </p>
+          <p class="text-sm text-amber-400 light-mode:text-amber-700">
+            ⚠️ Personalizovani proizvodi (sa vezenim imenom ili izabranim motivom) su izuzeti iz prava na odustanak po čl. 37 Zakona o zaštiti potrošača.
+          </p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Šta ako proizvod ima oštećenje ili kvar?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Vidljivo fizičko oštećenje pri prijemu treba prijaviti u <strong class="text-white light-mode:text-gray-900">roku od 8 dana</strong>.
+            Saobraznost (skriveni kvarovi) važi <strong class="text-white light-mode:text-gray-900">2 godine</strong> od kupovine.
+          </p>
+          <p>
+            Postupak i obrazac za prijavu reklamacije:
+            <a href="{{ '/reklamacije/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Reklamacije</a>.
+          </p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Da li mogu da pratim svoju porudžbinu?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Da. Nakon porudžbine dobićete email sa linkom za praćenje. Link sadrži broj porudžbine
+            (npr. <code>LB-XXXXXX</code>) i vaš broj telefona radi verifikacije. Direktan pristup:
+            <a href="{{ '/pracenje-porudzbine/' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Praćenje porudžbine</a>.
+          </p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Da li nudite personalizaciju (vez)?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>Da, nudimo dva tipa personalizacije:</p>
+          <ul class="list-disc list-inside ml-2 space-y-1">
+            <li><strong class="text-white light-mode:text-gray-900">Vez sa motivom</strong> iz naše galerije (Bambi, cvet, sport, itd.).</li>
+            <li><strong class="text-white light-mode:text-gray-900">Vez sa imenom ili tekstom</strong> — možete birati latinicu ili ćirilicu.</li>
+          </ul>
+          <p class="text-sm">Opcije personalizacije birate na stranici proizvoda pre dodavanja u korpu.</p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Kako se neguje Lazy Bag?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Skidiva navlaka se može prati u veš mašini na 30°C uz blagi deterdžent.
+            Punjenje (stiropor granule) se po potrebi dopunjava — vidi naš blog post
+            <a href="{{ '/2025/11/22/kako-dopuniti-lazy-bag.html' | relative_url }}" class="text-purple-400 hover:text-purple-300 underline">Kako dopuniti Lazy Bag</a>.
+          </p>
+        </div>
+      </details>
+
+      <details class="bg-gradient-to-br from-slate-800 to-slate-700 light-mode:from-white light-mode:to-gray-50 rounded-2xl border border-slate-600 light-mode:border-gray-200 shadow-lg overflow-hidden">
+        <summary class="px-6 py-5 flex items-center justify-between gap-4">
+          <span class="text-lg font-semibold text-white light-mode:text-gray-900">Da li dostavljate van Srbije?</span>
+          <svg class="faq-chevron w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-300 light-mode:text-gray-700 space-y-2">
+          <p>
+            Trenutno dostavljamo isključivo na teritoriji Republike Srbije. Za inostranstvo nas
+            kontaktirajte direktno na <a href="mailto:{{ site.store.email }}" class="text-purple-400 hover:text-purple-300 underline">{{ site.store.email }}</a>
+            i dogovorićemo individualno.
+          </p>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="text-center mt-12 pt-8 border-t border-slate-700 light-mode:border-gray-200">
+      <p class="text-gray-400 light-mode:text-gray-600 mb-4">Niste našli odgovor?</p>
+      <a href="{{ '/kontakt/' | relative_url }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-500 text-white px-8 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-purple-600 transition-all shadow-lg">
+        Kontaktirajte nas
+      </a>
+    </div>
+
+  </div>
+</div>
