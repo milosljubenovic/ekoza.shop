@@ -73,7 +73,9 @@ title: Završi Porudžbinu
                 <label for="firstName" class="block text-sm font-semibold text-white mb-2">
                   Ime <span class="text-red-400">*</span>
                 </label>
-                <input type="text" id="firstName" name="firstName" required
+                <input type="text" id="firstName" name="firstName" required minlength="2" maxlength="50"
+                       autocomplete="given-name"
+                       title="Unesite ime (najmanje 2 znaka)."
                        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
               </div>
 
@@ -81,7 +83,9 @@ title: Završi Porudžbinu
                 <label for="lastName" class="block text-sm font-semibold text-white mb-2">
                   Prezime <span class="text-red-400">*</span>
                 </label>
-                <input type="text" id="lastName" name="lastName" required
+                <input type="text" id="lastName" name="lastName" required minlength="2" maxlength="50"
+                       autocomplete="family-name"
+                       title="Unesite prezime (najmanje 2 znaka)."
                        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
               </div>
 
@@ -89,7 +93,10 @@ title: Završi Porudžbinu
                 <label for="email" class="block text-sm font-semibold text-white mb-2">
                   Email <span class="text-red-400">*</span>
                 </label>
-                <input type="email" id="email" name="email" required
+                <input type="email" id="email" name="email" required maxlength="120"
+                       autocomplete="email"
+                       pattern="[^\s@]+@[^\s@]+\.[A-Za-z]{2,}"
+                       title="Unesite ispravnu email adresu (npr. ime@primer.com)."
                        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
               </div>
 
@@ -98,6 +105,10 @@ title: Završi Porudžbinu
                   Telefon <span class="text-red-400">*</span>
                 </label>
                 <input type="tel" id="phone" name="phone" required placeholder="+381 XX XXX XXXX"
+                       autocomplete="tel"
+                       inputmode="tel"
+                       pattern="\+381\d{7,10}"
+                       title="Unesite broj telefona u srpskom formatu. Primer: +381 62 220 894 ili 062 220 894 (sistem automatski dodaje +381)."
                        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
               </div>
             </div>
@@ -118,7 +129,10 @@ title: Završi Porudžbinu
                 <label for="address" class="block text-sm font-semibold text-white mb-2">
                   Ulica i broj <span class="text-red-400">*</span>
                 </label>
-                <input type="text" id="address" name="address" required placeholder="Ulica 123"
+                <input type="text" id="address" name="address" required minlength="3" maxlength="120"
+                       autocomplete="street-address"
+                       placeholder="Ulica 123"
+                       title="Unesite ulicu i broj (npr. Knez Mihailova 12)."
                        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
               </div>
 
@@ -127,7 +141,9 @@ title: Završi Porudžbinu
                   <label for="city" class="block text-sm font-semibold text-white mb-2">
                     Grad <span class="text-red-400">*</span>
                   </label>
-                  <input type="text" id="city" name="city" required
+                  <input type="text" id="city" name="city" required minlength="2" maxlength="60"
+                         autocomplete="address-level2"
+                         title="Unesite grad."
                          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
                 </div>
 
@@ -136,6 +152,11 @@ title: Završi Porudžbinu
                     Poštanski broj <span class="text-red-400">*</span>
                   </label>
                   <input type="text" id="postalCode" name="postalCode" required placeholder="11000"
+                         autocomplete="postal-code"
+                         inputmode="numeric"
+                         pattern="\d{5}"
+                         maxlength="5"
+                         title="Unesite poštanski broj (5 cifara, npr. 11000)."
                          class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none transition-colors">
                 </div>
 
