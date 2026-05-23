@@ -70,6 +70,10 @@ function loadOrderSummary() {
   document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
     radio.addEventListener('change', () => updateOrderTotals(subtotal));
   });
+
+  // Cart is non-empty here; let the validity gate decide button state based on
+  // current form contents (still likely disabled until user fills the form).
+  updateSubmitButtonState();
 }
 
 function updateOrderTotals(subtotal) {
@@ -125,6 +129,34 @@ function setupFormHandlers() {
   };
   
   document.getElementById('submitOrderBtn')?.addEventListener('click', handleOrderSubmit);
+
+  // Keep the submit button disabled until the form is fully valid AND the cart
+  // is non-empty. `form.checkValidity()` already covers required/min-length/
+  // pattern checks plus the required terms checkbox. Re-evaluate on every
+  // input + change event (fires for text inputs, radios, the terms checkbox).
+  if (form) {
+    form.addEventListener('input', updateSubmitButtonState);
+    form.addEventListener('change', updateSubmitButtonState);
+  }
+  // Initial state -- runs after loadOrderSummary too, but harmless either way.
+  updateSubmitButtonState();
+}
+
+function updateSubmitButtonState() {
+  const submitBtn = document.getElementById('submitOrderBtn');
+  if (!submitBtn) return;
+
+  // Don't fight the in-flight submit state -- handleOrderSubmit owns the
+  // button while isSubmitting is true (spinner text, etc.).
+  if (isSubmitting) return;
+
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const form = document.getElementById('checkoutForm');
+
+  const cartOk = cart.length > 0;
+  const formOk = form ? form.checkValidity() : false;
+
+  submitBtn.disabled = !(cartOk && formOk);
 }
 
 // Re-entrancy guard: setting `disabled` on the button only takes effect after the
@@ -224,9 +256,12 @@ async function handleOrderSubmit() {
     console.error('Error submitting order:', error);
     alert('Došlo je do greške prilikom slanja porudžbine. Molimo pokušajte ponovo.');
 
-    submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnHtml;
     isSubmitting = false;
+    // Let the validity gate set disabled state. The cart may have changed
+    // (e.g. user removed an item from another tab), and the form may now be
+    // invalid even though it was valid at submit time.
+    updateSubmitButtonState();
   }
 }
 

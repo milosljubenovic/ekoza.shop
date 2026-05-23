@@ -69,14 +69,13 @@ async function fillForm(page, overrides = {}) {
   await page.check('#terms');
 }
 
-async function trySubmitWithIntercept(page) {
-  // Count only POST requests -- the browser also fires an OPTIONS preflight
-  // for the cross-origin POST, but the preflight by itself doesn't mean the
-  // order was submitted. Counting POSTs gives us a clean "would the order
-  // have actually been sent?" signal.
-  let postHits = 0;
+async function setupOrdersInterceptor(page) {
+  // Used by the happy-path test only -- counts POSTs so we can confirm the
+  // submit would have actually been sent. Cross-origin POST triggers an
+  // OPTIONS preflight that also matches the URL pattern; we ignore it.
+  const state = { postHits: 0 };
   await page.route(ORDERS_API, async (route) => {
-    if (route.request().method() === 'POST') postHits += 1;
+    if (route.request().method() === 'POST') state.postHits += 1;
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -84,10 +83,7 @@ async function trySubmitWithIntercept(page) {
       body: JSON.stringify({ success: true, orderId: 'TEST-INTERCEPTED', message: 'ok' }),
     });
   });
-  await page.locator('#submitOrderBtn').click();
-  // Give browser time to either dispatch the fetch or block via reportValidity.
-  await page.waitForTimeout(1500);
-  return postHits;
+  return state;
 }
 
 test.describe('checkout HTML5 validation', () => {
@@ -95,55 +91,64 @@ test.describe('checkout HTML5 validation', () => {
     await seedCartAndOpenCheckout(page);
   });
 
-  test('blocks submit with invalid email (no TLD)', async ({ page }) => {
+  // For each "blocked" case the user-facing guarantee is: the Poruči button
+  // STAYS DISABLED while the form is invalid. So the assertion is on
+  // button.disabled rather than clicking-and-hoping-nothing-happens.
+
+  test('disables submit with invalid email (no TLD)', async ({ page }) => {
     await fillForm(page, { email: 'test@example' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
-    await expect(page.locator('#email')).not.toHaveJSProperty('validity.valid', true);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
+    await expect(page.locator('#email')).toHaveJSProperty('validity.valid', false);
   });
 
-  test('blocks submit with empty required field', async ({ page }) => {
+  test('disables submit with empty required field', async ({ page }) => {
     await fillForm(page, { firstName: '' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
     await expect(page.locator('#firstName')).toHaveJSProperty('validity.valueMissing', true);
   });
 
-  test('blocks submit with too-short firstName', async ({ page }) => {
+  test('disables submit with too-short firstName', async ({ page }) => {
     await fillForm(page, { firstName: 'M' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
     await expect(page.locator('#firstName')).toHaveJSProperty('validity.tooShort', true);
   });
 
-  test('blocks submit with non-Serbian phone shape', async ({ page }) => {
+  test('disables submit with non-Serbian phone shape', async ({ page }) => {
     await fillForm(page, { phone: '12345' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
     await expect(page.locator('#phone')).toHaveJSProperty('validity.patternMismatch', true);
   });
 
-  test('blocks submit with non-numeric postal code', async ({ page }) => {
+  test('disables submit with non-numeric postal code', async ({ page }) => {
     await fillForm(page, { postalCode: 'abcde' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
     await expect(page.locator('#postalCode')).toHaveJSProperty('validity.patternMismatch', true);
   });
 
-  test('blocks submit with 4-digit postal code', async ({ page }) => {
+  test('disables submit with 4-digit postal code', async ({ page }) => {
     await fillForm(page, { postalCode: '1100' });
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(0);
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
     await expect(page.locator('#postalCode')).toHaveJSProperty('validity.patternMismatch', true);
   });
 
-  test('allows submit when every field is valid (API would have been called)', async ({ page }) => {
+  test('disables submit when terms are not accepted', async ({ page }) => {
+    await fillForm(page);
+    await page.uncheck('#terms');
+    await expect(page.locator('#submitOrderBtn')).toBeDisabled();
+  });
+
+  test('enables submit when every field is valid and posts to API on click', async ({ page }) => {
     await fillForm(page); // all valid defaults
-    const hits = await trySubmitWithIntercept(page);
-    expect(hits).toBe(1);
-    // Sanity: every field reports valid.
-    for (const id of ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode']) {
+    await expect(page.locator('#submitOrderBtn')).toBeEnabled();
+    // Every field reports valid.
+    for (const id of ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode', 'terms']) {
       await expect(page.locator(`#${id}`)).toHaveJSProperty('validity.valid', true);
     }
+    // Now actually click and verify the POST would have gone out (intercepted,
+    // so no real order lands in R2).
+    const intercept = await setupOrdersInterceptor(page);
+    await page.locator('#submitOrderBtn').click();
+    await page.waitForTimeout(1500);
+    expect(intercept.postHits).toBe(1);
   });
 });
