@@ -83,45 +83,62 @@ title: Kontakt
       <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl shadow-2xl p-8 border border-slate-600">
         <h2 class="text-3xl font-bold mb-8 text-white">Pošaljite nam poruku</h2>
         
-        <form id="contactForm" class="space-y-5">
+        <form id="contactForm" class="space-y-5" autocomplete="on">
           <div>
             <label for="name" class="block text-sm font-semibold text-white mb-2">Ime i prezime *</label>
-            <input type="text" id="name" name="name" required class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            <input type="text" id="name" name="name" required minlength="2" maxlength="120"
+                   autocomplete="name"
+                   title="Unesite ime i prezime (najmanje 2 znaka)."
+                   class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
           </div>
 
           <div>
             <label for="email" class="block text-sm font-semibold text-white mb-2">Email *</label>
-            <input type="email" id="email" name="email" required class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            <input type="email" id="email" name="email" required maxlength="120"
+                   autocomplete="email"
+                   pattern="[^\s@]+@[^\s@]+\.[A-Za-z]{2,}"
+                   title="Unesite ispravnu email adresu."
+                   class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
           </div>
 
           <div>
             <label for="phone" class="block text-sm font-semibold text-white mb-2">Telefon</label>
-            <input type="tel" id="phone" name="phone" class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel"
+                   placeholder="opciono, npr. +381 62 220 894"
+                   class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
           </div>
 
           <div>
             <label for="subject" class="block text-sm font-semibold text-white mb-2">Tema *</label>
             <select id="subject" name="subject" required class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
               <option value="">Izaberite temu</option>
-              <option value="order">Porudžbina</option>
-              <option value="product">Upit o proizvodu</option>
-              <option value="delivery">Dostava</option>
-              <option value="return">Povraćaj</option>
-              <option value="other">Ostalo</option>
+              <option value="Porudžbina">Porudžbina</option>
+              <option value="Upit o proizvodu">Upit o proizvodu</option>
+              <option value="Dostava">Dostava</option>
+              <option value="Povraćaj">Povraćaj</option>
+              <option value="Ostalo">Ostalo</option>
             </select>
           </div>
 
           <div>
             <label for="message" class="block text-sm font-semibold text-white mb-2">Poruka *</label>
-            <textarea id="message" name="message" rows="5" required class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"></textarea>
+            <textarea id="message" name="message" rows="5" required minlength="10" maxlength="4000"
+                      title="Poruka mora imati najmanje 10 karaktera."
+                      class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"></textarea>
           </div>
 
-          <button type="submit" class="w-full btn-primary-modern text-lg py-4">
-            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button type="submit" id="kt-submitBtn" class="w-full btn-primary-modern text-lg py-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg id="kt-submitIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
             </svg>
-            Pošalji poruku
+            <svg id="kt-submitSpinner" class="hidden animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span id="kt-submitText">Pošalji poruku</span>
           </button>
+
+          <p id="kt-errorMessage" class="hidden text-red-400 text-sm text-center bg-red-900/30 border border-red-500/40 rounded-lg p-3"></p>
         </form>
       </div>
     </div>
@@ -130,26 +147,103 @@ title: Kontakt
 </div>
 
 <script>
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const subject = document.getElementById('subject').value;
-  const message = document.getElementById('message').value;
-  
-  // Create WhatsApp message
-  let whatsappMessage = `Kontakt forma:\n\n`;
-  whatsappMessage += `Ime: ${name}\n`;
-  whatsappMessage += `Email: ${email}\n`;
-  if (phone) whatsappMessage += `Telefon: ${phone}\n`;
-  whatsappMessage += `Tema: ${subject}\n\n`;
-  whatsappMessage += `Poruka:\n${message}`;
-  
-  const phoneNumber = '381622208944';
-  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-  
-  window.open(whatsappURL, '_blank');
-});
+  // Contact form submit -> POST to ekozashop-orders worker's /kontakt endpoint.
+  // Worker writes the record to R2, posts to the Telegram "Kontakt" topic
+  // with action buttons, and sends the customer a confirmation email from
+  // kontakt@ekoza.shop. We show a spinner while it's in flight, then a
+  // success modal with the assigned KT-XXXXXX ID.
+  const KT_API_URL = 'https://ekozashop-orders.7kqq5yynhz.workers.dev/kontakt';
+  const KT_TIMEOUT_MS = 15000;
+
+  document.getElementById('contactForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const f = e.target;
+    if (!f.checkValidity()) {
+      f.reportValidity();
+      return;
+    }
+
+    const get = (id) => document.getElementById(id).value.trim();
+    const payload = {
+      name: get('name'),
+      email: get('email'),
+      phone: get('phone'),
+      subject: get('subject'),
+      message: get('message'),
+    };
+
+    const btn = document.getElementById('kt-submitBtn');
+    const text = document.getElementById('kt-submitText');
+    const icon = document.getElementById('kt-submitIcon');
+    const spinner = document.getElementById('kt-submitSpinner');
+    const errBox = document.getElementById('kt-errorMessage');
+
+    btn.disabled = true;
+    text.textContent = 'Šaljemo...';
+    icon.classList.add('hidden');
+    spinner.classList.remove('hidden');
+    errBox.classList.add('hidden');
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), KT_TIMEOUT_MS);
+
+    try {
+      const resp = await fetch(KT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok || !data || data.success !== true) {
+        throw new Error((data && data.error) || `HTTP ${resp.status}`);
+      }
+      f.reset();
+      showKontaktSuccess(data.kontaktId, payload.email);
+    } catch (err) {
+      console.error('Kontakt submission failed:', err);
+      errBox.textContent = err.name === 'AbortError'
+        ? 'Server ne odgovara. Pokušajte ponovo za nekoliko minuta ili pišite na office@ekoza.shop.'
+        : 'Došlo je do greške prilikom slanja poruke. Pokušajte ponovo ili nas kontaktirajte na office@ekoza.shop.';
+      errBox.classList.remove('hidden');
+    } finally {
+      clearTimeout(timeoutId);
+      btn.disabled = false;
+      text.textContent = 'Pošalji poruku';
+      icon.classList.remove('hidden');
+      spinner.classList.add('hidden');
+    }
+  });
+
+  function showKontaktSuccess(kontaktId, email) {
+    const safeId = String(kontaktId || '').replace(/[<>&"']/g, '');
+    const safeEmail = String(email || '').replace(/[<>&"']/g, '');
+    const modal = document.createElement('div');
+    modal.id = 'kontaktSuccessModal';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4';
+    modal.addEventListener('click', (ev) => { if (ev.target === modal) modal.remove(); });
+    modal.innerHTML = `
+      <div class="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 border border-slate-600 max-w-md w-full text-center shadow-2xl">
+        <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-3">Poruka poslata</h2>
+        <div class="bg-slate-900 rounded-xl p-3 mb-4">
+          <p class="text-xs text-gray-400 mb-1">Broj poruke</p>
+          <p class="text-xl font-bold text-gradient">${safeId}</p>
+        </div>
+        <p class="text-gray-300 mb-5 text-sm">
+          Potvrda je poslata na <strong class="text-white">${safeEmail}</strong>.
+          Odgovaramo u najkraćem roku.
+        </p>
+        <button type="button" onclick="document.getElementById('kontaktSuccessModal').remove();"
+                class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-700 hover:to-purple-600 transition-all">
+          U redu
+        </button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
 </script>
