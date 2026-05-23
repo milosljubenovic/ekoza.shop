@@ -30,7 +30,7 @@ shipping:
   standard_price: 400
   standard_delivery_days: 7 radnih dana
   pickup_delivery_days: 3 radna dana
-  cod_fee: 50
+  cod_fee: 0
   free_min_order: 15000
 google_apps_script:
   url: https://script.google.com/macros/s/AKfycbxq-bHQPOgC66nc--iE_q9B29YFbt_NWtofNJ2LHmEnFDPpfkP90d_5gY85-iwIZQsF/exec
