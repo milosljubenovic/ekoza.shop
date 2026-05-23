@@ -165,6 +165,19 @@ function updateSubmitButtonState() {
 // synchronously at the very top of the handler.
 let isSubmitting = false;
 
+// Wrapper around fetch() that aborts after `timeoutMs` so the UI doesn't hang
+// forever when the Worker is slow / down. Throws a regular fetch-style error
+// on abort, caught by the surrounding try/catch and surfaced to the user.
+async function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function handleOrderSubmit() {
   if (isSubmitting) {
     return;
@@ -203,13 +216,15 @@ async function handleOrderSubmit() {
 
     const orderData = collectOrderData();
 
-    const response = await fetch('https://ekozashop-orders.7kqq5yynhz.workers.dev', {
+    // 15s timeout -- order POST is the slowest path (Telegram + email + R2),
+    // but if it's not back by then something is genuinely wrong.
+    const response = await fetchWithTimeout('https://ekozashop-orders.7kqq5yynhz.workers.dev', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(orderData)
-    });
+    }, 15000);
 
     if (!response.ok) {
       throw new Error('Failed to place order');
