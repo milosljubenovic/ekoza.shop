@@ -478,10 +478,13 @@ function collectOrderData() {
       // Worker's Telegram formatter looks for embroidery / name / font under
       // customization. Note: customization.name (the embroidered name) is
       // distinct from item.name (the product title) -- the Worker reads both.
+      // embroideryImage lets the Worker include the vez design as an inline
+      // photo in the Telegram album alongside the product image.
       customization: {
         color: item.color || null,
         size: item.size || null,
         embroidery: item.embroidery || null,
+        embroideryImage: item.embroideryImage || null,
         name: item.customName || null,
         font: item.font || null,
       }
