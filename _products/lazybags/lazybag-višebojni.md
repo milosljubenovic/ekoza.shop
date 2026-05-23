@@ -4,7 +4,7 @@ title: LazyBag - Višebojni
 product_id: lazybag-višebojni
 category: Lazy Bag
 base_price: 0
-price: -3
+price: 0
 in_stock: false
 featured: true
 supports_embroidery: true
@@ -16,14 +16,13 @@ description: >-
   Ovaj jedinstveni komad nameštaja je dizajniran da vam pruži maksimalnu
   udobnost i podršku, bilo da se odmarate, čitate ili gledate omiljeni film.   
 
-    
+
+
 
   Višebojni Lazy Bag je savršen dodatak svakom domu, bilo da ga koristite za
   opuštanje, čitanje ili jednostavno kao dekorativni element.
-    
 
 
-    
 
 
   ## Veličine:
